@@ -14,6 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SearchCustomerComponent } from './search-customer/search-customer.component';
 import { TableModule } from 'primeng/table';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TableModule } from 'primeng/table';
     SlideMenuModule,
     MenubarModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

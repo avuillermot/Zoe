@@ -1,10 +1,4 @@
-export class Customer {
-
-  public firstName: string;
-  public lastName: string;
-
-  public constructor() {
-    this.firstName = "";
-    this.lastName = "";
-  }
+export interface Customer {
+  firstName: string;
+  lastName: string;
 }

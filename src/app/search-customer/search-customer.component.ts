@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Customer } from './../_models/customer';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-search-customer',
@@ -11,17 +12,22 @@ export class SearchCustomerComponent implements OnInit {
   customers: Customer[];
   cols: any[];
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.customers = new Array<Customer>();
     this.cols = new Array<any>();
   }
 
   ngOnInit(): void {
-    this.customers.push({ firstName: "Leo", lastName: "Rouhana" });
-    this.customers.push({ firstName: "Alex", lastName: "Vuillermot" });
+    this.getCustomers();
 
     this.cols.push({ field: "firstName", header:"Prenom" });
     this.cols.push({ field: "lastName", header: "Nom" });
+  }
+
+  getCustomers(): void {
+    this.http.get('http://localhost:8000/')
+      .toPromise()
+      .then(res => this.customers = <Customer[]>res)
   }
 
 }
