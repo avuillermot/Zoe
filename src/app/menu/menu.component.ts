@@ -23,10 +23,11 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-id-card',
         items: [
           {
-            label: "Créer un client"
+            label: "Recherche client",
+            routerLink: "./search/customer"
           },
           {
-            label: "Mettre à jour client"
+            label: "Mise à jour client"
           },
           {
             label: "Suivi client"

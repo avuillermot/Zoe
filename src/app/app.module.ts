@@ -9,15 +9,19 @@ import { SlideMenuModule } from 'primeng/slidemenu';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 
-
 import { MenuComponent } from './menu/menu.component'
-import { HeaderComponent } from './header/header.component'
+import { HeaderComponent } from './header/header.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { SearchCustomerComponent } from './search-customer/search-customer.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    HeaderComponent
+    HeaderComponent,
+    WelcomeComponent,
+    SearchCustomerComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,8 @@ import { HeaderComponent } from './header/header.component'
     BrowserAnimationsModule,
     SlideMenuModule,
     MenubarModule,
-    ButtonModule
+    ButtonModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

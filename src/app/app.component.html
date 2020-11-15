@@ -1,5 +1,5 @@
 <style>
- 
+
   .content {
     display: flex;
     margin: 82px auto 32px;
@@ -10,30 +10,24 @@
   }
 
   .menu {
-      
   }
 
   .header {
-      width:100%;
-      
+    width: 100%;
   }
-  
 </style>
+
+<div class="header">
+  <app-header></app-header>
+</div>
 
 <div style="display:flex">
   <div class="menu">
     <app-menu></app-menu>
   </div>
-  <div class="header">
-    <app-header></app-header>
-  </div>
-
-
-  <div class="content" role="main">
-    
+  <div class="content" role="main" style="background-color:red; width:100%">
+    <router-outlet></router-outlet>
   </div>
 </div>
 
 
-
-<!--<router-outlet></router-outlet>-->
