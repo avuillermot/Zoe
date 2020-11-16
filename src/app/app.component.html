@@ -1,12 +1,10 @@
 <style>
 
   .content {
-    display: flex;
-    margin: 82px auto 32px;
+    margin: 32px auto 32px;
     padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
+    max-width: 90%;
+    min-width:50%;
   }
 
   .menu {
@@ -25,7 +23,7 @@
   <div class="menu">
     <app-menu></app-menu>
   </div>
-  <div class="content" role="main" style="background-color:red; width:100%">
+  <div class="content" role="main">
     <router-outlet></router-outlet>
   </div>
 </div>

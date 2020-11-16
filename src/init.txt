@@ -1,0 +1,4 @@
+Pour démarrer une entité :
+- dans les services documents, voir comment générer la numérotation des documents ?
+- vaider les documents édités : contenu et mise en page
+- valider le code entité

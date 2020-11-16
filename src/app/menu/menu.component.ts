@@ -24,7 +24,7 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: "Recherche client",
-            routerLink: "./search/customer"
+            routerLink: "./customer/search"
           },
           {
             label: "Mise à jour client"

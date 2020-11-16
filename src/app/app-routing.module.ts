@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SearchCustomerComponent  } from './search-customer/search-customer.component'
-import { HeaderComponent } from './header/header.component'
+import { UpdateCustomerComponent } from './update-customer/update-customer.component'
 import { WelcomeComponent } from './welcome/welcome.component'
 
 const routes: Routes = [
   { path: "welcome", component: WelcomeComponent },
-  { path: "search/customer", component: SearchCustomerComponent }
+  { path: "customer/search", component: SearchCustomerComponent },
+  { path: "customer/update/:id", component: UpdateCustomerComponent },
+  { path: "customer/add", component: UpdateCustomerComponent }
 ];
 
 @NgModule({

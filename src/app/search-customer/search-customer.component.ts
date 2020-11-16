@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Customer } from './../_models/customer';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Table } from 'primeng/table';
+import { ICustomer } from '../_services/customer/customer.model';
+import { CustomerService } from '../_services/customer/customer.service';
 
 @Component({
   selector: 'app-search-customer',
@@ -9,25 +11,33 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SearchCustomerComponent implements OnInit {
 
-  customers: Customer[];
+  customers: ICustomer[];
   cols: any[];
+  @ViewChild('dt') table: Table;
 
-  constructor(private http: HttpClient) {
-    this.customers = new Array<Customer>();
+  constructor(private router: Router, private servCustomer: CustomerService) {
+    this.customers = new Array<ICustomer>();
     this.cols = new Array<any>();
+    this.table = ViewChild('dt');
   }
 
-  ngOnInit(): void {
-    this.getCustomers();
+  async ngOnInit(): Promise<void> {
+    this.customers = await this.servCustomer.getCustomers("ENTTEST");
 
     this.cols.push({ field: "firstName", header:"Prenom" });
     this.cols.push({ field: "lastName", header: "Nom" });
+    this.cols.push({ field: "email", header: "Email" });
+    this.cols.push({ field: "phone", header: "Telephone" });
+    this.cols.push({ field: "city", header: "Ville" });
   }
 
-  getCustomers(): void {
-    this.http.get('http://localhost:8000/')
-      .toPromise()
-      .then(res => this.customers = <Customer[]>res)
+
+  filter($event:any, field:string, pattern:string): void {
+    this.table.filter($event.target.value, field, pattern);
+  }
+
+  onClick(data:string): void {
+    this.router.navigate(['customer/update/'+ data]);
   }
 
 }

@@ -1,0 +1,74 @@
+<div id="update-customer">
+  <span class="p-buttonset">
+    <button pButton type="button" label="Enregistrer" icon="pi pi-check" (click)="onSave()"></button>
+  </span>
+  <div>&#160;</div>
+  <p-panel header="Civilité">
+    <div class="p-field p-grid">
+      <div><label for="firstname" class="p-col-fixed">Prénom</label></div>
+      <div class="p-col">
+        <input id="firstname" type="text" pInputText [(ngModel)]="customer.firstName">
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <div><label for="lastname" class="p-col-fixed">Nom</label></div>
+      <div class="p-col">
+        <input id="lastname" type="text" pInputText [(ngModel)]="customer.lastName">
+      </div>
+    </div>
+  </p-panel>
+  <div>&#160;</div>
+  <p-panel header="Adresse">
+    <div class="p-field p-grid">
+      <div><label for="address1" class="p-col-fixed">Adresse</label></div>
+      <div class="p-col">
+        <input id="address1" type="text" pInputText [(ngModel)]="customer.address1">
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <div><label for="address2" class="p-col-fixed">Complémente adresse 1</label></div>
+      <div class="p-col">
+        <input id="address2" type="text" pInputText [(ngModel)]="customer.address2">
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <div><label for="address3" class="p-col-fixed">Complémente adresse 2</label></div>
+      <div class="p-col">
+        <input id="address3" type="text" pInputText [(ngModel)]="customer.address3">
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <div><label for="zipCode" class="p-col-fixed">Code postal</label></div>
+      <div class="p-col">
+        <input id="zipCode" type="text" pInputText [(ngModel)]="customer.zipCode">
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <div><label for="city" class="p-col-fixed">Ville</label></div>
+      <div class="p-col">
+        <input id="city" type="text" pInputText [(ngModel)]="customer.city">
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <div><label for="country" class="p-col-fixed">Pays</label></div>
+      <div class="p-col">
+        <input id="country" type="text" pInputText [(ngModel)]="customer.country">
+      </div>
+    </div>
+  </p-panel>
+  <div>&#160;</div>
+  <p-panel header="Téléphone & mail">
+    <div class="p-field p-grid">
+      <div><label for="phone" class="p-col-fixed">Téléphone</label></div>
+      <div class="p-col">
+        <input id="phone" type="text" pInputText [(ngModel)]="customer.phone">
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <div><label for="email" class="p-col-fixed">Email</label></div>
+      <div class="p-col">
+        <input id="email" type="text" pInputText [(ngModel)]="customer.email">
+      </div>
+    </div>
+  </p-panel>
+</div>

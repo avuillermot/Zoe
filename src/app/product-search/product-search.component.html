@@ -1,4 +1,4 @@
-<p-table #dt [columns]="cols" [value]="customers" id="search-customer" [scrollable]="true" scrollHeight="500px"
+<p-table #dt [columns]="cols" [value]="products" id="search-product" [scrollable]="true" scrollHeight="500px"
          [globalFilterFields]="['firstName','lastName','email','phone','city']">
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -7,13 +7,13 @@
       </td>
     </tr>
     <tr>
-        <td  *ngFor="let col of columns">
-          <input pInputText type="text"
-                 (input)="filter($event, col.field, 'startsWith')"
-                 placeholder="{{col.header}} commence par"
-                 class="p-column-filter"/>
-        </td>
-     </tr>
+      <td *ngFor="let col of columns">
+        <input pInputText type="text"
+               (input)="filter($event, col.field, 'startsWith')"
+               placeholder="{{col.header}} commence par"
+               class="p-column-filter" />
+      </td>
+    </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
