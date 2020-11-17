@@ -13,32 +13,32 @@ import { newArray } from '@angular/compiler/src/util';
 export class UpdateCustomerComponent implements OnInit {
 
   customer: ICustomer;
+  errors: { type: string, field: string }[];
 
   constructor(private route: ActivatedRoute, private servCustomer: CustomerService) {
     this.customer = <ICustomer>{};
+    this.errors = new Array<{ type: string, field: string }>();
   }
 
   async ngOnInit(): Promise<void> {
     let id: string | null = this.route.snapshot.paramMap.get("id");
-    if (id != null) this.customer = await this.servCustomer.getCustomer("ENTTEST", id)
+    if (id != null) this.customer = await this.servCustomer.get("ENTTEST", id)
   }
 
   async onSave(customerForm: NgForm) {
-    console.log(customerForm);
+    let self = this;
+    self.errors = new Array<{type: string, field: string }>();
     if (customerForm.form.status == "VALID") {
       await this.servCustomer.update(this.customer);
     }
     else {
-      var results: { type: string, field: string }[] = new Array <{ type: string, field: string }>();
-      let errors: { [key: string]: AbstractControl } = customerForm.form.controls;
-      Object.keys(errors).forEach(function (value) {
-        var current = errors[value];
-        if (current.status == "INVALID") {
-
+      let _errors: { [key: string]: AbstractControl } = customerForm.form.controls;
+      Object.keys(_errors).forEach(function (value) {
+        var current = _errors[value];
+        if (current.status == "INVALID" && current.errors != null) {
           Object.keys(current.errors).forEach(function (error) {
-            //results.push({ type: current.errors, field: value });
+            self.errors.push({ type: error, field: value });
           });
-
         }
       });
     }

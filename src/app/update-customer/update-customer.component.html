@@ -1,4 +1,7 @@
 <form id="update-customer" (ngSubmit)="onSave(customerForm)" #customerForm="ngForm">
+  <div *ngFor="let error of errors">
+    {{error.field}} {{error.type}}
+  </div>
   <span class="p-buttonset">
     <button pButton type="submit" label="Enregistrer" icon="pi pi-check"></button>
   </span>

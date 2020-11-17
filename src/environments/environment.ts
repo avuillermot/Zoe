@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   services: {
-    customer: "http://localhost:8000/"
+    customer: "http://localhost:8000/",
+    product: "http://localhost:8000/"
   }
 };
 

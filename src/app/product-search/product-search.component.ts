@@ -22,13 +22,12 @@ export class ProductSearchComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.products = []; //await this.servProduct.get("ENTTEST");
+    this.products = await this.servProduct.getAll("ENTTEST");
 
-    this.cols.push({ field: "firstName", header: "Prenom" });
-    this.cols.push({ field: "lastName", header: "Nom" });
-    this.cols.push({ field: "email", header: "Email" });
-    this.cols.push({ field: "phone", header: "Telephone" });
-    this.cols.push({ field: "city", header: "Ville" });
+    this.cols.push({ field: "code", header: "Code" });
+    this.cols.push({ field: "name", header: "Nom" });
+    this.cols.push({ field: "price", header: "Prix unitaire" });
+    this.cols.push({ field: "taxPercent", header: "Taxe (%)" });
   }
 
 
