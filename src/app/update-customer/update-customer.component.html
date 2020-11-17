@@ -1,74 +1,74 @@
-<div id="update-customer">
+<form id="update-customer" (ngSubmit)="onSave(customerForm)" #customerForm="ngForm">
   <span class="p-buttonset">
-    <button pButton type="button" label="Enregistrer" icon="pi pi-check" (click)="onSave()"></button>
+    <button pButton type="submit" label="Enregistrer" icon="pi pi-check"></button>
   </span>
   <div>&#160;</div>
   <p-panel header="Civilité">
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="firstname" class="p-col-fixed">Prénom</label></div>
       <div class="p-col">
-        <input id="firstname" type="text" pInputText [(ngModel)]="customer.firstName">
+        <input id="firstname" name="firstname" class="form-control" type="text" pInputText [(ngModel)]="customer.firstName" required minlength="1">
       </div>
     </div>
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="lastname" class="p-col-fixed">Nom</label></div>
       <div class="p-col">
-        <input id="lastname" type="text" pInputText [(ngModel)]="customer.lastName">
+        <input id="lastname" name="lastname" class="form-control" type="text" pInputText [(ngModel)]="customer.lastName" required minlenght="1">
       </div>
     </div>
   </p-panel>
   <div>&#160;</div>
   <p-panel header="Adresse">
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="address1" class="p-col-fixed">Adresse</label></div>
       <div class="p-col">
-        <input id="address1" type="text" pInputText [(ngModel)]="customer.address1">
+        <input id="address1" name="address1" class="form-control" type="text" pInputText [(ngModel)]="customer.address1" required minlength="1">
       </div>
     </div>
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="address2" class="p-col-fixed">Complémente adresse 1</label></div>
       <div class="p-col">
-        <input id="address2" type="text" pInputText [(ngModel)]="customer.address2">
+        <input id="address2" name="address2" class="form-control" type="text" pInputText [(ngModel)]="customer.address2">
       </div>
     </div>
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="address3" class="p-col-fixed">Complémente adresse 2</label></div>
       <div class="p-col">
-        <input id="address3" type="text" pInputText [(ngModel)]="customer.address3">
+        <input id="address3" name="address3" class="form-control" type="text" pInputText [(ngModel)]="customer.address3">
       </div>
     </div>
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="zipCode" class="p-col-fixed">Code postal</label></div>
       <div class="p-col">
-        <input id="zipCode" type="text" pInputText [(ngModel)]="customer.zipCode">
+        <input id="zipCode" name="zipCode" class="form-control" type="text" pInputText [(ngModel)]="customer.zipCode" required minlength="1">
       </div>
     </div>
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="city" class="p-col-fixed">Ville</label></div>
       <div class="p-col">
-        <input id="city" type="text" pInputText [(ngModel)]="customer.city">
+        <input id="city" name="city" class="form-control" class="form-control" type="text" pInputText [(ngModel)]="customer.city" required minlength="1">
       </div>
     </div>
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="country" class="p-col-fixed">Pays</label></div>
       <div class="p-col">
-        <input id="country" type="text" pInputText [(ngModel)]="customer.country">
+        <input id="country" name="country" class="form-control" type="text" pInputText [(ngModel)]="customer.country" required minlength="1">
       </div>
     </div>
   </p-panel>
   <div>&#160;</div>
   <p-panel header="Téléphone & mail">
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="phone" class="p-col-fixed">Téléphone</label></div>
       <div class="p-col">
-        <input id="phone" type="text" pInputText [(ngModel)]="customer.phone">
+        <input id="phone" name="phone" class="form-control" type="text" pInputText [(ngModel)]="customer.phone" required minlength="3">
       </div>
     </div>
-    <div class="p-field p-grid">
+    <div class="p-field p-grid form-group">
       <div><label for="email" class="p-col-fixed">Email</label></div>
       <div class="p-col">
-        <input id="email" type="text" pInputText [(ngModel)]="customer.email">
+        <input id="email" name="email" class="form-control" type="text" pInputText [(ngModel)]="customer.email" required email>
       </div>
     </div>
   </p-panel>
-</div>
+</form>
