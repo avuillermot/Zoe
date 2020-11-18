@@ -25,7 +25,7 @@ export class ProductUpdateComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     let id: string | null = this.route.snapshot.paramMap.get("id");
     this.updateOrAddMode = ((id == null || id == undefined) ? "ADD" : "UPDATE");
-    if (id != null) this.product = await this.servProduct.get(this.servUser.User.entity, id);
+    if (id != null) this.product = await this.servProduct.get(id);
   }
 
   async onSave(productForm: NgForm) {
@@ -36,7 +36,7 @@ export class ProductUpdateComponent implements OnInit {
       if (this.updateOrAddMode == "UPDATE") await this.servProduct.update(this.product);
       else {
         this.blocked = true;
-        let back: IProduct = <IProduct>await this.servProduct.create(this.product, this.servUser.User);
+        let back: IProduct = <IProduct>await this.servProduct.create(this.product);
         this.router.navigate(['product/update/' + back._id]);
       }
     }

@@ -17,7 +17,7 @@ export class UpdateCustomerComponent implements OnInit {
   updateOrAddMode: string = "";
   blocked: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private servCustomer: CustomerService, private servUser: UserService) {
+  constructor(private route: ActivatedRoute, private router: Router, private servCustomer: CustomerService) {
     this.customer = <ICustomer>{};
     this.errors = new Array<{ type: string, field: string }>();
   }
@@ -25,17 +25,17 @@ export class UpdateCustomerComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     let id: string | null = this.route.snapshot.paramMap.get("id");
     this.updateOrAddMode = ((id == null || id == undefined) ? "ADD" : "UPDATE");
-    if (id != null) this.customer = await this.servCustomer.get(this.servUser.User.entity, id)
+    if (id != null) this.customer = await this.servCustomer.get(id)
   }
 
   async onSave(customerForm: NgForm) {
     let self = this;
     self.errors = new Array<{type: string, field: string }>();
     if (customerForm.form.status == "VALID") {
-      if (this.updateOrAddMode == "UPDATE") await this.servCustomer.update(this.customer, this.servUser.User);
+      if (this.updateOrAddMode == "UPDATE") await this.servCustomer.update(this.customer);
       else {
         this.blocked = true;
-        let back:ICustomer = <ICustomer> await this.servCustomer.create(this.customer, this.servUser.User);
+        let back:ICustomer = <ICustomer> await this.servCustomer.create(this.customer);
         this.router.navigate(['customer/update/' + back._id]);
       }
     }

@@ -23,7 +23,7 @@ export class ProductSearchComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.products = await this.servProduct.getAll(this.servUser.User.entity);
+    this.products = await this.servProduct.getAll();
 
     this.cols.push({ field: "code", header: "Code" });
     this.cols.push({ field: "name", header: "Nom" });
