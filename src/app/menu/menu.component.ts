@@ -24,11 +24,13 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: "Recherche clients",
-            routerLink: "./customer/search"
+            routerLink: "./customer/search",
+            icon: 'pi pi-fw pi-search'
           },
           {
             label: "Nouveau client",
-            routerLink: "./customer/add"
+            routerLink: "./customer/add",
+            icon: 'pi pi-fw pi-plus-circle'
           }
         ]
       },
@@ -38,11 +40,13 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: "Recherche articles",
-            routerLink: "./product/search"
+            routerLink: "./product/search",
+            icon: 'pi pi-fw pi-search'
           },
           {
             label: "Nouveau article",
-            routerLink: "./product/add"
+            routerLink: "./product/add",
+            icon: 'pi pi-fw pi-plus-circle'
           }
         ]
       },
