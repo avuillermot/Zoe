@@ -25,6 +25,10 @@ export class MenuComponent implements OnInit {
           {
             label: "Recherche clients",
             routerLink: "./customer/search"
+          },
+          {
+            label: "Nouveau client",
+            routerLink: "./customer/add"
           }
         ]
       },
@@ -33,8 +37,12 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-briefcase',
         items: [
           {
-            label: "Recherche produits",
+            label: "Recherche articles",
             routerLink: "./product/search"
+          },
+          {
+            label: "Nouveau article",
+            routerLink: "./product/add"
           }
         ]
       },

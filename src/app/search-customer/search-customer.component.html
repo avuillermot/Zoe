@@ -1,5 +1,5 @@
 <p-table #dt [columns]="cols" [value]="customers" id="search-customer" [scrollable]="true" scrollHeight="500px"
-         [globalFilterFields]="['firstName','lastName','email','phone','city']">
+         [globalFilterFields]="['number','firstName','lastName','email','phone','city']">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <td *ngFor="let col of columns">

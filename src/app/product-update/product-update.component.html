@@ -10,7 +10,7 @@
     <div class="p-field p-grid form-group">
       <div><label for="code" class="p-col-fixed">Code</label></div>
       <div class="p-col">
-        <input id="code" name="code" class="form-control" type="text" pInputText [(ngModel)]="product.code" required minlength="1" disabled="disabled">
+        <input id="code" name="code" class="form-control" type="text" pInputText [(ngModel)]="product.code" required minlength="1" disabled="{{updateOrAddMode == 'UPDATE'}}">
       </div>
     </div>
     <div class="p-field p-grid form-group">
@@ -39,4 +39,5 @@
     </div>
   </p-panel>
   <div>&#160;</div>
+  <p-blockUI [blocked]="blocked"></p-blockUI>
 </form>

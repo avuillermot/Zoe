@@ -8,6 +8,12 @@
   <div>&#160;</div>
   <p-panel header="Civilité">
     <div class="p-field p-grid form-group">
+      <div><label for="number" class="p-col-fixed">Numéro</label></div>
+      <div class="p-col">
+        <input id="number" name="number" class="form-control" type="text" pInputText [(ngModel)]="customer.number" disabled="disabled">
+      </div>
+    </div>
+    <div class="p-field p-grid form-group">
       <div><label for="firstname" class="p-col-fixed">Prénom</label></div>
       <div class="p-col">
         <input id="firstname" name="firstname" class="form-control" type="text" pInputText [(ngModel)]="customer.firstName" required minlength="1">
@@ -74,4 +80,5 @@
       </div>
     </div>
   </p-panel>
+  <p-blockUI [blocked]="blocked"></p-blockUI>
 </form>

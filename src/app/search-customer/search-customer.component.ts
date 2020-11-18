@@ -25,6 +25,7 @@ export class SearchCustomerComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.customers = await this.servCustomer.getAll(this.servUser.User.entity);
 
+    this.cols.push({ field: "number", header: "Numéro" });
     this.cols.push({ field: "firstName", header:"Prenom" });
     this.cols.push({ field: "lastName", header: "Nom" });
     this.cols.push({ field: "email", header: "Email" });

@@ -12,6 +12,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
+import { BlockUIModule } from 'primeng/blockui';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -42,7 +43,8 @@ import { ProductUpdateComponent } from './product-update/product-update.componen
     TableModule,
     HttpClientModule,
     FormsModule,
-    PanelModule
+    PanelModule,
+    BlockUIModule
   ],
   providers: [],
   bootstrap: [AppComponent]

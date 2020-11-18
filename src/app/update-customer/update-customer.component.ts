@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { CustomerService } from '../_services/customer/customer.service';
 import { UserService } from '../_services/user/user.service';
 import { ICustomer } from '../_services/customer/customer.model';
@@ -14,14 +14,17 @@ export class UpdateCustomerComponent implements OnInit {
 
   customer: ICustomer;
   errors: { type: string, field: string }[];
+  updateOrAddMode: string = "";
+  blocked: boolean = false;
 
-  constructor(private route: ActivatedRoute, private servCustomer: CustomerService, private servUser: UserService) {
+  constructor(private route: ActivatedRoute, private router: Router, private servCustomer: CustomerService, private servUser: UserService) {
     this.customer = <ICustomer>{};
     this.errors = new Array<{ type: string, field: string }>();
   }
 
   async ngOnInit(): Promise<void> {
     let id: string | null = this.route.snapshot.paramMap.get("id");
+    this.updateOrAddMode = ((id == null || id == undefined) ? "ADD" : "UPDATE");
     if (id != null) this.customer = await this.servCustomer.get(this.servUser.User.entity, id)
   }
 
@@ -29,7 +32,12 @@ export class UpdateCustomerComponent implements OnInit {
     let self = this;
     self.errors = new Array<{type: string, field: string }>();
     if (customerForm.form.status == "VALID") {
-      await this.servCustomer.update(this.customer);
+      if (this.updateOrAddMode == "UPDATE") await this.servCustomer.update(this.customer, this.servUser.User);
+      else {
+        this.blocked = true;
+        let back:ICustomer = <ICustomer> await this.servCustomer.create(this.customer, this.servUser.User);
+        this.router.navigate(['customer/update/' + back._id]);
+      }
     }
     else {
       let _errors: { [key: string]: AbstractControl } = customerForm.form.controls;

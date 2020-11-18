@@ -16,14 +16,5 @@ div.p-col input {
 
 #update-customer div.p-field {
   margin-bottom: 5px;
-  font-weight:600;
-}
-
-#update-customer p-panel {
-  margin-top: 15px;
-  background-color:bisque;
-}
-
-#update-customer button {
-  cursor:pointer;
+  font-weight:300;
 }

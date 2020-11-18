@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { IProduct } from '../_services/product/product.model';
 import { ProductService } from '../_services/product/product.service';
 import { UserService } from '../_services/user/user.service';
@@ -14,14 +14,17 @@ export class ProductUpdateComponent implements OnInit {
 
   product: IProduct;
   errors: { type: string, field: string }[];
+  updateOrAddMode: string = "";
+  blocked: boolean = false;
 
-  constructor(private route: ActivatedRoute, private servProduct: ProductService, private servUser: UserService ) {
+  constructor(private route: ActivatedRoute, private router: Router, private servProduct: ProductService, private servUser: UserService ) {
     this.product = <IProduct>{};
     this.errors = new Array<{ type: string, field: string }>();
   }
 
   async ngOnInit(): Promise<void> {
     let id: string | null = this.route.snapshot.paramMap.get("id");
+    this.updateOrAddMode = ((id == null || id == undefined) ? "ADD" : "UPDATE");
     if (id != null) this.product = await this.servProduct.get(this.servUser.User.entity, id);
   }
 
@@ -30,7 +33,12 @@ export class ProductUpdateComponent implements OnInit {
     
     self.errors = new Array<{ type: string, field: string }>();
     if (productForm.form.status == "VALID") {
-      await this.servProduct.update(this.product);
+      if (this.updateOrAddMode == "UPDATE") await this.servProduct.update(this.product);
+      else {
+        this.blocked = true;
+        let back: IProduct = <IProduct>await this.servProduct.create(this.product, this.servUser.User);
+        this.router.navigate(['product/update/' + back._id]);
+      }
     }
     else {
       let _errors: { [key: string]: AbstractControl } = productForm.form.controls;
