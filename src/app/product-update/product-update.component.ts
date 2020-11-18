@@ -25,13 +25,14 @@ export class ProductUpdateComponent implements OnInit {
   }
 
   async onSave(productForm: NgForm) {
-    /*let self = this;
+    let self = this;
+    
     self.errors = new Array<{ type: string, field: string }>();
-    if (customerForm.form.status == "VALID") {
-      await this.servCustomer.update(this.customer);
+    if (productForm.form.status == "VALID") {
+      await this.servProduct.update(this.product);
     }
     else {
-      let _errors: { [key: string]: AbstractControl } = customerForm.form.controls;
+      let _errors: { [key: string]: AbstractControl } = productForm.form.controls;
       Object.keys(_errors).forEach(function (value) {
         var current = _errors[value];
         if (current.status == "INVALID" && current.errors != null) {
@@ -40,7 +41,7 @@ export class ProductUpdateComponent implements OnInit {
           });
         }
       });
-    }*/
+    }
   }
 
 }

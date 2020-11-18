@@ -28,13 +28,13 @@
     <div class="p-field p-grid form-group">
       <div><label for="price" class="p-col-fixed">Prix Unitaire</label></div>
       <div class="p-col">
-        <input id="price" name="price" class="form-control" type="text" pInputText [(ngModel)]="product.price" required minlength="1">
+        <input id="price" name="price" class="form-control" type="number" pInputText [(ngModel)]="product.price" required minlength="1">
       </div>
     </div>
     <div class="p-field p-grid form-group">
       <div><label for="tva" class="p-col-fixed">TVA (en %)</label></div>
       <div class="p-col">
-        <input id="tva" name="tva" class="form-control" type="text" pInputText [(ngModel)]="product.taxPercent" required minlength="1">
+        <input id="tva" name="tva" class="form-control" type="number" pInputText [(ngModel)]="product.taxPercent" required minlength="1">
       </div>
     </div>
   </p-panel>
