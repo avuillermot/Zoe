@@ -1,8 +1,9 @@
 export interface IProduct {
   _id: string;
   entityId: string;
-  productCode: string;
-  productName: string;
+  code: string;
+  name: string;
   price: number;
   taxPercent: number;
+  description: string;
 }

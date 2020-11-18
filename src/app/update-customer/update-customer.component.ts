@@ -3,7 +3,6 @@ import { ActivatedRoute } from "@angular/router";
 import { CustomerService } from '../_services/customer/customer.service';
 import { ICustomer } from '../_services/customer/customer.model';
 import { NgForm, AbstractControl } from '@angular/forms';
-import { newArray } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-update-customer',

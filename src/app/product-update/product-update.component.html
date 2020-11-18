@@ -1,1 +1,42 @@
-<p>product-update works!</p>
+<form id="update-product" (ngSubmit)="onSave(productForm)" #productForm="ngForm">
+  <div *ngFor="let error of errors">
+    {{error.field}} {{error.type}}
+  </div>
+  <span class="p-buttonset">
+    <button pButton type="submit" label="Enregistrer" icon="pi pi-check"></button>
+  </span>
+  <div>&#160;</div>
+  <p-panel header="Fiche Produit">
+    <div class="p-field p-grid form-group">
+      <div><label for="code" class="p-col-fixed">Code</label></div>
+      <div class="p-col">
+        <input id="code" name="code" class="form-control" type="text" pInputText [(ngModel)]="product.code" required minlength="1" disabled="disabled">
+      </div>
+    </div>
+    <div class="p-field p-grid form-group">
+      <div><label for="name" class="p-col-fixed">Nom</label></div>
+      <div class="p-col">
+        <input id="name" name="name" class="form-control" type="text" pInputText [(ngModel)]="product.name" required minlength="1">
+      </div>
+    </div>
+    <div class="p-field p-grid form-group">
+      <div><label for="description" class="p-col-fixed">Description</label></div>
+      <div class="p-col">
+        <textarea id="description" name="description" class="form-control" pInputText [(ngModel)]="product.description" cols="50" rows="10"></textarea>
+      </div>
+    </div>
+    <div class="p-field p-grid form-group">
+      <div><label for="price" class="p-col-fixed">Prix Unitaire</label></div>
+      <div class="p-col">
+        <input id="price" name="price" class="form-control" type="text" pInputText [(ngModel)]="product.price" required minlength="1">
+      </div>
+    </div>
+    <div class="p-field p-grid form-group">
+      <div><label for="tva" class="p-col-fixed">TVA (en %)</label></div>
+      <div class="p-col">
+        <input id="tva" name="tva" class="form-control" type="text" pInputText [(ngModel)]="product.taxPercent" required minlength="1">
+      </div>
+    </div>
+  </p-panel>
+  <div>&#160;</div>
+</form>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SearchCustomerComponent  } from './search-customer/search-customer.component'
 import { UpdateCustomerComponent } from './update-customer/update-customer.component'
 import { ProductSearchComponent } from './product-search/product-search.component'
+import { ProductUpdateComponent } from './product-update/product-update.component'
 import { WelcomeComponent } from './welcome/welcome.component'
 
 const routes: Routes = [
@@ -10,7 +11,8 @@ const routes: Routes = [
   { path: "customer/search", component: SearchCustomerComponent },
   { path: "customer/update/:id", component: UpdateCustomerComponent },
   { path: "customer/add", component: UpdateCustomerComponent },
-  { path: "product/search", component: ProductSearchComponent }
+  { path: "product/search", component: ProductSearchComponent },
+  { path: "product/update/:id", component: ProductUpdateComponent }
 ];
 
 @NgModule({
