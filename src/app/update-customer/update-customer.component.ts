@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { CustomerService } from '../_services/customer/customer.service';
+import { UserService } from '../_services/user/user.service';
 import { ICustomer } from '../_services/customer/customer.model';
 import { NgForm, AbstractControl } from '@angular/forms';
 
@@ -14,14 +15,14 @@ export class UpdateCustomerComponent implements OnInit {
   customer: ICustomer;
   errors: { type: string, field: string }[];
 
-  constructor(private route: ActivatedRoute, private servCustomer: CustomerService) {
+  constructor(private route: ActivatedRoute, private servCustomer: CustomerService, private servUser: UserService) {
     this.customer = <ICustomer>{};
     this.errors = new Array<{ type: string, field: string }>();
   }
 
   async ngOnInit(): Promise<void> {
     let id: string | null = this.route.snapshot.paramMap.get("id");
-    if (id != null) this.customer = await this.servCustomer.get("ENTTEST", id)
+    if (id != null) this.customer = await this.servCustomer.get(this.servUser.User.entity, id)
   }
 
   async onSave(customerForm: NgForm) {

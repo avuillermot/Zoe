@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { ICustomer } from '../_services/customer/customer.model';
 import { CustomerService } from '../_services/customer/customer.service';
+import { UserService } from '../_services/user/user.service';
 
 @Component({
   selector: 'app-search-customer',
@@ -15,14 +16,14 @@ export class SearchCustomerComponent implements OnInit {
   cols: any[];
   @ViewChild('dt') table: Table;
 
-  constructor(private router: Router, private servCustomer: CustomerService) {
+  constructor(private router: Router, private servCustomer: CustomerService, private servUser: UserService) {
     this.customers = new Array<ICustomer>();
     this.cols = new Array<any>();
     this.table = ViewChild('dt');
   }
 
   async ngOnInit(): Promise<void> {
-    this.customers = await this.servCustomer.getAll("ENTTEST");
+    this.customers = await this.servCustomer.getAll(this.servUser.User.entity);
 
     this.cols.push({ field: "firstName", header:"Prenom" });
     this.cols.push({ field: "lastName", header: "Nom" });

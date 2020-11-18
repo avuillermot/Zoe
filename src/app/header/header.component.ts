@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { UserService } from '../_services/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -10,14 +11,14 @@ export class HeaderComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor() {
+  constructor(private servUser: UserService) {
     this.items = new Array<MenuItem>();
   }
 
   ngOnInit(): void {
     this.items = [
       {
-        label:"test"
+        label: this.servUser.User.email
       }
     ]
   }

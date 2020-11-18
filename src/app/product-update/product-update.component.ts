@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { IProduct } from '../_services/product/product.model';
 import { ProductService } from '../_services/product/product.service';
+import { UserService } from '../_services/user/user.service';
 import { NgForm, AbstractControl } from '@angular/forms';
 
 @Component({
@@ -14,14 +15,14 @@ export class ProductUpdateComponent implements OnInit {
   product: IProduct;
   errors: { type: string, field: string }[];
 
-  constructor(private route: ActivatedRoute, private servProduct: ProductService) {
+  constructor(private route: ActivatedRoute, private servProduct: ProductService, private servUser: UserService ) {
     this.product = <IProduct>{};
     this.errors = new Array<{ type: string, field: string }>();
   }
 
   async ngOnInit(): Promise<void> {
     let id: string | null = this.route.snapshot.paramMap.get("id");
-    if (id != null) this.product = await this.servProduct.get("ENTTEST", id)
+    if (id != null) this.product = await this.servProduct.get(this.servUser.User.entity, id);
   }
 
   async onSave(productForm: NgForm) {
