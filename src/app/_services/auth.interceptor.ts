@@ -1,34 +1,36 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { UserService } from './../_services/user/user.service';
-import { User } from './../_services/user/user.model';
+import { Observable, of } from 'rxjs';
+import { retry } from 'rxjs/operators';
+import { map, filter, tap, catchError } from 'rxjs/operators';
 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  public static user: User = new User();
-  private static userIsInit: boolean = false;
   constructor() {
-    if (AuthInterceptor.userIsInit == false) {
-      AuthInterceptor.userIsInit = true;
-    }
+
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (AuthInterceptor.userIsInit != false) {
-      req = req.clone({
+    req = req.clone({
         setHeaders: {
           'Content-Type': 'application/json; charset=utf-8',
           'Accept': 'application/json',
-          'Authorization': AuthInterceptor.user.login
+          'Authorization': "mmm"
         },
         setParams: {
-          'entity': AuthInterceptor.user.entity
+          'entity': ""
         }
-      });
-    }
-    return next.handle(req);
+    });
+    return next.handle(req).pipe(
+      tap(evt => { }),
+      catchError(
+        (err: any) => {
+          if ((<HttpErrorResponse>err).status == 401) window.location.href = '/login';
+          return of(err);
+        }
+      )
+    );
   }
 }

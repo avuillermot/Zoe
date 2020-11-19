@@ -1,0 +1,23 @@
+<div id="div-main-login">
+  <form id="user-login" (ngSubmit)="onLogon(loginForm)" #loginForm="ngForm">
+    <p-panel header="Connexion">
+      <div class="p-field p-grid form-group">
+        <div><label for="login" class="p-col-fixed">Identifiant</label></div>
+        <div class="p-col">
+          <input id="login" name="login" class="form-control" type="text" pInputText [(ngModel)]="login" required minlength="1" />
+        </div>
+      </div>
+      <div class="p-field p-grid form-group">
+        <div><label for="password" class="p-col-fixed">Mot de passe</label></div>
+        <div class="p-col">
+          <input id="password" name="password" type="password" pPassword [(ngModel)]="password" required minlength="1" />
+        </div>
+      </div>
+      <div class="p-field p-grid form-group">
+        <span class="p-buttonset">
+          <button pButton type="submit" label="Connexion" icon="pi pi-sign-in"></button>
+        </span>
+      </div>
+    </p-panel>
+  </form>
+ </div>

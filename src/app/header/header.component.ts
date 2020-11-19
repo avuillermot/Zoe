@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { UserService } from '../_services/user/user.service';
+import { User } from '../_services/user/user.model';
+import { AuthInterceptor } from '../_services/auth.interceptor';
 
 @Component({
   selector: 'app-header',
@@ -9,18 +9,12 @@ import { UserService } from '../_services/user/user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  items: MenuItem[];
-
-  constructor(private servUser: UserService) {
-    this.items = new Array<MenuItem>();
-  }
+  user: User|null = new User();
+  constructor() {}
 
   ngOnInit(): void {
-    this.items = [
-      {
-        label: this.servUser.User.email
-      }
-    ]
+    let token: string | null = localStorage.getItem('token');
+    if (token != null && token != undefined) this.user = <User> JSON.parse(token);
   }
 
 }

@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { BlockUIModule } from 'primeng/blockui';
+import { PasswordModule } from 'primeng/password';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -21,8 +22,11 @@ import { SearchCustomerComponent } from './search-customer/search-customer.compo
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { ProductUpdateComponent } from './product-update/product-update.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 import { AuthInterceptor } from '../app/_services/auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +37,9 @@ import { AuthInterceptor } from '../app/_services/auth.interceptor';
     SearchCustomerComponent,
     UpdateCustomerComponent,
     ProductSearchComponent,
-    ProductUpdateComponent
+    ProductUpdateComponent,
+    UserLoginComponent,
+    UserUpdateComponent
   ],
   imports: [
     BrowserModule,

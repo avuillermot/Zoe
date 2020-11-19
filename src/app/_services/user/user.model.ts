@@ -5,9 +5,9 @@ export class User {
   public entity: string;
 
   constructor() {
-    this.login = "testuser";
-    this.email = "test@email.com";
-    this.entity = "ENTTEST";
+    this.login = "none";
+    this.email = "none";
+    this.entity = "NONE";
   }
 
 }

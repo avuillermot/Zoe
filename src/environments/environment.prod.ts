@@ -1,4 +1,8 @@
 export const environment = {
-  production: true,
-  urlAvtFact: "http://localhost:8001"
+  production: false,
+  services: {
+    customer: "http://prod:8000/",
+    product: "http://prod:8000/",
+    user: "http://prod:8001/"
+  }
 };

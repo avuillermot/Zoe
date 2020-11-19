@@ -5,8 +5,10 @@
 export const environment = {
   production: false,
   services: {
+    entity: "http://localhost:8000/",
     customer: "http://localhost:8000/",
-    product: "http://localhost:8000/"
+    product: "http://localhost:8000/",
+    user: "http://localhost:8001/"
   }
 };
 
