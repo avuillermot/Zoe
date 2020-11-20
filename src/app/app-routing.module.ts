@@ -5,7 +5,8 @@ import { UpdateCustomerComponent } from './update-customer/update-customer.compo
 import { ProductSearchComponent } from './product-search/product-search.component';
 import { ProductUpdateComponent } from './product-update/product-update.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { UserLoginComponent } from './user-login/user-login.component'
+import { UserLoginComponent } from './user-login/user-login.component';
+import { QuoteCreateComponent } from './quote-create/quote-create.component';
 
 const routes: Routes = [
   { path: "welcome", component: WelcomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: "product/update/:id", component: ProductUpdateComponent },
   { path: "product/add", component: ProductUpdateComponent },
   { path: "login", component: UserLoginComponent },
+  { path: "quote/create", component: QuoteCreateComponent }
 ];
 
 @NgModule({

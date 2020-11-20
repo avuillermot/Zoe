@@ -1,0 +1,11 @@
+﻿
+<p-panel header="Client">
+  Content
+</p-panel>
+<div>&#160;</div>
+<p-panel header="Article">
+  <p-autoComplete [suggestions]="products" (completeMethod)="search($event)" field="name" [(ngModel)]="current" delay=1000 emptyMessage="Aucun résultat" (onSelect)="onSelectProduct()"></p-autoComplete>
+  {{current._id}}
+</p-panel>
+
+

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { IProduct } from '../_services/product/product.model';
 import { ProductService } from '../_services/product/product.service';
-import { UserService } from '../_services/user/user.service';
 import { NgForm, AbstractControl } from '@angular/forms';
 
 @Component({
@@ -17,7 +16,7 @@ export class ProductUpdateComponent implements OnInit {
   updateOrAddMode: string = "";
   blocked: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private servProduct: ProductService, private servUser: UserService ) {
+  constructor(private route: ActivatedRoute, private router: Router, private servProduct: ProductService ) {
     this.product = <IProduct>{};
     this.errors = new Array<{ type: string, field: string }>();
   }

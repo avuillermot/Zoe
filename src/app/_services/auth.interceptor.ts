@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
         setHeaders: {
           'Content-Type': 'application/json; charset=utf-8',
           'Accept': 'application/json',
-          'Authorization': "mmm"
+          'Authorization': AuthInterceptor.getContext()
         },
         setParams: {
           'entity': AuthInterceptor.getEntity()
@@ -42,6 +42,12 @@ export class AuthInterceptor implements HttpInterceptor {
   public static logout() {
     localStorage.setItem('context', "");
     localStorage.setItem('token', "");
+  }
+
+  public static getContext() : string {
+    let data: string | null = localStorage.getItem("context");
+    if (data == null || data == undefined || data == "") return "";
+    return data;
   }
 
   public static getEntity(): string {

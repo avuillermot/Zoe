@@ -14,6 +14,7 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { BlockUIModule } from 'primeng/blockui';
 import { PasswordModule } from 'primeng/password';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -26,6 +27,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 
 import { AuthInterceptor } from '../app/_services/auth.interceptor';
+import { QuoteCreateComponent } from './quote-create/quote-create.component';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { AuthInterceptor } from '../app/_services/auth.interceptor';
     ProductSearchComponent,
     ProductUpdateComponent,
     UserLoginComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    QuoteCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,9 @@ import { AuthInterceptor } from '../app/_services/auth.interceptor';
     HttpClientModule,
     FormsModule,
     PanelModule,
-    BlockUIModule
+    BlockUIModule,
+    PasswordModule,
+    AutoCompleteModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

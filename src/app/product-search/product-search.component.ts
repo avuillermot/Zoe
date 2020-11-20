@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { IProduct } from '../_services/product/product.model';
 import { ProductService } from '../_services/product/product.service';
-import { UserService } from '../_services/user/user.service';
 
 @Component({
   selector: 'app-product-search',
@@ -16,7 +15,7 @@ export class ProductSearchComponent implements OnInit {
   cols: any[];
   @ViewChild('dt') table: Table;
 
-  constructor(private router: Router, private servProduct: ProductService, private servUser: UserService) {
+  constructor(private router: Router, private servProduct: ProductService) {
     this.products = new Array<IProduct>();
     this.cols = new Array<any>();
     this.table = ViewChild('dt');

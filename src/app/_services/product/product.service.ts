@@ -22,6 +22,12 @@ export class ProductService {
     return product;
   }
 
+  public async startWith(startWith: string): Promise<IProduct[]> {
+    const params = new HttpParams().set("startwith", startWith);
+    let products: IProduct[] = await this.http.get<IProduct[]>(environment.services.product + "product/startwith", { params }).toPromise();
+    return products;
+  }
+
   public async update(product: IProduct): Promise<IProduct> {
     const params = new HttpParams().set("id", product._id);
     const options = { params: params };
