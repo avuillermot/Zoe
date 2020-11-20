@@ -30,10 +30,10 @@ export class ProductService {
   }
 
   public async create(product: IProduct): Promise<IProduct> {
-    const params = new HttpParams().set('entity', AuthInterceptor.user.entity);
+    const params = new HttpParams().set('entity', AuthInterceptor.getEntity());
     const options = { params: params };
 
-    product.entityId = AuthInterceptor.user.entity;
+    product.entityId = AuthInterceptor.getEntity();
     return await this.http.post<IProduct>(environment.services.customer + "product", product, options).toPromise();
   }
 }

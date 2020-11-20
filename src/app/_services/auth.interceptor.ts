@@ -20,17 +20,39 @@ export class AuthInterceptor implements HttpInterceptor {
           'Authorization': "mmm"
         },
         setParams: {
-          'entity': ""
+          'entity': AuthInterceptor.getEntity()
         }
     });
     return next.handle(req).pipe(
       tap(evt => { }),
       catchError(
         (err: any) => {
-          if ((<HttpErrorResponse>err).status == 401) window.location.href = '/login';
-          return of(err);
+          if ((<HttpErrorResponse>err).status == 401 && window.location.pathname != '/login') window.location.href = '/login';
+          throw err;
         }
       )
     );
+  }
+
+  public static setDataContext(context: any, token: any): void {
+    localStorage.setItem('context', JSON.stringify(context));
+    localStorage.setItem('token', JSON.stringify(token));
+  }
+
+  public static logout() {
+    localStorage.setItem('context', "");
+    localStorage.setItem('token', "");
+  }
+
+  public static getEntity(): string {
+    let data: string | null = localStorage.getItem("context");
+    if (data == null || data == undefined || data == "") return "";
+    return JSON.parse(data).entity;
+  }
+
+  public static getLogin(): string {
+    let data: string | null = localStorage.getItem("context");
+    if (data == null || data == undefined || data == "") return "";
+    return JSON.parse(data).login;
   }
 }

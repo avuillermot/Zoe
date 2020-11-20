@@ -9,12 +9,11 @@ import { AuthInterceptor } from '../_services/auth.interceptor';
 })
 export class HeaderComponent implements OnInit {
 
-  user: User|null = new User();
+  login: string = AuthInterceptor.getLogin();
   constructor() {}
 
   ngOnInit(): void {
-    let token: string | null = localStorage.getItem('token');
-    if (token != null && token != undefined) this.user = <User> JSON.parse(token);
+
   }
 
 }

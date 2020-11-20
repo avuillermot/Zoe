@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs-compat/Observable';
+import { AuthInterceptor } from '../auth.interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,14 @@ export class UserService {
 
   }
 
-  private async getEntity(login: string) {
-    let back: any = await this.http.put(environment.services.entity + "entity/byuser", { login: login }).toPromise();
+  private async getAllowEntity(context: { login: string, email: string, entity: string }) {
+    let back: any = await this.http.put(environment.services.entity + "entity/byuser", { login: context.login }).toPromise()
+      .then((entities: any) => {
+        context.entity = entities[0]._id;
+        AuthInterceptor.setDataContext(context, JSON.stringify(context));
+        window.location.href = '/';
+      })
+      .catch(() => { alert("Accès refusé !"); });
     console.log(back);
   }
 
@@ -21,17 +28,13 @@ export class UserService {
     const params = new HttpParams();
     const options = { params: params };
 
-    this.http.put<Observable<{ login: string, email: string, entity: string }>>(environment.services.user + "logon", { login: login, password: password }, options).toPromise()
-      .then((data) => {
-        localStorage.setItem('data', JSON.stringify(data));
-        localStorage.setItem('token', JSON.stringify(data));
-        this.getEntity(login);
-        window.location.href = '/';
+    this.http.put<{ login: string, email: string, entity: string }>(environment.services.user + "logon", { login: login, password: password }, options).toPromise()
+      .then((context) => {
+        this.getAllowEntity(context);
       })
-      .catch(() => {
-        localStorage.setItem('data', JSON.stringify({}));
-        localStorage.setItem('token', JSON.stringify({}));
-        alert("Connexion Impossible");
+      .catch((err) => {
+        AuthInterceptor.logout();
+        alert("Identifiant non valide");
       });
   }
 }

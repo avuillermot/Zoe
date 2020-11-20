@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user/user.service';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
+import { AuthInterceptor } from '../_services/auth.interceptor';
 
 @Component({
   selector: 'app-user-login',
@@ -16,6 +17,7 @@ export class UserLoginComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private servUser:UserService) { }
 
   ngOnInit(): void {
+    AuthInterceptor.logout();
   }
 
   onLogon(logonForm: NgForm): void {
