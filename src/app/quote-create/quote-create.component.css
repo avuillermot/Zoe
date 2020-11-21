@@ -3,3 +3,12 @@ div {
     vertical-align:top;
     margin-left:10px;
 }
+
+input {
+    width:60px;
+}
+
+#footer div {
+    display: block;
+    margin-top: 5px;
+}

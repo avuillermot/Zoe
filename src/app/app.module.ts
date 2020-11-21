@@ -15,6 +15,7 @@ import { TableModule } from 'primeng/table';
 import { BlockUIModule } from 'primeng/blockui';
 import { PasswordModule } from 'primeng/password';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { CalendarModule } from 'primeng/calendar';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -57,7 +58,8 @@ import { QuoteCreateComponent } from './quote-create/quote-create.component';
     PanelModule,
     BlockUIModule,
     PasswordModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CalendarModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

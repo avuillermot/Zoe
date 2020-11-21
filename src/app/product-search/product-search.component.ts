@@ -26,7 +26,7 @@ export class ProductSearchComponent implements OnInit {
 
     this.cols.push({ field: "code", header: "Code" });
     this.cols.push({ field: "name", header: "Nom" });
-    this.cols.push({ field: "price", header: "Prix unitaire" });
+    this.cols.push({ field: "price", header: "Prix unitaire HT" });
     this.cols.push({ field: "taxPercent", header: "Taxe (%)" });
   }
 
