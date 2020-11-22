@@ -4,11 +4,23 @@ div {
     margin-left:10px;
 }
 
-input {
+.item-line {
     width:60px;
 }
 
-#footer div {
+#footer div, #header div {
     display: block;
     margin-top: 5px;
+}
+
+#header div.label, #details div.label {
+    display: inline-block;
+    min-width: 100px;
+    font-size: small;
+}
+
+span input{
+    background-color:red;
+    width:60px !important;
+    height:200px !important;
 }

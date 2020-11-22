@@ -1,10 +1,22 @@
 <div style="width:25%">
+  <span class="p-buttonset">
+    <button pButton type="button" label="Enregistrer" icon="pi pi-check" style="margin-bottom:5px" (click)="onSave()"></button>
+  </span>
   <p-panel header="Entête">
-    <p-calendar [(ngModel)]="document.date" dateFormat="dd/mm/yy"></p-calendar>
+    <div id="header">
+      <div><div class="label">Numéro Client :</div>{{document.customer.number}}</div>
+      <div><div class="label">Client :</div><p-autoComplete [suggestions]="customers" (completeMethod)="searchCustomer($event)" field="fullName" [(ngModel)]="document.customer" emptyMessage="Aucun résultat" [required]="true" class="autocomplete ng-invalid" placeholder="Nom du client"></p-autoComplete></div>
+      <div><div class="label">Date du devis :</div><p-calendar [(ngModel)]="document.date" dateFormat="dd/mm/yy" [required]="true" placeholder="Date du devis"></p-calendar></div>
+      <div><div class="label">Expire le :</div><p-calendar [(ngModel)]="document.expirationDate" dateFormat="dd/mm/yy" [required]="true" placeholder="Date expiration"></p-calendar></div>
+    </div>
   </p-panel>
   <div>&#160;</div>
   <p-panel header="Articles">
-    <p-autoComplete [suggestions]="products" (completeMethod)="search($event)" field="name" [(ngModel)]="current" emptyMessage="Aucun résultat" (onSelect)="onSelectProduct($event)"></p-autoComplete>
+    <div id="details">
+      <div>
+        <div class="label">Recherche :</div><p-autoComplete [suggestions]="products" (completeMethod)="searchProduct($event)" field="name" [(ngModel)]="product" emptyMessage="Aucun résultat" (onSelect)="onSelectProduct($event)" placeholder="Nom de l'article" class="autocomple ng-invalid"></p-autoComplete>
+      </div>
+    </div>
   </p-panel>
 </div>
 <div style="width:65%">
@@ -19,10 +31,11 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
       <tr>
+        <td>{{rowData.order}}</td>
         <td>{{rowData.name}}</td>
-        <td><input pInputText type="number" [(ngModel)]="rowData.price" (change)="onChangeDocument()" /></td>
+        <td><input pInputText type="number" [(ngModel)]="rowData.price" (change)="onChangeDocument()" class="item-line" /></td>
         <td>{{rowData.taxPercent}}</td>
-        <td><input pInputText type="number" [(ngModel)]="rowData.quantity" (change)="onChangeDocument()" /></td>
+        <td><input pInputText type="number" [(ngModel)]="rowData.quantity" (change)="onChangeDocument()" class="item-line" /></td>
         <td>{{rowData.taxAmount  | currency:'EUR'}}</td>
         <td>{{rowData.totalFreeTax | currency:'EUR'}}</td>
         <td>{{rowData.total | currency:'EUR'}}</td>

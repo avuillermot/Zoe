@@ -17,4 +17,12 @@ export class CalculEngineService {
     const back: IDocument = await this.http.put<IDocument>(environment.services.calculEngine + "document/calcul", document, options).toPromise();
     return back;
   }
+
+  public async createQuote(document: IDocument): Promise<IDocument> {
+    const params = new HttpParams();
+    const options = { params: params };
+
+    const back: IDocument = await this.http.post<IDocument>(environment.services.calculEngine + "quote/create", document, options).toPromise();
+    return back;
+  }
 }

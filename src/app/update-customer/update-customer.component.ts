@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { CustomerService } from '../_services/customer/customer.service';
-import { UserService } from '../_services/user/user.service';
 import { ICustomer } from '../_services/customer/customer.model';
 import { NgForm, AbstractControl } from '@angular/forms';
 

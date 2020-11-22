@@ -23,6 +23,12 @@ export class CustomerService {
     return customer;
   }
 
+  public async startWith(startWith: string): Promise<ICustomer[]> {
+    const params = new HttpParams().set("startwith", startWith);
+    let customers: ICustomer[] = await this.http.get<ICustomer[]>(environment.services.product + "customer/startwith", { params }).toPromise();
+    return customers;
+  }
+
   public async update(customer: ICustomer): Promise<void> {
     const params = new HttpParams().set("id", customer._id);
     const options = { params: params };

@@ -17,7 +17,11 @@ const routes: Routes = [
   { path: "product/update/:id", component: ProductUpdateComponent },
   { path: "product/add", component: ProductUpdateComponent },
   { path: "login", component: UserLoginComponent },
-  { path: "quote/create", component: QuoteCreateComponent }
+
+  // QUOTE
+  { path: "quote/create", component: QuoteCreateComponent },
+  // parametre automatiquement le client
+  { path: "quote/create/customer/:customer", component: QuoteCreateComponent }
 ];
 
 @NgModule({

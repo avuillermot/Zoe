@@ -3,6 +3,7 @@ export interface ICustomer {
   number: string;
   firstName: string;
   lastName: string;
+  fullName: string;
   address1: string;
   address2: string;
   address3: string;
