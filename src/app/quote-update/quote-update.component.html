@@ -1,10 +1,11 @@
 <div style="width:25%">
   <span class="p-buttonset">
-    <button pButton type="button" label="Enregistrer" icon="pi pi-check" style="margin-bottom:5px" (click)="onSave()"></button>
+    <button pButton type="button" label="Enregistrer" icon="pi pi-save" style="margin-bottom:5px; margin-right:5px" (click)="onSave()"></button>
+    <button pButton type="button" label="Valider" icon="pi pi-check" style="margin-bottom:5px" (click)="onSave()"></button>
   </span>
   <p-panel header="Entête">
     <div id="header">
-      <div><div class="label">Numéro Client :</div>{{document.customer.number}}</div>
+      <div><div style="margin-top:0px" class="label">Numéro Client :</div><div style="margin-top:0px" class="label">{{document.customer.number}}</div></div>
       <div><div class="label">Client :</div><p-autoComplete [suggestions]="customers" (completeMethod)="searchCustomer($event)" field="fullName" [(ngModel)]="document.customer" emptyMessage="Aucun résultat" [required]="true" class="autocomplete ng-invalid" placeholder="Nom du client"></p-autoComplete></div>
       <div><div class="label">Date du devis :</div><p-calendar [(ngModel)]="document.date" dateFormat="dd/mm/yy" [required]="true" placeholder="Date du devis"></p-calendar></div>
       <div><div class="label">Expire le :</div><p-calendar [(ngModel)]="document.expirationDate" dateFormat="dd/mm/yy" [required]="true" placeholder="Date expiration"></p-calendar></div>
@@ -39,13 +40,14 @@
         <td>{{rowData.taxAmount  | currency:'EUR'}}</td>
         <td>{{rowData.totalFreeTax | currency:'EUR'}}</td>
         <td>{{rowData.total | currency:'EUR'}}</td>
+        <td><button type="button" class="p-button-rounded p-button-danger p-button-outlined p-button p-button-icon-only pi pi-times" (click)="removeItemLine(rowData.order)"></button></td>
       </tr>
     </ng-template>
   </p-table>
   <div *ngIf="document.items.length > 0" id="footer">
-    <div>Montant TVA : {{document.taxAmount | currency:'EUR'}}</div>
-    <div>Montant HT : {{document.totalFreeTax | currency:'EUR'}}</div>
-    <div>Montant TTC : {{document.total | currency:'EUR'}}</div>
+    <div class="label">Montant TVA : {{document.taxAmount | currency:'EUR'}}</div>
+    <div class="label">Montant HT : {{document.totalFreeTax | currency:'EUR'}}</div>
+    <div class="label">Montant TTC : {{document.total | currency:'EUR'}}</div>
   </div>
 </div>
 

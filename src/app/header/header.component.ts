@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../_services/user/user.model';
 import { AuthInterceptor } from '../_services/auth.interceptor';
+import { UserService } from '../_services/user/user.service';
+import { IContext} from '../_services/context';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +11,13 @@ import { AuthInterceptor } from '../_services/auth.interceptor';
 })
 export class HeaderComponent implements OnInit {
 
-  login: string = AuthInterceptor.getLogin();
-  constructor() {}
+  context: IContext;
+  constructor(private servUser: UserService) {
+    this.context = { entite: "", login: "" };
+  }
 
-  ngOnInit(): void {
-
+  async ngOnInit(): void {
+    this.context = await this.servUser.getContext();
   }
 
 }

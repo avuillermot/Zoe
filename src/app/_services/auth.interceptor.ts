@@ -17,10 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
         setHeaders: {
           'Content-Type': 'application/json; charset=utf-8',
           'Accept': 'application/json',
-          'Authorization': AuthInterceptor.getContext()
-        },
-        setParams: {
-          'entity': AuthInterceptor.getEntity()
+        'Authorization': 'Bearer '+AuthInterceptor.getToken()
         }
     });
     return next.handle(req).pipe(
@@ -34,31 +31,17 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
-  public static setDataContext(context: any, token: any): void {
-    localStorage.setItem('context', JSON.stringify(context));
-    localStorage.setItem('token', JSON.stringify(token));
+  public static setTokenContext(token: any): void {
+    localStorage.setItem('zoetoken', token);
   }
 
   public static logout() {
-    localStorage.setItem('context', "");
-    localStorage.setItem('token', "");
+    localStorage.setItem('zoetoken', "");
   }
 
-  public static getContext() : string {
-    let data: string | null = localStorage.getItem("context");
+  public static getToken() : string {
+    let data: string | null = localStorage.getItem("zoetoken");
     if (data == null || data == undefined || data == "") return "";
     return data;
-  }
-
-  public static getEntity(): string {
-    let data: string | null = localStorage.getItem("context");
-    if (data == null || data == undefined || data == "") return "";
-    return JSON.parse(data).entity;
-  }
-
-  public static getLogin(): string {
-    let data: string | null = localStorage.getItem("context");
-    if (data == null || data == undefined || data == "") return "";
-    return JSON.parse(data).login;
   }
 }

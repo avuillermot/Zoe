@@ -12,6 +12,7 @@ export interface IItemLine extends IProduct {
 }
 
 export interface IDocument {
+  number: string;
   total: number;
   totalFreeTax: number;
   taxAmount: number;

@@ -1,0 +1,25 @@
+<p-table #dt [columns]="cols" [value]="quotes" id="search-quote" [scrollable]="true" scrollHeight="500px"
+         [globalFilterFields]="['code','name','price','taxPercent']">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <td *ngFor="let col of columns">
+        {{col.header}}
+      </td>
+    </tr>
+    <tr>
+      <td *ngFor="let col of columns">
+        <input pInputText type="text"
+               (input)="filter($event, col.field, 'startsWith')"
+               placeholder="{{col.header}} commence par"
+               class="p-column-filter" />
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns" (click)="onClick(rowData._id)">
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

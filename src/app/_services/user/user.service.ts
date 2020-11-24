@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs-compat/Observable';
 import { AuthInterceptor } from '../auth.interceptor';
+import { IContext} from '../context'
 
 @Injectable({
   providedIn: 'root'
@@ -13,28 +13,33 @@ export class UserService {
 
   }
 
-  private async getAllowEntity(context: { login: string, email: string, entity: string }) {
-    let back: any = await this.http.put(environment.services.entity + "entity/byuser", { login: context.login }).toPromise()
-      .then((entities: any) => {
-        context.entity = entities[0]._id;
-        AuthInterceptor.setDataContext(context, JSON.stringify(context));
+  private async getAllowEntity(token: string) {
+    // set token with empty entity
+    AuthInterceptor.setTokenContext(token);
+    let back: any = await this.http.put(environment.services.entity + "entity/byuser", { }).toPromise()
+      .then((newToken: any) => {
+        // set token with entity
+        AuthInterceptor.setTokenContext(newToken.token);
         window.location.href = '/';
       })
-      .catch(() => { alert("Accès refusé !"); });
-    console.log(back);
+      .catch((err) => { debugger; alert("Accès refusé !"); });
   }
 
   public async logon(login: string, password: string): Promise<void> {
     const params = new HttpParams();
     const options = { params: params };
 
-    this.http.put<{ login: string, email: string, entity: string }>(environment.services.user + "logon", { login: login, password: password }, options).toPromise()
+    this.http.put<{token: string}>(environment.services.user + "logon", { login: login, password: password }, options).toPromise()
       .then((context) => {
-        this.getAllowEntity(context);
+        this.getAllowEntity(context.token);
       })
       .catch((err) => {
         AuthInterceptor.logout();
         alert("Identifiant non valide");
       });
+  }
+
+  public async getContext(): Promise<IContext> {
+    return await this.http.get<IContext>(environment.services.context + "context").toPromise();
   }
 }

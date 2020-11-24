@@ -6,7 +6,8 @@ import { ProductSearchComponent } from './product-search/product-search.componen
 import { ProductUpdateComponent } from './product-update/product-update.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { QuoteCreateComponent } from './quote-create/quote-create.component';
+import { QuoteUpdateComponent } from './quote-update/quote-update.component';
+import { QuoteSearchComponent } from './quote-search/quote-search.component';
 
 const routes: Routes = [
   { path: "welcome", component: WelcomeComponent },
@@ -19,9 +20,11 @@ const routes: Routes = [
   { path: "login", component: UserLoginComponent },
 
   // QUOTE
-  { path: "quote/create", component: QuoteCreateComponent },
+  { path: "quote/create", component: QuoteUpdateComponent },
+  { path: "quote/read/:id", component: QuoteUpdateComponent },
+  { path: "quote/search", component: QuoteSearchComponent },
   // parametre automatiquement le client
-  { path: "quote/create/customer/:customer", component: QuoteCreateComponent }
+  { path: "quote/create/customer/:customer", component: QuoteUpdateComponent }
 ];
 
 @NgModule({

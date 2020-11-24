@@ -8,16 +8,16 @@ div {
     width:60px;
 }
 
-#footer div, #header div {
-    display: block;
-    margin-top: 5px;
+#footer div, #header div, #details div {
+  display: block;
+  margin-top: 15px;
 }
 
-#header div.label, #details div.label {
+ #header div.label, #details div.label {
     display: inline-block;
     min-width: 100px;
     font-size: small;
-}
+ }
 
 span input{
     background-color:red;

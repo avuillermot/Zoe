@@ -55,6 +55,11 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-file',
         items: [
           {
+            label: "Recherche devis",
+            routerLink: "./quote/search",
+            icon: 'pi pi-fw pi-search'
+          },
+          {
             label: "Créer",
             routerLink: "./quote/create"
           },

@@ -29,8 +29,7 @@ export class ProductSearchComponent implements OnInit {
     this.cols.push({ field: "price", header: "Prix unitaire HT" });
     this.cols.push({ field: "taxPercent", header: "Taxe (%)" });
   }
-
-
+  
   filter($event: any, field: string, pattern: string): void {
     this.table.filter($event.target.value, field, pattern);
   }
@@ -38,5 +37,4 @@ export class ProductSearchComponent implements OnInit {
   onClick(data: string): void {
     this.router.navigate(['product/update/' + data]);
   }
-
 }

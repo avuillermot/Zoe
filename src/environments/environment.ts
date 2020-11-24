@@ -9,7 +9,8 @@ export const environment = {
     customer: "http://localhost:8000/",
     product: "http://localhost:8000/",
     calculEngine: "http://localhost:8000/",
-    user: "http://localhost:8001/"
+    user: "http://localhost:8001/",
+    context: "http://localhost:8000/"
   }
 };
 

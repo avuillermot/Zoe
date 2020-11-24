@@ -28,7 +28,8 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 
 import { AuthInterceptor } from '../app/_services/auth.interceptor';
-import { QuoteCreateComponent } from './quote-create/quote-create.component';
+import { QuoteUpdateComponent } from './quote-update/quote-update.component';
+import { QuoteSearchComponent } from './quote-search/quote-search.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { QuoteCreateComponent } from './quote-create/quote-create.component';
     ProductUpdateComponent,
     UserLoginComponent,
     UserUpdateComponent,
-    QuoteCreateComponent
+    QuoteUpdateComponent,
+    QuoteSearchComponent
   ],
   imports: [
     BrowserModule,
