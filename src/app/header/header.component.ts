@@ -13,10 +13,10 @@ export class HeaderComponent implements OnInit {
 
   context: IContext;
   constructor(private servUser: UserService) {
-    this.context = { entite: "", login: "" };
+    this.context = { entity: "", login: "" };
   }
 
-  async ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.context = await this.servUser.getContext();
   }
 

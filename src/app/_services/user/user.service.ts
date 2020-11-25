@@ -22,7 +22,7 @@ export class UserService {
         AuthInterceptor.setTokenContext(newToken.token);
         window.location.href = '/';
       })
-      .catch((err) => { debugger; alert("Accès refusé !"); });
+      .catch((err) => { alert("Accès refusé !"); });
   }
 
   public async logon(login: string, password: string): Promise<void> {

@@ -1,4 +1,4 @@
 export interface IContext {
-    entite: string;
+    entity: string;
     login: string;
 }

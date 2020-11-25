@@ -11,7 +11,7 @@ import { AuthInterceptor } from '../_services/auth.interceptor';
 })
 export class UserLoginComponent implements OnInit {
 
-  login: string = "confirm@test.com";
+  login: string = "confirm1@test.com";
   password: string = "vipSOTUwEs"
 
   constructor(private route: ActivatedRoute, private router: Router, private servUser:UserService) { }

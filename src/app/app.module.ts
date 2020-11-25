@@ -16,6 +16,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { PasswordModule } from 'primeng/password';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
+import {TabViewModule} from 'primeng/tabview';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -61,7 +62,8 @@ import { QuoteSearchComponent } from './quote-search/quote-search.component';
     BlockUIModule,
     PasswordModule,
     AutoCompleteModule,
-    CalendarModule
+    CalendarModule,
+    TabViewModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
