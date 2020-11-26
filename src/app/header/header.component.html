@@ -1,7 +1,9 @@
 <p-menubar>
-  <div id="header-logo" >&#160;</div>
-  <div>
-    <span style="margin-right:20px;">{{context.login}} - ({{context.entity}})</span>
-    <button type="button" pButton label="Logout" icon="pi pi-power-off" style="margin-left:.25em"></button>
+  <div id="header-logo">&#160;</div>
+  <div style="display:inline-block">
+    <span style="margin-right:200px;">{{context.login}} - ({{context.entity}})</span>
+  </div>
+  <div class="logout">
+    <button class="p-button-sm" type="button" pButton label="Logout" icon="pi pi-power-off" style="margin-left:.25em"></button>
   </div>
 </p-menubar>

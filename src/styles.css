@@ -2,6 +2,29 @@
 @import '../node_modules/primeicons/primeicons.css';
 @import '../node_modules/primeng/resources/themes/fluent-light/theme.css';
 
+/* MUST BE APPLY AFTER PRIME NG CSS */
+.p-table-buttonset input.p-inputtext, .p-table-buttonset div {
+  height: 12px !important;
+  font-size: 12px;
+  margin-right: 25px;
+}
+
+.p-table-buttonset div.p-autocomplete-panel {
+    min-height: 150px;
+}
+
+.menubar {
+  position: absolute;
+  right: 20px;
+  top: 110px;
+}
+
+.logout {
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+}
+
 .ng-valid:not(form) {
   border-left: 5px solid #42A948; /* green */
 }
