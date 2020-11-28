@@ -2,7 +2,7 @@
   <button pButton class="p-button-sm" type="button" label="Enregistrer" icon="pi pi-save" style="margin-bottom:5px; margin-right:5px" (click)="onSave()"></button>
   <button pButton class="p-button-sm" type="button" label="Valider" icon="pi pi-check" style="margin-bottom:5px" (click)="onSave()"></button>
 </div>
-<div class="left-panel" style="max-width:25%;width:400px">
+<div class="left-panel section" style="max-width:25%;width:400px">
   <div id="header">
     <div><div style="margin-top:0px" class="label">Numéro Client&#160;</div><div style="margin-top:0px;padding-left:20px;" class="label">{{document.customer.number}}</div></div>
     <div><div class="label">Client&#160;</div><p-autoComplete [suggestions]="customers" (completeMethod)="searchCustomer($event)" field="fullName" [(ngModel)]="document.customer" emptyMessage="Aucun résultat" [required]="true" class="ng-invalid" placeholder="Nom du client"></p-autoComplete></div>
@@ -10,8 +10,8 @@
     <div><div class="label">Expire le&#160;</div><p-calendar [(ngModel)]="document.expirationDate" dateFormat="dd/mm/yy" [required]="true" placeholder="Date expiration"></p-calendar></div>
   </div>
 </div>
-<div class="right-panel" style="max-width:75%;width:1200px">
-  <p-tabView>
+<div class="right-panel section" style="max-width:75%;width:1200px">
+  <p-tabView (onChange)="onChangeTab($event)">
     <p-tabPanel header="Détails">
       <div>
         <div id="details" style="margin-bottom:10px">
@@ -66,7 +66,7 @@
       </div>
     </p-tabPanel>
     <p-tabPanel header="Aperçu document">
-      Content 3
+      <iframe [src]="urlPdf" style="width:100%; height:100%; min-height:500px"></iframe>
     </p-tabPanel>
     <p-tabPanel header="Workflow">
       Content 3

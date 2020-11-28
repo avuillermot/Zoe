@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from "@angular/router";
 import { Table } from 'primeng/table';
 import { IProduct} from '../_services/product/product.model';
@@ -7,6 +8,7 @@ import { ProductService } from '../_services/product/product.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
 import { IDocument, IItemLine } from '../_services/calcul-engine/calcul-engine.model';
 import { CustomerService } from '../_services/customer/customer.service';
+import { environment } from '../../environments/environment';
 import * as moment from 'moment';
 
 
@@ -22,9 +24,13 @@ export class QuoteUpdateComponent implements OnInit {
   products: IProduct[];
   document: IDocument;
   cols: any[];
+  urlPdf: SafeResourceUrl;
   @ViewChild('dt') table: Table;
 
-  constructor(private servProduct: ProductService, private servCustomer: CustomerService, private servCalcul: CalculEngineService, private route: ActivatedRoute) {
+  constructor(private servProduct: ProductService, private servCustomer: CustomerService, private servCalcul: CalculEngineService,
+    private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+
+    this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl("");
     this.products = new Array<IProduct>();
     this.customers = new Array<ICustomer>();
     this.cols = new Array<any>();
@@ -82,6 +88,7 @@ export class QuoteUpdateComponent implements OnInit {
 
   async onChangeDocument(): Promise<void> {
     await this.calculDocument();
+    await this.servCalcul.getPreview(this.document);
   }
 
   async calculDocument(): Promise<void> {
@@ -99,12 +106,27 @@ export class QuoteUpdateComponent implements OnInit {
     });
   } 
 
-  onSave(): void {
-    this.servCalcul.createQuote(this.document);
+  async onSave(): Promise<void> {
+    let id: string | null = this.route.snapshot.paramMap.get("id");
+    if (id == null) await this.servCalcul.createQuote(this.document);
+    else await this.servCalcul.updateQuote(this.document);
+
+    this.servCalcul.getPreview(this.document);
   }
 
   removeItemLine(order: number): void {
     this.document.items.splice(order - 1, 1);
     this.calculDocument();
+  }
+
+  onChangeTab(event: any): void {
+    if (event.index == 2) {
+      let self = this;
+      let fn = function () {
+        let id: string | null = self.route.snapshot.paramMap.get("id");
+        if (id != null) self.urlPdf = self.sanitizer.bypassSecurityTrustResourceUrl(environment.services.calculEngine + "quote/pdf?id=" + id);
+      };
+      window.setTimeout(fn, 1500);
+    }
   }
 }

@@ -11,7 +11,7 @@ export const environment = {
     calculEngine: "http://localhost:8000/",
     user: "http://localhost:8001/",
     context: "http://localhost:8000/"
-  }
+  },
 };
 
 /*
