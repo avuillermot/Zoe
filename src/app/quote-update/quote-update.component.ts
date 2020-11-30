@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Table } from 'primeng/table';
 import { IProduct} from '../_services/product/product.model';
 import { ICustomer } from '../_services/customer/customer.model';
 import { ProductService } from '../_services/product/product.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
-import { IDocument, IItemLine } from '../_services/calcul-engine/calcul-engine.model';
+import { IDocument, IItemLine, DocumentHelper } from '../_services/calcul-engine/calcul-engine.model';
 import { CustomerService } from '../_services/customer/customer.service';
 import { environment } from '../../environments/environment';
 import * as moment from 'moment';
@@ -26,9 +26,10 @@ export class QuoteUpdateComponent implements OnInit {
   cols: any[];
   urlPdf: SafeResourceUrl;
   @ViewChild('dt') table: Table;
+  typeDocument: string = "";
 
   constructor(private servProduct: ProductService, private servCustomer: CustomerService, private servCalcul: CalculEngineService,
-    private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+    private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {
 
     this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl("");
     this.products = new Array<IProduct>();
@@ -37,7 +38,7 @@ export class QuoteUpdateComponent implements OnInit {
     this.table = ViewChild('dt');
     this.product = { code: "", description: "", entityId: "", name: "", price: 0, taxPercent: 0, _id: "" };
     this.document = {
-      items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(),
+      _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(),
       number: "",
       customer: {
         address1: "", address2: "", address3: "", city: "", country: "", email: "",
@@ -65,6 +66,12 @@ export class QuoteUpdateComponent implements OnInit {
     let id: string | null = this.route.snapshot.paramMap.get("id");
     if (id != null) {
       this.document = await this.servCalcul.getQuote(id);
+      // force date to date object to be set in calendar
+      this.document.date = new Date(this.document.date);
+      this.document.expirationDate = new Date(this.document.expirationDate);
+      this.typeDocument = "Devis"
+      if (this.document.customer.number != null || this.document.customer.number != undefined)
+        document.querySelector('#findCustomer')?.classList.remove('ng-invalid');
     }
   }
 
@@ -86,9 +93,21 @@ export class QuoteUpdateComponent implements OnInit {
     this.customers = await this.servCustomer.startWith(event.query);
   }
 
+  async onSelectCustomer(): Promise<void> {
+    document.querySelector('#findCustomer')?.classList.remove('ng-invalid');
+  }
+
+  async onUnselectCustomer(): Promise<void> {
+    document.querySelector('#findCustomer')?.classList.add('ng-invalid');
+  }
+
+  async onKeyupCustomer(): Promise<void> {
+    if (this.document.customer.number == null || this.document.customer.number == undefined)
+      document.querySelector('#findCustomer')?.classList.add('ng-invalid');
+  }
+
   async onChangeDocument(): Promise<void> {
     await this.calculDocument();
-    await this.servCalcul.getPreview(this.document);
   }
 
   async calculDocument(): Promise<void> {
@@ -104,14 +123,19 @@ export class QuoteUpdateComponent implements OnInit {
       value.order = index;
       index++;
     });
-  } 
+  }
 
   async onSave(): Promise<void> {
-    let id: string | null = this.route.snapshot.paramMap.get("id");
-    if (id == null) await this.servCalcul.createQuote(this.document);
-    else await this.servCalcul.updateQuote(this.document);
-
-    this.servCalcul.getPreview(this.document);
+    let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
+    if (elems.length == 0) {
+      let id: string | null = this.route.snapshot.paramMap.get("id");
+      if (id == null) {
+        let back: { id: string } = await this.servCalcul.createQuote(this.document);
+        this.router.navigate(['quote/update/' + back.id])
+      }
+      else await this.servCalcul.updateQuote(this.document);
+    }
+    else alert("Des champs sont obligatoires.")
   }
 
   removeItemLine(order: number): void {
@@ -126,7 +150,7 @@ export class QuoteUpdateComponent implements OnInit {
         let id: string | null = self.route.snapshot.paramMap.get("id");
         if (id != null) self.urlPdf = self.sanitizer.bypassSecurityTrustResourceUrl(environment.services.calculEngine + "quote/pdf?id=" + id);
       };
-      window.setTimeout(fn, 1500);
+      window.setTimeout(fn, 500);
     }
   }
 }

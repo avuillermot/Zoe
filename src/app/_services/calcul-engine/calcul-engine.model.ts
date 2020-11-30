@@ -1,5 +1,6 @@
 import { IProduct } from "../product/product.model";
 import { ICustomer } from '../customer/customer.model';
+import * as moment from 'moment';
 
 export interface IItemLine extends IProduct {
   code: string;
@@ -12,6 +13,7 @@ export interface IItemLine extends IProduct {
 }
 
 export interface IDocument {
+  _id: string;
   number: string;
   total: number;
   totalFreeTax: number;
@@ -20,4 +22,10 @@ export interface IDocument {
   date: Date;
   expirationDate: Date;
   customer: ICustomer;
+}
+
+export class DocumentHelper {
+  public static formatDateUI(date: Date): string {
+    return moment(date).format("DD/MM/yy");
+  }
 }

@@ -4,8 +4,9 @@
 </div>
 <div class="left-panel section" style="max-width:25%;width:400px">
   <div id="header">
+    <div><div style="margin-top:0px" class="label">{{typeDocument}}&#160;</div><div style="margin-top:0px;padding-left:20px;" class="label">{{document.number}}</div></div>
     <div><div style="margin-top:0px" class="label">Numéro Client&#160;</div><div style="margin-top:0px;padding-left:20px;" class="label">{{document.customer.number}}</div></div>
-    <div><div class="label">Client&#160;</div><p-autoComplete [suggestions]="customers" (completeMethod)="searchCustomer($event)" field="fullName" [(ngModel)]="document.customer" emptyMessage="Aucun résultat" [required]="true" class="ng-invalid" placeholder="Nom du client"></p-autoComplete></div>
+    <div><div class="label">Client&#160;</div><p-autoComplete id="findCustomer" name="findCustomer"  [suggestions]="customers" (completeMethod)="searchCustomer($event)" (onSelect)="onSelectCustomer()" (onClear)="onUnselectCustomer()" (onUnselect)="onUnselectCustomer()" (onKeyUp)="onKeyupCustomer()" field="fullName" [(ngModel)]="document.customer" emptyMessage="Aucun résultat" [required]="true" class="ng-invalid" placeholder="Nom du client"></p-autoComplete></div>
     <div><div class="label">Date du devis&#160;</div><p-calendar [(ngModel)]="document.date" dateFormat="dd/mm/yy" [required]="true" placeholder="Date du devis"></p-calendar></div>
     <div><div class="label">Expire le&#160;</div><p-calendar [(ngModel)]="document.expirationDate" dateFormat="dd/mm/yy" [required]="true" placeholder="Date expiration"></p-calendar></div>
   </div>
@@ -16,7 +17,7 @@
       <div>
         <div id="details" style="margin-bottom:10px">
           <div class="p-table-buttonset">
-            <div class="label">Ajouter article&#160;</div><p-autoComplete id="findProduct" name="findProduct" [suggestions]="products" (completeMethod)="searchProduct($event)" field="name" [(ngModel)]="product" emptyMessage="Aucun résultat" (onSelect)="onSelectProduct($event)" placeholder="Nom de l'article" class="ng-invalid"></p-autoComplete>
+            <div class="label">Ajouter article&#160;</div><p-autoComplete id="findProduct" name="findProduct" [suggestions]="products" (completeMethod)="searchProduct($event)" field="name" [(ngModel)]="product" emptyMessage="Aucun résultat" (onSelect)="onSelectProduct($event)" placeholder="Nom de l'article"></p-autoComplete>
             <div class="label">Montant TVA : {{document.taxAmount | currency:'EUR'}}</div>
             <div class="label">Montant HT : {{document.totalFreeTax | currency:'EUR'}}</div>
             <div class="label">Montant TVA : {{document.total | currency:'EUR'}}</div>
@@ -53,7 +54,7 @@
         </p-table>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="Adresse du devis">
+    <p-tabPanel header="Adresse document">
       <div id="address">
         <div><div class="label">Adresse 1&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address1" class="address" required minlength="1"/></div>
         <div><div class="label">Adresse 2&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address2" class="address" /></div>

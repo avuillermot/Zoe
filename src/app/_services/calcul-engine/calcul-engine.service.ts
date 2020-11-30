@@ -19,19 +19,16 @@ export class CalculEngineService {
     return back;
   }
 
-  public async getPreview(document: IDocument): Promise<any> {
+/**
+* Create a new quote
+* @document data of the new document
+* @returns id of the new document
+*/
+  public async createQuote(document: IDocument): Promise<{id: string}> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IDocument = await this.http.post<IDocument>(environment.services.calculEngine + "quote/pdf/preview", document, options).toPromise();
-    return back;
-  }
-
-  public async createQuote(document: IDocument): Promise<IDocument> {
-    const params = new HttpParams();
-    const options = { params: params };
-
-    const back: IDocument = await this.http.post<IDocument>(environment.services.calculEngine + "quote", document, options).toPromise();
+    const back: { id: string } = await this.http.post<{ id: string }>(environment.services.calculEngine + "quote", document, options).toPromise();
     return back;
   }
 
