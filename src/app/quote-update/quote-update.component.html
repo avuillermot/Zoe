@@ -1,6 +1,6 @@
 <div class="p-buttonset menubar">
-  <button pButton class="p-button-sm" type="button" label="Enregistrer" icon="pi pi-save" style="margin-bottom:5px; margin-right:5px" (click)="onSave()"></button>
-  <button pButton class="p-button-sm" type="button" label="Valider" icon="pi pi-check" style="margin-bottom:5px" (click)="onSave()"></button>
+  <button pButton class="p-button-sm" type="button" label="Enregistrer" icon="pi pi-save" style="margin-bottom:5px; margin-right:5px" (click)="onSave()" *ngIf="document.status != 'LOCK'"></button>
+  <button pButton class="p-button-sm" type="button" label="Valider" icon="pi pi-check" style="margin-bottom:5px" (click)="onLock()" *ngIf="document.status != 'LOCK' && document.number != '' && document.number!= null"></button>
 </div>
 <div class="left-panel section" style="max-width:25%;width:400px">
   <div id="header">
@@ -41,10 +41,10 @@
           <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
               <td class="order">{{rowData.order}}</td>
-              <td class="designation"><input pInputText type="text" [(ngModel)]="rowData.name" required minlength="1"/></td>
-              <td class="amount"><input pInputText type="number" [(ngModel)]="rowData.price" (change)="onChangeDocument()" required minlength="1"/></td>
+              <td class="designation"><input pInputText type="text" [(ngModel)]="rowData.name" required minlength="1" /></td>
+              <td class="amount"><input pInputText type="number" [(ngModel)]="rowData.price" (change)="onChangeDocument()" required minlength="1" /></td>
               <td class="tax">{{rowData.taxPercent}}</td>
-              <td class="quantity"><input pInputText type="number" [(ngModel)]="rowData.quantity" (change)="onChangeDocument()" required minlength="1"/></td>
+              <td class="quantity"><input pInputText type="number" [(ngModel)]="rowData.quantity" (change)="onChangeDocument()" required minlength="1" /></td>
               <td class="amount">{{rowData.taxAmount  | currency:'EUR'}}</td>
               <td class="amount">{{rowData.totalFreeTax | currency:'EUR'}}</td>
               <td class="amount">{{rowData.total | currency:'EUR'}}</td>
@@ -56,23 +56,29 @@
     </p-tabPanel>
     <p-tabPanel header="Adresse document">
       <div id="address">
-        <div><div class="label">Adresse 1&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address1" class="address" required minlength="1"/></div>
+        <div><div class="label">Adresse 1&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address1" class="address" required minlength="1" /></div>
         <div><div class="label">Adresse 2&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address2" class="address" /></div>
         <div><div class="label">Adresse 3&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address3" class="address" /></div>
-        <div><div class="label">Code postal&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.zipCode" class="address" required minlength="1"/></div>
-        <div><div class="label">Ville&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.city" class="address" required minlength="1"/></div>
-        <div><div class="label">Pays&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.country" class="address" required minlength="1"/></div>
-        <div><div class="label">Email&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.email" class="address" required minlength="1"/></div>
-        <div><div class="label">Téléphone&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.phone" class="address" required minlength="1"/></div>
+        <div><div class="label">Code postal&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.zipCode" class="address" required minlength="1" /></div>
+        <div><div class="label">Ville&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.city" class="address" required minlength="1" /></div>
+        <div><div class="label">Pays&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.country" class="address" required minlength="1" /></div>
+        <div><div class="label">Email&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.email" class="address" required minlength="1" /></div>
+        <div><div class="label">Téléphone&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.phone" class="address" required minlength="1" /></div>
       </div>
     </p-tabPanel>
     <p-tabPanel header="Aperçu document">
       <iframe [src]="urlPdf" style="width:100%; height:100%; min-height:500px"></iframe>
     </p-tabPanel>
+    <p-tabPanel header="Historique" id="historic">
+      <div *ngFor="let status of document.statusHistory">
+        <div class="label">{{status.status | documentstatus}}</div><div class="label">Par {{status.createdBy}}</div><div class="label">Le {{status.created | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
+      </div>
+    </p-tabPanel>
     <p-tabPanel header="Workflow">
       Content 3
     </p-tabPanel>
   </p-tabView>
+  <p-blockUI [blocked]="blocked"></p-blockUI>
 </div>
 
 

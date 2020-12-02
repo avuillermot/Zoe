@@ -32,6 +32,8 @@ import { AuthInterceptor } from '../app/_services/auth.interceptor';
 import { QuoteUpdateComponent } from './quote-update/quote-update.component';
 import { QuoteSearchComponent } from './quote-search/quote-search.component';
 
+import { DocumentStatusPipe } from '../app/_pipes/document.status.pipe';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { QuoteSearchComponent } from './quote-search/quote-search.component';
     UserLoginComponent,
     UserUpdateComponent,
     QuoteUpdateComponent,
-    QuoteSearchComponent
+    QuoteSearchComponent,
+    DocumentStatusPipe
   ],
   imports: [
     BrowserModule,

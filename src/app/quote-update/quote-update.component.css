@@ -13,10 +13,10 @@ input {
   margin-top: 15px;
 }
 
- #header div.label, #details div.label {
+  #header div.label, #details div.label, #historic div.label {
     display: inline-block;
     min-width: 100px;
- }
+  }
  
 #footer {
   width: 100%;

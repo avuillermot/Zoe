@@ -6,7 +6,7 @@ import { IProduct} from '../_services/product/product.model';
 import { ICustomer } from '../_services/customer/customer.model';
 import { ProductService } from '../_services/product/product.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
-import { IDocument, IItemLine, DocumentHelper } from '../_services/calcul-engine/calcul-engine.model';
+import { IDocument, IItemLine, DocumentHelper, IStatus } from '../_services/calcul-engine/calcul-engine.model';
 import { CustomerService } from '../_services/customer/customer.service';
 import { environment } from '../../environments/environment';
 import * as moment from 'moment';
@@ -27,6 +27,7 @@ export class QuoteUpdateComponent implements OnInit {
   urlPdf: SafeResourceUrl;
   @ViewChild('dt') table: Table;
   typeDocument: string = "";
+  blocked: boolean = false;
 
   constructor(private servProduct: ProductService, private servCustomer: CustomerService, private servCalcul: CalculEngineService,
     private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {
@@ -38,7 +39,8 @@ export class QuoteUpdateComponent implements OnInit {
     this.table = ViewChild('dt');
     this.product = { code: "", description: "", entityId: "", name: "", price: 0, taxPercent: 0, _id: "" };
     this.document = {
-      _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(),
+      _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, statusHistory: new Array<IStatus>(),
+      date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(), status: 'CREATE',
       number: "",
       customer: {
         address1: "", address2: "", address3: "", city: "", country: "", email: "",
@@ -130,10 +132,22 @@ export class QuoteUpdateComponent implements OnInit {
     if (elems.length == 0) {
       let id: string | null = this.route.snapshot.paramMap.get("id");
       if (id == null) {
+        this.blocked = true;
         let back: { id: string } = await this.servCalcul.createQuote(this.document);
         this.router.navigate(['quote/update/' + back.id])
       }
       else await this.servCalcul.updateQuote(this.document);
+    }
+    else alert("Des champs sont obligatoires.")
+  }
+
+  async onLock(): Promise<void> {
+    let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
+    if (elems.length == 0) {
+      this.blocked = true;
+      await this.servCalcul.lockQuote(this.document);
+      this.document = await this.servCalcul.getQuote(this.document._id);
+      this.blocked = false;
     }
     else alert("Des champs sont obligatoires.")
   }

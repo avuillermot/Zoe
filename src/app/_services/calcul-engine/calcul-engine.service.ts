@@ -40,6 +40,14 @@ export class CalculEngineService {
     return back;
   }
 
+  public async lockQuote(document: IDocument): Promise<IDocument> {
+    const params = new HttpParams();
+    const options = { params: params };
+
+    const back: IDocument = await this.http.put<IDocument>(environment.services.calculEngine + "quote/lock", document, options).toPromise();
+    return back;
+  }
+
   public async getQuote(id: string): Promise<IDocument> {
     const params = new HttpParams().set("id", id);
     const options = { params: params };

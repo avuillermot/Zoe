@@ -22,6 +22,15 @@ export interface IDocument {
   date: Date;
   expirationDate: Date;
   customer: ICustomer;
+  status: string;
+  statusHistory: IStatus[];
+}
+
+export interface IStatus {
+  _id: string;
+  createdBy: string;
+  created: Date;
+  status: String;
 }
 
 export class DocumentHelper {
