@@ -32,7 +32,11 @@ export class ProductUpdateComponent implements OnInit {
     
     self.errors = new Array<{ type: string, field: string }>();
     if (productForm.form.status == "VALID") {
-      if (this.updateOrAddMode == "UPDATE") await this.servProduct.update(this.product);
+      if (this.updateOrAddMode == "UPDATE") {
+        this.blocked = true;
+        await this.servProduct.update(this.product);
+        this.blocked = false;
+      }
       else {
         this.blocked = true;
         let back: IProduct = <IProduct>await this.servProduct.create(this.product);

@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Table } from 'primeng/table';
+import { ConfirmationService } from 'primeng/api';
 import { IProduct} from '../_services/product/product.model';
 import { ICustomer } from '../_services/customer/customer.model';
 import { ProductService } from '../_services/product/product.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
-import { IDocument, IItemLine, DocumentHelper, IStatus } from '../_services/calcul-engine/calcul-engine.model';
+import { IQuote, IItemLine, IStatus } from '../_services/calcul-engine/calcul-engine.model';
 import { CustomerService } from '../_services/customer/customer.service';
 import { environment } from '../../environments/environment';
 import * as moment from 'moment';
@@ -15,22 +16,26 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-quote-update',
   templateUrl: './quote-update.component.html',
-  styleUrls: ['./quote-update.component.css']
+  styleUrls: ['./quote-update.component.css'],
+  providers: [ConfirmationService]
 })
 export class QuoteUpdateComponent implements OnInit {
 
   customers: ICustomer[];
   product: IProduct;
   products: IProduct[];
-  document: IDocument;
+  document: IQuote;
   cols: any[];
   urlPdf: SafeResourceUrl;
   @ViewChild('dt') table: Table;
   typeDocument: string = "";
   blocked: boolean = false;
+  popupDisplay: boolean = false;
+  popupMessage: string = "";
 
   constructor(private servProduct: ProductService, private servCustomer: CustomerService, private servCalcul: CalculEngineService,
-    private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {
+    private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer,
+    private confirmationService: ConfirmationService) {
 
     this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl("");
     this.products = new Array<IProduct>();
@@ -72,8 +77,19 @@ export class QuoteUpdateComponent implements OnInit {
       this.document.date = new Date(this.document.date);
       this.document.expirationDate = new Date(this.document.expirationDate);
       this.typeDocument = "Devis"
-      if (this.document.customer.number != null || this.document.customer.number != undefined)
-        document.querySelector('#findCustomer')?.classList.remove('ng-invalid');
+    }
+  }
+
+  async ngAfterViewChecked() {
+    if (this.document.customer.number != null || this.document.customer.number != undefined)
+      document.querySelector('#findCustomer')?.classList.remove('ng-invalid');
+    if (this.document.status == "LOCK") {
+      document.querySelectorAll("input")?.forEach((current:Element) => {
+        current.setAttribute("disabled", "disabled");
+      });
+      document.querySelectorAll(".remove-item")?.forEach((current: Element) => {
+        current.innerHTML = "";
+      });
     }
   }
 
@@ -113,7 +129,7 @@ export class QuoteUpdateComponent implements OnInit {
   }
 
   async calculDocument(): Promise<void> {
-    let result: IDocument = await this.servCalcul.send(this.document);
+    let result: IQuote = await this.servCalcul.send(this.document);
 
     this.document.items = result.items;
     this.document.total = result.total;
@@ -133,23 +149,46 @@ export class QuoteUpdateComponent implements OnInit {
       let id: string | null = this.route.snapshot.paramMap.get("id");
       if (id == null) {
         this.blocked = true;
-        let back: { id: string } = await this.servCalcul.createQuote(this.document);
-        this.router.navigate(['quote/update/' + back.id])
+        try {
+          let back: { id: string } = await this.servCalcul.createQuote(this.document);
+          this.router.navigate(['quote/update/' + back.id])
+        }
+        catch (ex) {
+          this.displayMessage(ex.error);
+        }
       }
       else await this.servCalcul.updateQuote(this.document);
     }
-    else alert("Des champs sont obligatoires.")
+    else this.displayMessage("Veuillez remplir les champs obligatoires.");
   }
 
-  async onLock(): Promise<void> {
+  async runLock(): Promise<void> {
     let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
     if (elems.length == 0) {
       this.blocked = true;
-      await this.servCalcul.lockQuote(this.document);
-      this.document = await this.servCalcul.getQuote(this.document._id);
+      try {
+        await this.servCalcul.lockQuote(this.document);
+      }
+      catch (ex) {
+        this.displayMessage(ex.error);
+      }
       this.blocked = false;
+      this.document = await this.servCalcul.getQuote(this.document._id);
     }
-    else alert("Des champs sont obligatoires.")
+    else this.displayMessage("Veuillez remplir les champs obligatoires.");
+  }
+
+  async onLock() {
+    this.confirmationService.confirm({
+      message: 'Voulez-vous valider ce devis ? Un devis validé ne pourra pas être modifié.',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: async() => {
+        await this.runLock();
+      },
+      reject: () => {
+      }
+    });
   }
 
   removeItemLine(order: number): void {
@@ -166,5 +205,12 @@ export class QuoteUpdateComponent implements OnInit {
       };
       window.setTimeout(fn, 500);
     }
+  }
+
+  displayMessage(message: string): void {
+    if (message == null || message == undefined) this.popupMessage = "Une erreur est survenue"
+    else this.popupMessage = message;
+    this.popupDisplay = true;
+    this.blocked = false;
   }
 }

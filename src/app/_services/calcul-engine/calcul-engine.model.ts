@@ -12,7 +12,7 @@ export interface IItemLine extends IProduct {
   order: number;
 }
 
-export interface IDocument {
+export interface IQuote {
   _id: string;
   number: string;
   total: number;

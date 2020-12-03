@@ -81,4 +81,13 @@
   <p-blockUI [blocked]="blocked"></p-blockUI>
 </div>
 
+<p-dialog header="Message" [(visible)]="popupDisplay" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  <p>
+    {{popupMessage}}
+  </p>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="popupDisplay=false" label="OK" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
 

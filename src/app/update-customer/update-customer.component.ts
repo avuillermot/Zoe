@@ -31,7 +31,11 @@ export class UpdateCustomerComponent implements OnInit {
     let self = this;
     self.errors = new Array<{type: string, field: string }>();
     if (customerForm.form.status == "VALID") {
-      if (this.updateOrAddMode == "UPDATE") await this.servCustomer.update(this.customer);
+      if (this.updateOrAddMode == "UPDATE") {
+        this.blocked = true;
+        await this.servCustomer.update(this.customer);
+        this.blocked = false;
+      }
       else {
         this.blocked = true;
         let back:ICustomer = <ICustomer> await this.servCustomer.create(this.customer);

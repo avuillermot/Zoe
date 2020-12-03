@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
-import { IDocument, IItemLine } from '../_services/calcul-engine/calcul-engine.model';
+import { IQuote, IItemLine } from '../_services/calcul-engine/calcul-engine.model';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
 
 @Component({
@@ -11,11 +11,11 @@ import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.se
 })
 export class QuoteSearchComponent implements OnInit {
 
-  quotes: IDocument[];
+  quotes: IQuote[];
   @ViewChild('dt') table: Table;
 
   constructor(private router: Router, private servCalculEngine: CalculEngineService) {
-    this.quotes = new Array<IDocument>();
+    this.quotes = new Array<IQuote>();
     this.table = ViewChild('dt');}
 
   async ngOnInit(): Promise<void> {

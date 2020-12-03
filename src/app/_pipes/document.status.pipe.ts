@@ -6,7 +6,7 @@ export class DocumentStatusPipe implements PipeTransform {
   private static status: { code: string, label: string }[] = [
     { code: "CREATE", label: "Créé" },
     { code: "UPDATE", label: "Mis à jour" },
-    { code: "LOCK", label: "Edité" }
+    { code: "LOCK", label: "Validé" }
   ];
 
   transform(value: String): String {

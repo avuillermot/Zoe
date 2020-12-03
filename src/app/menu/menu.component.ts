@@ -61,10 +61,8 @@ export class MenuComponent implements OnInit {
           },
           {
             label: "Créer",
-            routerLink: "./quote/create"
-          },
-          {
-            label: "Suivre",
+            routerLink: "./quote/create",
+            icon: 'pi pi-fw pi-plus-circle'
           }
         ]
       },
@@ -73,10 +71,13 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-bookmark',
         items: [
           {
-            label: "Créer"
+            label: "Recherche BL",
+            routerLink: "./quote/search",
+            icon: 'pi pi-fw pi-search'
           },
           {
-            label: "Suivre",
+            label: "Créer",
+            icon: 'pi pi-fw pi-plus-circle'
           }
         ]
       },

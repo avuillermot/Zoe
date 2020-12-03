@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { IItemLine, IDocument } from "./calcul-engine.model";
+import { IItemLine, IQuote } from "./calcul-engine.model";
 import { isQuote } from '@angular/compiler';
 
 @Injectable({
@@ -11,11 +11,11 @@ export class CalculEngineService {
 
   constructor(private http: HttpClient) { }
 
-  public async send(document: IDocument): Promise<IDocument> {
+  public async send(document: IQuote): Promise<IQuote> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IDocument = await this.http.put<IDocument>(environment.services.calculEngine + "document/calcul", document, options).toPromise();
+    const back: IQuote = await this.http.put<IQuote>(environment.services.calculEngine + "document/calcul", document, options).toPromise();
     return back;
   }
 
@@ -24,7 +24,7 @@ export class CalculEngineService {
 * @document data of the new document
 * @returns id of the new document
 */
-  public async createQuote(document: IDocument): Promise<{id: string}> {
+  public async createQuote(document: IQuote): Promise<{id: string}> {
     const params = new HttpParams();
     const options = { params: params };
 
@@ -32,36 +32,36 @@ export class CalculEngineService {
     return back;
   }
 
-  public async updateQuote(document: IDocument): Promise<IDocument> {
+  public async updateQuote(document: IQuote): Promise<IQuote> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IDocument = await this.http.put<IDocument>(environment.services.calculEngine + "quote", document, options).toPromise();
+    const back: IQuote = await this.http.put<IQuote>(environment.services.calculEngine + "quote", document, options).toPromise();
     return back;
   }
 
-  public async lockQuote(document: IDocument): Promise<IDocument> {
+  public async lockQuote(document: IQuote): Promise<IQuote> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IDocument = await this.http.put<IDocument>(environment.services.calculEngine + "quote/lock", document, options).toPromise();
+    const back: IQuote = await this.http.put<IQuote>(environment.services.calculEngine + "quote/lock", document, options).toPromise();
     return back;
   }
 
-  public async getQuote(id: string): Promise<IDocument> {
+  public async getQuote(id: string): Promise<IQuote> {
     const params = new HttpParams().set("id", id);
     const options = { params: params };
 
-    const back: IDocument[] = await this.http.get<IDocument[]>(environment.services.calculEngine + "quote", options).toPromise();
+    const back: IQuote[] = await this.http.get<IQuote[]>(environment.services.calculEngine + "quote", options).toPromise();
     if (back.length > 0) return back[0]
-    return <IDocument>{};
+    return <IQuote>{};
   }
 
-  public async getQuotes(): Promise<IDocument[]> {
+  public async getQuotes(): Promise<IQuote[]> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IDocument[] = await this.http.get<IDocument[]>(environment.services.calculEngine + "quotes", options).toPromise();
+    const back: IQuote[] = await this.http.get<IQuote[]>(environment.services.calculEngine + "quotes", options).toPromise();
     return back;
   }
 }
