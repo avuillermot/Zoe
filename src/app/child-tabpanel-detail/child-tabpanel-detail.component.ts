@@ -31,9 +31,6 @@ export class ChildTabpanelDetailComponent {
     this.cols.push({ field: "order", header: "Supprimer" });
   }
 
-  ngOnInit(): void {
-  }
-
   removeItemLine(order: number): void {
     this.document.items.splice(order - 1, 1);
     this.calculDocument();

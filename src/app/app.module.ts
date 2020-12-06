@@ -38,6 +38,8 @@ import { DocumentStatusPipe } from '../app/_pipes/document.status.pipe';
 import { WorkflowSendMailComponent } from './workflow-send-mail/workflow-send-mail.component';
 import { ChildTabpanelAddressComponent } from './child-tabpanel-address/child-tabpanel-address.component';
 import { ChildTabpanelDetailComponent } from './child-tabpanel-detail/child-tabpanel-detail.component';
+import { ChildTabpanelViewpdfComponent } from './child-tabpanel-viewpdf/child-tabpanel-viewpdf.component';
+import { PurchaseorderUpdateComponent } from './purchaseorder-update/purchaseorder-update.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import { ChildTabpanelDetailComponent } from './child-tabpanel-detail/child-tabp
     DocumentStatusPipe,
     WorkflowSendMailComponent,
     ChildTabpanelAddressComponent,
-    ChildTabpanelDetailComponent
+    ChildTabpanelDetailComponent,
+    ChildTabpanelViewpdfComponent,
+    PurchaseorderUpdateComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { QuoteUpdateComponent } from './quote-update/quote-update.component';
 import { QuoteSearchComponent } from './quote-search/quote-search.component';
 import { WorkflowSendMailComponent } from './workflow-send-mail/workflow-send-mail.component';
+import { PurchaseorderUpdateComponent } from './purchaseorder-update/purchaseorder-update.component';
 
 const routes: Routes = [
   { path: "welcome", component: WelcomeComponent },
@@ -27,6 +28,14 @@ const routes: Routes = [
   { path: "quote/search", component: QuoteSearchComponent },
   // parametre automatiquement le client
   { path: "quote/create/customer/:customer", component: QuoteUpdateComponent },
+
+  //PURCHASE ORDER
+  { path: "purchaseorder/create", component: PurchaseorderUpdateComponent },
+  { path: "purchaseorder/read/:id", component: PurchaseorderUpdateComponent },
+  { path: "purchaseorder/update/:id", component: PurchaseorderUpdateComponent },
+  { path: "purchaseorder/search", component: PurchaseorderUpdateComponent },
+  // parametre automatiquement le client
+  { path: "purchaseorder/create/customer/:customer", component: PurchaseorderUpdateComponent },
 
   // WORKFLOW
   { path: "workflow/send-mail/:typedocument/:id", component: WorkflowSendMailComponent }

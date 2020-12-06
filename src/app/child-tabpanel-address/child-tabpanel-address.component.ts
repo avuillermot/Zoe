@@ -10,8 +10,4 @@ export class ChildTabpanelAddressComponent {
   @Input() customer: ICustomer = <ICustomer>{};
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

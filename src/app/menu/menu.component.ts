@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api'
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -86,7 +87,9 @@ export class MenuComponent implements OnInit {
         icon: 'pi pi-fw pi-shopping-cart',
         items: [
           {
-            label: "Créer"
+            label: "Créer",
+            icon: 'pi pi-fw pi-plus-circle',
+            routerLink: "./purchaseorder/create"
           },
           {
             label: "Suivre",

@@ -1,18 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
-import { IProduct} from '../_services/product/product.model';
 import { ICustomer } from '../_services/customer/customer.model';
 import { UserService } from '../_services/user/user.service';
-import { ProductService } from '../_services/product/product.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
 import { IQuote, IItemLine, IStatus } from '../_services/calcul-engine/calcul-engine.model';
 import { CustomerService } from '../_services/customer/customer.service';
 import { WorkflowSendMailService } from '../_services/worfklow-send-mail/workflow-send-mail.service';
 import { WorkflowHelperService } from '../_services/worfklow-helper/workflow-helper.service';
-import { environment } from '../../environments/environment';
 import * as moment from 'moment';
 
 
@@ -25,22 +21,16 @@ import * as moment from 'moment';
 export class QuoteUpdateComponent implements OnInit {
 
   customers: ICustomer[];
-  //product: IProduct;
-  //products: IProduct[];
   document: IQuote;
-  //cols: any[];
-  urlPdf: SafeResourceUrl;
   @ViewChild('dt') table: Table;
   typeDocument: string = "";
   blocked: boolean = false;
   popupDisplay: boolean = false;
   popupMessage: string = "";
 
-  constructor(private servProduct: ProductService, private servCustomer: CustomerService, private servCalcul: CalculEngineService,
-    private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer,
-    private confirmationService: ConfirmationService) {
+  constructor(private servCustomer: CustomerService, private servCalcul: CalculEngineService,
+    private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) {
 
-    this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl("");
     this.customers = new Array<ICustomer>();
     this.table = ViewChild('dt');
     this.document = {
@@ -150,17 +140,6 @@ export class QuoteUpdateComponent implements OnInit {
       reject: () => {
       }
     });
-  }
-
-  onChangeTab(event: any): void {
-    if (event.index == 2) {
-      let self = this;
-      let fn = function () {
-        let id: string | null = self.route.snapshot.paramMap.get("id");
-        if (id != null) self.urlPdf = self.sanitizer.bypassSecurityTrustResourceUrl(environment.services.calculEngine + "quote/pdf?id=" + id);
-      };
-      window.setTimeout(fn, 500);
-    }
   }
 
   displayMessage(message: string): void {

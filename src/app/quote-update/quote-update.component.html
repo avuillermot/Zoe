@@ -15,7 +15,7 @@
   </div>
 </div>
 <div class="right-panel section" style="max-width:75%;width:1200px">
-  <p-tabView (onChange)="onChangeTab($event)">
+  <p-tabView>
     <p-tabPanel header="Détails">
       <app-child-tabpanel-detail [document]="document"></app-child-tabpanel-detail>
     </p-tabPanel>
@@ -23,7 +23,7 @@
       <app-child-tabpanel-address [customer]="document.customer"></app-child-tabpanel-address>
     </p-tabPanel>
     <p-tabPanel header="Aperçu document">
-      <iframe [src]="urlPdf" style="width:100%; height:100%; min-height:500px"></iframe>
+      <app-child-tabpanel-viewpdf [id]="document._id" [typeDocument]="'quote'" [statusDocument]="document.status"></app-child-tabpanel-viewpdf>
     </p-tabPanel>
     <p-tabPanel header="Statut" id="status">
       <div *ngFor="let status of document.statusHistory">
