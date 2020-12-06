@@ -64,3 +64,10 @@ thead.p-datatable-thead {
 p-menubar div.p-component {
   height:100px !important;
 }
+
+#workflow button {
+  border-radius: 10px;
+  margin-right:10px;
+  width: 130px !important;
+  height: 50px !important;
+}

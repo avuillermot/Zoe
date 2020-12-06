@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../_services/user/user.model';
-import { AuthInterceptor } from '../_services/auth.interceptor';
 import { UserService } from '../_services/user/user.service';
 import { IContext} from '../_services/context';
 

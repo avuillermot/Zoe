@@ -1,3 +1,4 @@
+<div id="main-quote">
 <div class="p-buttonset menubar">
   <button pButton class="p-button-sm" type="button" label="Enregistrer" icon="pi pi-save" style="margin-bottom:5px; margin-right:5px" (click)="onSave()" *ngIf="document.status != 'LOCK'"></button>
   <button pButton class="p-button-sm" type="button" label="Valider" icon="pi pi-check" style="margin-bottom:5px" (click)="onLock()" *ngIf="document.status != 'LOCK' && document.number != '' && document.number!= null"></button>
@@ -5,7 +6,9 @@
 <div class="left-panel section" style="max-width:25%;width:400px">
   <div id="header">
     <div><div style="margin-top:0px" class="label">{{typeDocument}}&#160;</div><div style="margin-top:0px;padding-left:20px;" class="label">{{document.number}}</div></div>
-    <div><div style="margin-top:0px" class="label">Numéro Client&#160;</div><div style="margin-top:0px;padding-left:20px;" class="label">{{document.customer.number}}</div></div>
+    <div><div style="margin-top:0px" class="label">Numéro Client&#160;</div><div style="margin-top:0px;padding-left:20px;" class="label">{{document.customer.number
+  }}
+</div></div>
     <div><div class="label">Client&#160;</div><p-autoComplete id="findCustomer" name="findCustomer"  [suggestions]="customers" (completeMethod)="searchCustomer($event)" (onSelect)="onSelectCustomer()" (onClear)="onUnselectCustomer()" (onUnselect)="onUnselectCustomer()" (onKeyUp)="onKeyupCustomer()" field="fullName" [(ngModel)]="document.customer" emptyMessage="Aucun résultat" [required]="true" class="ng-invalid" placeholder="Nom du client"></p-autoComplete></div>
     <div><div class="label">Date du devis&#160;</div><p-calendar [(ngModel)]="document.date" dateFormat="dd/mm/yy" [required]="true" placeholder="Date du devis"></p-calendar></div>
     <div><div class="label">Expire le&#160;</div><p-calendar [(ngModel)]="document.expirationDate" dateFormat="dd/mm/yy" [required]="true" placeholder="Date expiration"></p-calendar></div>
@@ -14,68 +17,27 @@
 <div class="right-panel section" style="max-width:75%;width:1200px">
   <p-tabView (onChange)="onChangeTab($event)">
     <p-tabPanel header="Détails">
-      <div>
-        <div id="details" style="margin-bottom:10px">
-          <div class="p-table-buttonset">
-            <div class="label">Ajouter article&#160;</div><p-autoComplete id="findProduct" name="findProduct" [suggestions]="products" (completeMethod)="searchProduct($event)" field="name" [(ngModel)]="product" emptyMessage="Aucun résultat" (onSelect)="onSelectProduct($event)" placeholder="Nom de l'article"></p-autoComplete>
-            <div class="label">Montant TVA : {{document.taxAmount | currency:'EUR'}}</div>
-            <div class="label">Montant HT : {{document.totalFreeTax | currency:'EUR'}}</div>
-            <div class="label">Montant TVA : {{document.total | currency:'EUR'}}</div>
-          </div>
-        </div>
-        <p-table #dt [value]="document.items" id="quote-items" [scrollable]="true" scrollHeight="500px"
-                 [globalFilterFields]="['code','name','price','taxPercent']">
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              <td class="order">N°</td>
-              <td class="designation">Désignation</td>
-              <td class="amount">Prix HT</td>
-              <td class="tax">Taxe (%)</td>
-              <td class="quantity">Quantité</td>
-              <td class="amount">Montant Taxe</td>
-              <td class="amount">Total HT</td>
-              <td class="amount">Total TTC</td>
-              <td class="remove-item"></td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-              <td class="order">{{rowData.order}}</td>
-              <td class="designation"><input pInputText type="text" [(ngModel)]="rowData.name" required minlength="1" /></td>
-              <td class="amount"><input pInputText type="number" [(ngModel)]="rowData.price" (change)="onChangeDocument()" required minlength="1" /></td>
-              <td class="tax">{{rowData.taxPercent}}</td>
-              <td class="quantity"><input pInputText type="number" [(ngModel)]="rowData.quantity" (change)="onChangeDocument()" required minlength="1" /></td>
-              <td class="amount">{{rowData.taxAmount  | currency:'EUR'}}</td>
-              <td class="amount">{{rowData.totalFreeTax | currency:'EUR'}}</td>
-              <td class="amount">{{rowData.total | currency:'EUR'}}</td>
-              <td class="remove-item"><button type="button" class="p-button-rounded p-button-danger p-button-outlined p-button p-button-icon-only pi pi-times" (click)="removeItemLine(rowData.order)"></button></td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
+      <app-child-tabpanel-detail [document]="document"></app-child-tabpanel-detail>
     </p-tabPanel>
     <p-tabPanel header="Adresse document">
-      <div id="address">
-        <div><div class="label">Adresse 1&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address1" class="address" required minlength="1" /></div>
-        <div><div class="label">Adresse 2&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address2" class="address" /></div>
-        <div><div class="label">Adresse 3&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.address3" class="address" /></div>
-        <div><div class="label">Code postal&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.zipCode" class="address" required minlength="1" /></div>
-        <div><div class="label">Ville&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.city" class="address" required minlength="1" /></div>
-        <div><div class="label">Pays&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.country" class="address" required minlength="1" /></div>
-        <div><div class="label">Email&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.email" class="address" required minlength="1" /></div>
-        <div><div class="label">Téléphone&#160;</div><input pInputText type="text" [(ngModel)]="document.customer.phone" class="address" required minlength="1" /></div>
-      </div>
+      <app-child-tabpanel-address [customer]="document.customer"></app-child-tabpanel-address>
     </p-tabPanel>
     <p-tabPanel header="Aperçu document">
       <iframe [src]="urlPdf" style="width:100%; height:100%; min-height:500px"></iframe>
     </p-tabPanel>
-    <p-tabPanel header="Historique" id="historic">
+    <p-tabPanel header="Statut" id="status">
       <div *ngFor="let status of document.statusHistory">
-        <div class="label">{{status.status | documentstatus}}</div><div class="label">Par {{status.createdBy}}</div><div class="label">Le {{status.created | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
+        <div class="label">{{status.status | documentstatus}}</div><div class="label label-large">Par {{status.updatedBy}}</div><div class="label">Le {{status.created | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="Workflow">
-      Content 3
+    <p-tabPanel header="Historique" id="historic">
+
+    </p-tabPanel>
+    <p-tabPanel header="Workflow" id="workflow">
+      <button pButton type="button" label="Envoyer" icon="pi pi-inbox" class="p-button-secondary p-button-sm" (click)="sendMail()"></button>
+      <button pButton type="button" label="Duplicata" icon="pi pi-file-pdf" class="p-button-info p-button-sm"></button>
+      <button pButton type="button" label="Facturer" icon="pi pi-money-bill" class="p-button-danger p-button-sm not-always"></button>
+      <button pButton type="button" label="Annuler" icon="pi pi-money-bill" class="p-button-warning p-button-sm not-always"></button>
     </p-tabPanel>
   </p-tabView>
   <p-blockUI [blocked]="blocked"></p-blockUI>
@@ -90,4 +52,4 @@
   </ng-template>
 </p-dialog>
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
-
+</div>

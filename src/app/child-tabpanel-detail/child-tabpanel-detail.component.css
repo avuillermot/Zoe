@@ -1,0 +1,36 @@
+#details div {
+  display: block;
+  margin-top: 15px;
+}
+
+#details div.label {
+  display: inline-block;
+  min-width: 100px;
+}
+
+td.order {
+  width: 30px;
+}
+
+td.designation, td.designation input {
+  min-width: 400px !important;
+  width: 40% !important;
+}
+
+td.amount, td.amount input {
+  width: 10% !important;
+  min-width: 80px;
+}
+
+td.tax {
+  margin-left: 15px !important;
+  width: 60px !important;
+}
+
+td.quantity input {
+  width: 40px !important;
+}
+
+td.remove-item {
+  width: 50px;
+}

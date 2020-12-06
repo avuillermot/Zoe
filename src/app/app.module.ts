@@ -35,6 +35,9 @@ import { QuoteUpdateComponent } from './quote-update/quote-update.component';
 import { QuoteSearchComponent } from './quote-search/quote-search.component';
 
 import { DocumentStatusPipe } from '../app/_pipes/document.status.pipe';
+import { WorkflowSendMailComponent } from './workflow-send-mail/workflow-send-mail.component';
+import { ChildTabpanelAddressComponent } from './child-tabpanel-address/child-tabpanel-address.component';
+import { ChildTabpanelDetailComponent } from './child-tabpanel-detail/child-tabpanel-detail.component';
 
 
 @NgModule({
@@ -51,7 +54,10 @@ import { DocumentStatusPipe } from '../app/_pipes/document.status.pipe';
     UserUpdateComponent,
     QuoteUpdateComponent,
     QuoteSearchComponent,
-    DocumentStatusPipe
+    DocumentStatusPipe,
+    WorkflowSendMailComponent,
+    ChildTabpanelAddressComponent,
+    ChildTabpanelDetailComponent
   ],
   imports: [
     BrowserModule,

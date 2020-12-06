@@ -8,6 +8,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { QuoteUpdateComponent } from './quote-update/quote-update.component';
 import { QuoteSearchComponent } from './quote-search/quote-search.component';
+import { WorkflowSendMailComponent } from './workflow-send-mail/workflow-send-mail.component';
 
 const routes: Routes = [
   { path: "welcome", component: WelcomeComponent },
@@ -25,7 +26,10 @@ const routes: Routes = [
   { path: "quote/update/:id", component: QuoteUpdateComponent },
   { path: "quote/search", component: QuoteSearchComponent },
   // parametre automatiquement le client
-  { path: "quote/create/customer/:customer", component: QuoteUpdateComponent }
+  { path: "quote/create/customer/:customer", component: QuoteUpdateComponent },
+
+  // WORKFLOW
+  { path: "workflow/send-mail/:typedocument/:id", component: WorkflowSendMailComponent }
 ];
 
 @NgModule({

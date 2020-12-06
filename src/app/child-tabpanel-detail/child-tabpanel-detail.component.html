@@ -1,0 +1,39 @@
+<div>
+  <div id="details" style="margin-bottom:10px">
+    <div class="p-table-buttonset">
+      <div class="label">Ajouter article&#160;</div><p-autoComplete id="findProduct" name="findProduct" [suggestions]="products" (completeMethod)="searchProduct($event)" field="name" [(ngModel)]="product" emptyMessage="Aucun résultat" (onSelect)="onSelectProduct($event)" placeholder="Nom de l'article"></p-autoComplete>
+      <div class="label">Montant TVA : {{document.taxAmount | currency:'EUR'}}</div>
+      <div class="label">Montant HT : {{document.totalFreeTax | currency:'EUR'}}</div>
+      <div class="label">Montant TVA : {{document.total | currency:'EUR'}}</div>
+    </div>
+  </div>
+  <p-table #dt [value]="document.items" id="quote-items" [scrollable]="true" scrollHeight="500px"
+           [globalFilterFields]="['code','name','price','taxPercent']">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <td class="order">N°</td>
+        <td class="designation">Désignation</td>
+        <td class="amount">Prix HT</td>
+        <td class="tax">Taxe (%)</td>
+        <td class="quantity">Quantité</td>
+        <td class="amount">Montant Taxe</td>
+        <td class="amount">Total HT</td>
+        <td class="amount">Total TTC</td>
+        <td class="remove-item"></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td class="order">{{rowData.order}}</td>
+        <td class="designation"><input pInputText type="text" [(ngModel)]="rowData.name" required minlength="1" /></td>
+        <td class="amount"><input pInputText type="number" [(ngModel)]="rowData.price" (change)="onChangeDocument()" required minlength="1" /></td>
+        <td class="tax">{{rowData.taxPercent}}</td>
+        <td class="quantity"><input pInputText type="number" [(ngModel)]="rowData.quantity" (change)="onChangeDocument()" required minlength="1" /></td>
+        <td class="amount">{{rowData.taxAmount  | currency:'EUR'}}</td>
+        <td class="amount">{{rowData.totalFreeTax | currency:'EUR'}}</td>
+        <td class="amount">{{rowData.total | currency:'EUR'}}</td>
+        <td class="remove-item"><button type="button" class="p-button-rounded p-button-danger p-button-outlined p-button p-button-icon-only pi pi-times" (click)="removeItemLine(rowData.order)"></button></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

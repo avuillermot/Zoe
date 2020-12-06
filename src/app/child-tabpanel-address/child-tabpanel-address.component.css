@@ -1,0 +1,10 @@
+#address div.label {
+  display: inline-block;
+  width: 100px;
+  margin-top: 15px;
+}
+
+.address {
+  min-width: 400px !important;
+  width: 40% !important;
+}

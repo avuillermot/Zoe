@@ -12,7 +12,7 @@ export interface IItemLine extends IProduct {
   order: number;
 }
 
-export interface IQuote {
+export interface IDocument {
   _id: string;
   number: string;
   total: number;
@@ -20,16 +20,20 @@ export interface IQuote {
   taxAmount: number;
   items: IItemLine[];
   date: Date;
-  expirationDate: Date;
   customer: ICustomer;
   status: string;
   statusHistory: IStatus[];
+}
+export interface IQuote extends IDocument {
+  expirationDate: Date;
 }
 
 export interface IStatus {
   _id: string;
   createdBy: string;
   created: Date;
+  updatedBy: string;
+  updated: Date;
   status: String;
 }
 

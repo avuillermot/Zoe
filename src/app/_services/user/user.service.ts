@@ -42,4 +42,14 @@ export class UserService {
   public async getContext(): Promise<IContext> {
     return await this.http.get<IContext>(environment.services.context + "context").toPromise();
   }
+
+  public static setReturnUrl(url: string): void {
+    localStorage.setItem('returnUrl', url);
+  }
+
+  public static getReturnUrl(): string {
+    let back: string | null = localStorage.getItem('returnUrl');
+    if (back == null) return "";
+    else return back;
+  }
 }

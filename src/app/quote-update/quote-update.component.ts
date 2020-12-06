@@ -5,10 +5,13 @@ import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
 import { IProduct} from '../_services/product/product.model';
 import { ICustomer } from '../_services/customer/customer.model';
+import { UserService } from '../_services/user/user.service';
 import { ProductService } from '../_services/product/product.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
 import { IQuote, IItemLine, IStatus } from '../_services/calcul-engine/calcul-engine.model';
 import { CustomerService } from '../_services/customer/customer.service';
+import { WorkflowSendMailService } from '../_services/worfklow-send-mail/workflow-send-mail.service';
+import { WorkflowHelperService } from '../_services/worfklow-helper/workflow-helper.service';
 import { environment } from '../../environments/environment';
 import * as moment from 'moment';
 
@@ -22,10 +25,10 @@ import * as moment from 'moment';
 export class QuoteUpdateComponent implements OnInit {
 
   customers: ICustomer[];
-  product: IProduct;
-  products: IProduct[];
+  //product: IProduct;
+  //products: IProduct[];
   document: IQuote;
-  cols: any[];
+  //cols: any[];
   urlPdf: SafeResourceUrl;
   @ViewChild('dt') table: Table;
   typeDocument: string = "";
@@ -38,30 +41,17 @@ export class QuoteUpdateComponent implements OnInit {
     private confirmationService: ConfirmationService) {
 
     this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl("");
-    this.products = new Array<IProduct>();
     this.customers = new Array<ICustomer>();
-    this.cols = new Array<any>();
     this.table = ViewChild('dt');
-    this.product = { code: "", description: "", entityId: "", name: "", price: 0, taxPercent: 0, _id: "" };
     this.document = {
       _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, statusHistory: new Array<IStatus>(),
-      date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(), status: 'CREATE',
+      date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(), status: 'INIT',
       number: "",
       customer: {
         address1: "", address2: "", address3: "", city: "", country: "", email: "",
-        entityId: "", firstName: "", lastName: "", fullName: "", number: "?", phone: "", zipCode: "", _id: ""
+        entityId: "", firstName: "", lastName: "", fullName: "", number: "", phone: "", zipCode: "", _id: ""
       }
     };
-
-    this.cols.push({ field: "order", header: "N°" });
-    this.cols.push({ field: "name", header: "Nom" });
-    this.cols.push({ field: "price", header: "Prix unitaire HT" });
-    this.cols.push({ field: "taxPercent", header: "Taxe (%)" });
-    this.cols.push({ field: "quantity", header: "Quantité" });
-    this.cols.push({ field: "taxAmount", header: "Taxe" });
-    this.cols.push({ field: "totalFreeTax", header: "Total HT" });
-    this.cols.push({ field: "total", header: "Total TTC" });
-    this.cols.push({ field: "order", header: "Supprimer" });
   }
 
   async ngOnInit() {
@@ -81,30 +71,20 @@ export class QuoteUpdateComponent implements OnInit {
   }
 
   async ngAfterViewChecked() {
-    if (this.document.customer.number != null || this.document.customer.number != undefined)
+    if (this.document.customer.number != null && this.document.customer.number != undefined && this.document.customer.number != "") {
       document.querySelector('#findCustomer')?.classList.remove('ng-invalid');
+    }
+    let container: Element |null = document.querySelector("#main-quote");
+    WorkflowHelperService.manageIcons(container, this.document.status);
+
     if (this.document.status == "LOCK") {
-      document.querySelectorAll("input")?.forEach((current:Element) => {
+      document.querySelectorAll("#main-quote input")?.forEach((current:Element) => {
         current.setAttribute("disabled", "disabled");
       });
-      document.querySelectorAll(".remove-item")?.forEach((current: Element) => {
+      document.querySelectorAll("#main-quote .remove-item")?.forEach((current: Element) => {
         current.innerHTML = "";
       });
     }
-  }
-
-  async searchProduct(event:any) {
-    this.products = await this.servProduct.startWith(event.query);
-  }
-
-  async onSelectProduct(event: any): Promise<void> {
-    let toAdd: IItemLine = <IItemLine>JSON.parse(JSON.stringify(this.product));
-    toAdd.quantity = 1;
-    this.document.items.push(toAdd);
-
-    await this.calculDocument();
-
-    this.product = { code: "", description: "", entityId: "", name: "", price: 0, taxPercent: 0, _id: "" };
   }
 
   async searchCustomer(event: any) {
@@ -122,25 +102,6 @@ export class QuoteUpdateComponent implements OnInit {
   async onKeyupCustomer(): Promise<void> {
     if (this.document.customer.number == null || this.document.customer.number == undefined)
       document.querySelector('#findCustomer')?.classList.add('ng-invalid');
-  }
-
-  async onChangeDocument(): Promise<void> {
-    await this.calculDocument();
-  }
-
-  async calculDocument(): Promise<void> {
-    let result: IQuote = await this.servCalcul.send(this.document);
-
-    this.document.items = result.items;
-    this.document.total = result.total;
-    this.document.totalFreeTax = result.totalFreeTax;
-    this.document.taxAmount = result.taxAmount;
-
-    let index: number = 1;
-    this.document.items.forEach((value: any) => {
-      value.order = index;
-      index++;
-    });
   }
 
   async onSave(): Promise<void> {
@@ -191,11 +152,6 @@ export class QuoteUpdateComponent implements OnInit {
     });
   }
 
-  removeItemLine(order: number): void {
-    this.document.items.splice(order - 1, 1);
-    this.calculDocument();
-  }
-
   onChangeTab(event: any): void {
     if (event.index == 2) {
       let self = this;
@@ -212,5 +168,11 @@ export class QuoteUpdateComponent implements OnInit {
     else this.popupMessage = message;
     this.popupDisplay = true;
     this.blocked = false;
+  }
+
+  // WORKFLOW
+  sendMail() {
+    UserService.setReturnUrl(window.location.href);
+    this.router.navigate([WorkflowSendMailService.navigateTo("quote", this.document._id)]);
   }
 }

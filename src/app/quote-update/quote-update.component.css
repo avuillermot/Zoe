@@ -8,15 +8,19 @@ input {
   margin-top: 15px;
 }
 
-#header div, #details div {
+#header div {
   display: block;
   margin-top: 15px;
 }
 
-  #header div.label, #details div.label, #historic div.label {
-    display: inline-block;
-    min-width: 100px;
-  }
+#header div.label, #status div.label {
+  display: inline-block;
+  min-width: 100px;
+}
+
+.label-large {
+    min-width: 250px !important;
+}
  
 #footer {
   width: 100%;
@@ -36,37 +40,4 @@ input {
   width: 100px;
   display: inline-block;
   text-align: right;
-}
-
-#address div.label {
-    display:inline-block;
-    width: 100px;
-    margin-top: 15px;
-}
-
-td.order {
-    width:30px;
-}
-
-td.designation, td.designation input, .address {
-    min-width:400px !important;
-    width:40% !important;
-}
-
-td.amount, td.amount input {
-    width:10% !important;
-    min-width:80px;
-}
-
-td.tax {
-    margin-left:15px !important;
-    width:60px !important;
-}
-
-td.quantity input {
-    width: 40px !important;
-}
-
-td.remove-item {
-    width:50px;
 }
