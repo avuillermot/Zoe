@@ -19,10 +19,8 @@
       <p-tabPanel header="Aperçu document">
         <app-child-tabpanel-viewpdf [id]="document._id" [typeDocument]="'quote'" [statusDocument]="document.status"></app-child-tabpanel-viewpdf>
       </p-tabPanel>
-      <p-tabPanel header="Statut" id="status">
-        <div *ngFor="let status of document.statusHistory">
-          <div class="label">{{status.status | documentstatus}}</div><div class="label label-large">Par {{status.updatedBy}}</div><div class="label">Le {{status.created | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
-        </div>
+      <p-tabPanel header="Statut">
+        <app-child-tabpanel-status [statusHistory]="document.statusHistory"></app-child-tabpanel-status>
       </p-tabPanel>
       <p-tabPanel header="Historique" id="historic">
 

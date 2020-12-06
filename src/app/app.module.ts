@@ -42,6 +42,7 @@ import { ChildTabpanelViewpdfComponent } from './child-tabpanel-viewpdf/child-ta
 import { PurchaseorderUpdateComponent } from './purchaseorder-update/purchaseorder-update.component';
 import { ChildDocumentHeaderComponent } from './child-document-header/child-document-header.component';
 import { PurchaseorderSearchComponent } from './purchaseorder-search/purchaseorder-search.component';
+import { ChildTabpanelStatusComponent } from './child-tabpanel-status/child-tabpanel-status.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { PurchaseorderSearchComponent } from './purchaseorder-search/purchaseord
     ChildTabpanelViewpdfComponent,
     PurchaseorderUpdateComponent,
     ChildDocumentHeaderComponent,
-    PurchaseorderSearchComponent
+    PurchaseorderSearchComponent,
+    ChildTabpanelStatusComponent
   ],
   imports: [
     BrowserModule,

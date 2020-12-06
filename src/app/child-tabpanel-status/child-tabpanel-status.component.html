@@ -1,0 +1,5 @@
+<div id="status">
+  <div *ngFor="let status of statusHistory">
+    <div class="label">{{status.status | documentstatus}}</div><div class="label label-large">Par {{status.updatedBy}}</div><div class="label">Le {{status.created | date : 'dd/MM/yyyy HH:mm:ss'}}</div>
+  </div>
+</div>
