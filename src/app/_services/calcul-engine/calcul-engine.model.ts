@@ -28,6 +28,10 @@ export interface IQuote extends IDocument {
   expirationDate: Date;
 }
 
+export interface IPurchaseOrder extends IDocument {
+  paymentDate: Date;
+}
+
 export interface IStatus {
   _id: string;
   createdBy: string;

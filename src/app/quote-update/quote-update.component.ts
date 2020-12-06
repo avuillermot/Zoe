@@ -20,10 +20,9 @@ import * as moment from 'moment';
 })
 export class QuoteUpdateComponent implements OnInit {
 
-  customers: ICustomer[];
   document: IQuote;
   @ViewChild('dt') table: Table;
-  typeDocument: string = "";
+  typeDocument: string = "Devis";
   blocked: boolean = false;
   popupDisplay: boolean = false;
   popupMessage: string = "";
@@ -31,7 +30,6 @@ export class QuoteUpdateComponent implements OnInit {
   constructor(private servCustomer: CustomerService, private servCalcul: CalculEngineService,
     private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) {
 
-    this.customers = new Array<ICustomer>();
     this.table = ViewChild('dt');
     this.document = {
       _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, statusHistory: new Array<IStatus>(),
@@ -52,11 +50,10 @@ export class QuoteUpdateComponent implements OnInit {
 
     let id: string | null = this.route.snapshot.paramMap.get("id");
     if (id != null) {
-      this.document = await this.servCalcul.getQuote(id);
+      this.document = await this.servCalcul.get(id, 'quote');
       // force date to date object to be set in calendar
       this.document.date = new Date(this.document.date);
       this.document.expirationDate = new Date(this.document.expirationDate);
-      this.typeDocument = "Devis"
     }
   }
 
@@ -77,23 +74,6 @@ export class QuoteUpdateComponent implements OnInit {
     }
   }
 
-  async searchCustomer(event: any) {
-    this.customers = await this.servCustomer.startWith(event.query);
-  }
-
-  async onSelectCustomer(): Promise<void> {
-    document.querySelector('#findCustomer')?.classList.remove('ng-invalid');
-  }
-
-  async onUnselectCustomer(): Promise<void> {
-    document.querySelector('#findCustomer')?.classList.add('ng-invalid');
-  }
-
-  async onKeyupCustomer(): Promise<void> {
-    if (this.document.customer.number == null || this.document.customer.number == undefined)
-      document.querySelector('#findCustomer')?.classList.add('ng-invalid');
-  }
-
   async onSave(): Promise<void> {
     let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
     if (elems.length == 0) {
@@ -101,14 +81,14 @@ export class QuoteUpdateComponent implements OnInit {
       if (id == null) {
         this.blocked = true;
         try {
-          let back: { id: string } = await this.servCalcul.createQuote(this.document);
+          let back: { id: string } = await this.servCalcul.create(this.document,'quote');
           this.router.navigate(['quote/update/' + back.id])
         }
         catch (ex) {
           this.displayMessage(ex.error);
         }
       }
-      else await this.servCalcul.updateQuote(this.document);
+      else await this.servCalcul.update(this.document, 'quote');
     }
     else this.displayMessage("Veuillez remplir les champs obligatoires.");
   }
@@ -118,13 +98,13 @@ export class QuoteUpdateComponent implements OnInit {
     if (elems.length == 0) {
       this.blocked = true;
       try {
-        await this.servCalcul.lockQuote(this.document);
+        await this.servCalcul.lock(this.document,'quote');
       }
       catch (ex) {
         this.displayMessage(ex.error);
       }
       this.blocked = false;
-      this.document = await this.servCalcul.getQuote(this.document._id);
+      this.document = await this.servCalcul.get(this.document._id, 'quote');
     }
     else this.displayMessage("Veuillez remplir les champs obligatoires.");
   }

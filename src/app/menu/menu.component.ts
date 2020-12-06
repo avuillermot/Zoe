@@ -36,7 +36,7 @@ export class MenuComponent implements OnInit {
         ]
       },
       {
-        label: "Articles",
+        label: "Catalogue articles",
         icon: 'pi pi-fw pi-briefcase',
         items: [
           {
@@ -68,17 +68,18 @@ export class MenuComponent implements OnInit {
         ]
       },
       {
-        label: "Bon de livraison",
+        label: "Bon de commande",
         icon: 'pi pi-fw pi-bookmark',
         items: [
           {
-            label: "Recherche BL",
-            routerLink: "./quote/search",
-            icon: 'pi pi-fw pi-search'
+            label: "Recherche Commande",
+            icon: 'pi pi-fw pi-search',
+            routerLink: "./purchaseorder/search"
           },
           {
             label: "Créer",
-            icon: 'pi pi-fw pi-plus-circle'
+            icon: 'pi pi-fw pi-plus-circle',
+            routerLink: "./purchaseorder/create"
           }
         ]
       },
@@ -88,8 +89,7 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: "Créer",
-            icon: 'pi pi-fw pi-plus-circle',
-            routerLink: "./purchaseorder/create"
+            icon: 'pi pi-fw pi-plus-circle'
           },
           {
             label: "Suivre",

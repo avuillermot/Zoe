@@ -1,0 +1,10 @@
+#header div {
+  display: block;
+  margin-top: 15px;
+}
+
+#header div.label {
+    display: inline-block;
+    min-width: 100px;
+}
+

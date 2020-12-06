@@ -24,44 +24,44 @@ export class CalculEngineService {
 * @document data of the new document
 * @returns id of the new document
 */
-  public async createQuote(document: IQuote): Promise<{id: string}> {
+  public async create(document: any, type:string): Promise<{id: string}> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: { id: string } = await this.http.post<{ id: string }>(environment.services.calculEngine + "quote", document, options).toPromise();
+    const back: { id: string } = await this.http.post<{ id: string }>(environment.services.calculEngine + type, document, options).toPromise();
     return back;
   }
 
-  public async updateQuote(document: IQuote): Promise<IQuote> {
+  public async update(document: any, type: string): Promise<any> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IQuote = await this.http.put<IQuote>(environment.services.calculEngine + "quote", document, options).toPromise();
+    const back: any = await this.http.put<any>(environment.services.calculEngine + type, document, options).toPromise();
     return back;
   }
 
-  public async lockQuote(document: IQuote): Promise<IQuote> {
+  public async lock(document: any, type: string): Promise<any> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IQuote = await this.http.put<IQuote>(environment.services.calculEngine + "quote/lock", document, options).toPromise();
+    const back: any = await this.http.put<any>(environment.services.calculEngine +  type + "/lock", document, options).toPromise();
     return back;
   }
 
-  public async getQuote(id: string): Promise<IQuote> {
+  public async get(id: string, type: string): Promise<any> {
     const params = new HttpParams().set("id", id);
     const options = { params: params };
 
-    const back: IQuote[] = await this.http.get<IQuote[]>(environment.services.calculEngine + "quote", options).toPromise();
+    const back: any[] = await this.http.get<any[]>(environment.services.calculEngine + type, options).toPromise();
     if (back.length > 0) return back[0]
-    return <IQuote>{};
+    return <any>{};
   }
 
-  public async getQuotes(): Promise<IQuote[]> {
+  public async getAll(type: string): Promise<any[]> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: IQuote[] = await this.http.get<IQuote[]>(environment.services.calculEngine + "quotes", options).toPromise();
+    const back: any[] = await this.http.get<any[]>(environment.services.calculEngine + type, options).toPromise();
     return back;
   }
 }

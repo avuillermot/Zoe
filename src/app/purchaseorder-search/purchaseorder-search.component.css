@@ -1,0 +1,7 @@
+#search-purchase-order tr:hover {
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+#search-purchase-order {
+}

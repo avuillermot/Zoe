@@ -1,19 +1,18 @@
-input {
+/*input {
   height: 35px !important;
-}
+}*/
 
-.left-panel, .right-panel {
-  display: inline-block;
-  vertical-align: top;
-  margin-top: 15px;
-}
-
-#header div {
+.left-panel div {
   display: block;
   margin-top: 15px;
 }
 
-#header div.label, #status div.label {
+.left-panel div.label {
+  display: inline-block;
+  min-width: 100px;
+}
+
+#status div.label {
   display: inline-block;
   min-width: 100px;
 }

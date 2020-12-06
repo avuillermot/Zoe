@@ -1,0 +1,9 @@
+.left-panel div {
+  display: block;
+  margin-top: 15px;
+}
+
+.left-panel div.label {
+  display: inline-block;
+  min-width: 100px;
+}

@@ -1,0 +1,47 @@
+<p-table #dt [value]="pos" id="search-purchase-order" [scrollable]="true" scrollHeight="500px"
+         [globalFilterFields]="['code','name','price','taxPercent']" [paginator]="true" [rows]="50">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <td>Code</td>
+      <td>Client</td>
+      <td>Créé le</td>
+      <td>Expire le</td>
+      <td>Montant HT</td>
+      <td>Montant TTC</td>
+      <td>Statut</td>
+    </tr>
+    <tr>
+      <td>
+        <input pInputText type="text"
+               (input)="filter($event, 'number', 'startsWith')"
+               placeholder="Numero commence par"
+               class="p-column-filter" />
+      </td>
+      <td>
+        <input pInputText type="text"
+               (input)="filter($event, 'customer.fullName', 'contains')"
+               placeholder="Nom contient"
+               class="p-column-filter" />
+      </td>
+      <td></td>
+      <td>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td (click)="onClick(rowData._id)">
+        {{rowData.number}}
+      </td>
+      <td (click)="onClick(rowData._id)">{{rowData.customer.fullName}}</td>
+      <td (click)="onClick(rowData._id)">{{rowData.date | date:'dd/MM/YYYY'}}</td>
+      <td (click)="onClick(rowData._id)">{{rowData.expirationDate | date:'dd/MM/YYYY'}}</td>
+      <td (click)="onClick(rowData._id)">{{rowData.totalFreeTax | currency:'EUR'}}</td>
+      <td (click)="onClick(rowData._id)">{{rowData.total | currency:'EUR'}}</td>
+      <td (click)="onClick(rowData._id)">{{rowData.status | documentstatus}}</td>
+    </tr>
+  </ng-template>
+</p-table>
