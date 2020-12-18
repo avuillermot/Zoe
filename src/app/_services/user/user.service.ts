@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { AuthInterceptor } from '../auth.interceptor';
-import { IContext} from '../context'
+import { IContext, IEntity} from '../context'
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +41,10 @@ export class UserService {
 
   public async getContext(): Promise<IContext> {
     return await this.http.get<IContext>(environment.services.context + "context").toPromise();
+  }
+
+  public async getCurrentEntity(): Promise<IEntity> {
+    return await this.http.get<IEntity>(environment.services.entity + "entity/current").toPromise();
   }
 
   public static setReturnUrl(url: string): void {

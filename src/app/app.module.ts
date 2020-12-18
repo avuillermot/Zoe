@@ -19,6 +19,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -43,6 +44,7 @@ import { PurchaseorderUpdateComponent } from './purchaseorder-update/purchaseord
 import { ChildDocumentHeaderComponent } from './child-document-header/child-document-header.component';
 import { PurchaseorderSearchComponent } from './purchaseorder-search/purchaseorder-search.component';
 import { ChildTabpanelStatusComponent } from './child-tabpanel-status/child-tabpanel-status.component';
+import { ChildDocumentManageSaveComponent } from './child-document-manage-save/child-document-manage-save.component';
 
 
 @NgModule({
@@ -67,7 +69,8 @@ import { ChildTabpanelStatusComponent } from './child-tabpanel-status/child-tabp
     PurchaseorderUpdateComponent,
     ChildDocumentHeaderComponent,
     PurchaseorderSearchComponent,
-    ChildTabpanelStatusComponent
+    ChildTabpanelStatusComponent,
+    ChildDocumentManageSaveComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ import { ChildTabpanelStatusComponent } from './child-tabpanel-status/child-tabp
     CalendarModule,
     TabViewModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    AngularEditorModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { IItemLine, IQuote, IDocument } from "./calcul-engine.model";
-import { isQuote } from '@angular/compiler';
+import { IDocument } from "./calcul-engine.model";
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +23,11 @@ export class CalculEngineService {
 * @document data of the new document
 * @returns id of the new document
 */
-  public async create(document: any, type:string): Promise<{id: string}> {
+  public async create(document: any, type:string): Promise<{_id: string}> {
     const params = new HttpParams();
     const options = { params: params };
 
-    const back: { id: string } = await this.http.post<{ id: string }>(environment.services.calculEngine + type, document, options).toPromise();
+    const back: { _id: string } = await this.http.post<{ _id: string }>(environment.services.calculEngine + type, document, options).toPromise();
     return back;
   }
 

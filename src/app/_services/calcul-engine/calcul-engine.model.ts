@@ -1,6 +1,6 @@
 import { IProduct } from "../product/product.model";
 import { ICustomer } from '../customer/customer.model';
-import * as moment from 'moment';
+import { IEntity } from '../context';
 
 export interface IItemLine extends IProduct {
   code: string;
@@ -20,9 +20,18 @@ export interface IDocument {
   taxAmount: number;
   items: IItemLine[];
   date: Date;
+  seller: IEntity;
   customer: ICustomer;
   status: string;
   statusHistory: IStatus[];
+  html: string;
+  address1: string;
+  address2: string;
+  address3: string;
+  zipCode: string;
+  city: string;
+  country: string;
+
 }
 export interface IQuote extends IDocument {
   expirationDate: Date;
@@ -39,10 +48,4 @@ export interface IStatus {
   updatedBy: string;
   updated: Date;
   status: String;
-}
-
-export class DocumentHelper {
-  public static formatDateUI(date: Date): string {
-    return moment(date).format("DD/MM/yy");
-  }
 }

@@ -1,7 +1,5 @@
-<div *ngIf="statusDocument != 'INIT'">
-  <button pButton type="button" label="Rafraichir" icon="pi pi-refresh" class="p-button-icon p-button-rounded p-button-outlined" (click)="refresh()"></button>
-  <iframe [src]="urlPdf" style="width:100%; height:100%; min-height:500px"></iframe>
+<div>
+<button pButton type="button" label="Rafraichir" icon="pi pi-refresh" class="p-button-icon p-button-rounded p-button-outlined" (click)="refresh()"></button>
+<button pButton type="button" label="Apercu" icon="pi pi-refresh" class="p-button-icon p-button-rounded p-button-outlined" (click)="openPdf()"></button>
 </div>
-<div *ngIf="statusDocument == 'INIT'">
-  Aperçu disponible après l'enregistrement
-</div>
+<angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="document.html" [config]="editorConfig"></angular-editor>

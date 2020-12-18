@@ -1,0 +1,14 @@
+<div class="p-buttonset menubar">
+  <button pButton class="p-button-sm" type="button" label="Enregistrer" icon="pi pi-save" style="margin-bottom:5px; margin-right:5px" (click)="onSave()" *ngIf="document.status != 'LOCK'"></button>
+  <button pButton class="p-button-sm" type="button" label="Valider" icon="pi pi-check" style="margin-bottom:5px" (click)="onLock()" *ngIf="document.status != 'LOCK' && document.number != '' && document.number!= null"></button>
+</div>
+<p-blockUI [blocked]="blocked"></p-blockUI>
+<p-dialog header="Message" [(visible)]="popupDisplay" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  <p>
+    {{popupMessage}}
+  </p>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="popupDisplay=false" label="OK" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>

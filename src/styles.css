@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/primeicons/primeicons.css';
 @import '../node_modules/primeng/resources/themes/fluent-light/theme.css';
+@import 'http://localhost:8000/pdf/document-html';
 
 /* MUST BE APPLY AFTER PRIME NG CSS */
 .p-table-buttonset input.p-inputtext, .p-table-buttonset div {
@@ -38,12 +39,12 @@
   right: 20px;
 }
 
-.ng-valid:not(form) {
-  border-left: 5px solid #42A948; /* green */
+.ng-valid:not(form).ng-valid:not(ae-select).ng-valid:not(angular-editor) {
+  border-left: 5px solid #42A948;
 }
 
 .ng-invalid:not(form) {
-  border-left: 5px solid #a94442; /* red */
+  border-left: 5px solid #a94442;
 }
 
 button {

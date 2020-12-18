@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { Table } from 'primeng/table';
 import { ConfirmationService } from 'primeng/api';
-import { ICustomer } from '../_services/customer/customer.model';
 import { UserService } from '../_services/user/user.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
 import { IQuote, IItemLine, IStatus } from '../_services/calcul-engine/calcul-engine.model';
@@ -10,7 +8,8 @@ import { CustomerService } from '../_services/customer/customer.service';
 import { WorkflowSendMailService } from '../_services/worfklow-send-mail/workflow-send-mail.service';
 import { WorkflowHelperService } from '../_services/worfklow-helper/workflow-helper.service';
 import * as moment from 'moment';
-
+import { ChildTabpanelViewpdfComponent } from '../child-tabpanel-viewpdf/child-tabpanel-viewpdf.component'
+import { IEntity } from '../_services/context';
 
 @Component({
   selector: 'app-quote-update',
@@ -21,25 +20,33 @@ import * as moment from 'moment';
 export class QuoteUpdateComponent implements OnInit {
 
   document: IQuote;
-  @ViewChild('dt') table: Table;
   typeDocument: string = "Devis";
   blocked: boolean = false;
   popupDisplay: boolean = false;
   popupMessage: string = "";
+  @ViewChild(ChildTabpanelViewpdfComponent) child: ChildTabpanelViewpdfComponent;
 
   constructor(private servCustomer: CustomerService, private servCalcul: CalculEngineService,
-    private route: ActivatedRoute, private router: Router, private confirmationService: ConfirmationService) {
+    private route: ActivatedRoute, private router: Router, private cd:ChangeDetectorRef) {
 
-    this.table = ViewChild('dt');
+    this.child = ViewChild('header');
     this.document = {
       _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, statusHistory: new Array<IStatus>(),
-      date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(), status: 'INIT',
-      number: "",
+      date: moment.utc().toDate(), expirationDate: moment.utc().add(30, "days").toDate(), status: 'INIT', html: "",
+      address1: "", address2: "", address3: "", zipCode: "", city:"", country:"", number: "",
+      seller: {
+        address1: "", address2: "", address3: "", zipCode: "", city: "", country: "", capital: 0,
+        codeAPE: "", codeTVA: "", email: "", legalType: "", name: "", phone: "", siren: "", siret: ""
+      },
       customer: {
         address1: "", address2: "", address3: "", city: "", country: "", email: "",
         entityId: "", firstName: "", lastName: "", fullName: "", number: "", phone: "", zipCode: "", _id: ""
       }
     };
+  }
+
+  onVersion(args:any) {
+    this.child.refresh();
   }
 
   async ngOnInit() {
@@ -61,72 +68,17 @@ export class QuoteUpdateComponent implements OnInit {
     if (this.document.customer.number != null && this.document.customer.number != undefined && this.document.customer.number != "") {
       document.querySelector('#findCustomer')?.classList.remove('ng-invalid');
     }
-    let container: Element |null = document.querySelector("#main-quote");
+    let container: Element |null = document.querySelector("#main-document");
     WorkflowHelperService.manageIcons(container, this.document.status);
 
     if (this.document.status == "LOCK") {
-      document.querySelectorAll("#main-quote input")?.forEach((current:Element) => {
+      document.querySelectorAll("#main-document input")?.forEach((current:Element) => {
         current.setAttribute("disabled", "disabled");
       });
-      document.querySelectorAll("#main-quote .remove-item")?.forEach((current: Element) => {
+      document.querySelectorAll("#main-document .remove-item")?.forEach((current: Element) => {
         current.innerHTML = "";
       });
     }
-  }
-
-  async onSave(): Promise<void> {
-    let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
-    if (elems.length == 0) {
-      let id: string | null = this.route.snapshot.paramMap.get("id");
-      if (id == null) {
-        this.blocked = true;
-        try {
-          let back: { id: string } = await this.servCalcul.create(this.document,'quote');
-          this.router.navigate(['quote/update/' + back.id])
-        }
-        catch (ex) {
-          this.displayMessage(ex.error);
-        }
-      }
-      else await this.servCalcul.update(this.document, 'quote');
-    }
-    else this.displayMessage("Veuillez remplir les champs obligatoires.");
-  }
-
-  async runLock(): Promise<void> {
-    let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
-    if (elems.length == 0) {
-      this.blocked = true;
-      try {
-        await this.servCalcul.lock(this.document,'quote');
-      }
-      catch (ex) {
-        this.displayMessage(ex.error);
-      }
-      this.blocked = false;
-      this.document = await this.servCalcul.get(this.document._id, 'quote');
-    }
-    else this.displayMessage("Veuillez remplir les champs obligatoires.");
-  }
-
-  async onLock() {
-    this.confirmationService.confirm({
-      message: 'Voulez-vous valider ce devis ? Un devis validé ne pourra pas être modifié.',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: async() => {
-        await this.runLock();
-      },
-      reject: () => {
-      }
-    });
-  }
-
-  displayMessage(message: string): void {
-    if (message == null || message == undefined) this.popupMessage = "Une erreur est survenue"
-    else this.popupMessage = message;
-    this.popupDisplay = true;
-    this.blocked = false;
   }
 
   // WORKFLOW

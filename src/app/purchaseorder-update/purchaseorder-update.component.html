@@ -1,8 +1,5 @@
-<div id="main-po">
-  <div class="p-buttonset menubar">
-    <button pButton class="p-button-sm" type="button" label="Enregistrer" icon="pi pi-save" style="margin-bottom:5px; margin-right:5px" (click)="onSave()" *ngIf="document.status != 'LOCK'"></button>
-    <button pButton class="p-button-sm" type="button" label="Valider" icon="pi pi-check" style="margin-bottom:5px" (click)="onLock()" *ngIf="document.status != 'LOCK' && document.number != '' && document.number!= null"></button>
-  </div>
+<div id="main-document">
+  <app-child-document-manage-save [document]="document" [typeDocument]="'purchaseorder'"></app-child-document-manage-save>
   <div class="left-panel section" style="max-width:25%;width:400px">
     <app-child-document-header [document]="document" [typeDocumentLabel]="'Bon de commande'"></app-child-document-header>
   </div>
@@ -16,7 +13,7 @@
         <app-child-tabpanel-address [customer]="document.customer"></app-child-tabpanel-address>
       </p-tabPanel>
       <p-tabPanel header="Aperçu document">
-        <app-child-tabpanel-viewpdf [id]="document._id" [typeDocument]="'purchaseorder'" [statusDocument]="document.status"></app-child-tabpanel-viewpdf>
+        <app-child-tabpanel-viewpdf [typeDocument]="'purchaseorder'" [document]="document"></app-child-tabpanel-viewpdf>
       </p-tabPanel>
       <p-tabPanel header="Statut">
         <app-child-tabpanel-status [statusHistory]="document.statusHistory"></app-child-tabpanel-status>

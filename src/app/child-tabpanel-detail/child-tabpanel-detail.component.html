@@ -27,7 +27,7 @@
         <td class="order">{{rowData.order}}</td>
         <td class="designation"><input pInputText type="text" [(ngModel)]="rowData.name" required minlength="1" /></td>
         <td class="amount"><input pInputText type="number" [(ngModel)]="rowData.price" (change)="onChangeDocument()" required minlength="1" /></td>
-        <td class="tax">{{rowData.taxPercent}}</td>
+        <td class="tax"><input pInputText type="number" [(ngModel)]="rowData.taxPercent" (change)="onChangeDocument()" required minlength="1" /></td>
         <td class="quantity"><input pInputText type="number" [(ngModel)]="rowData.quantity" (change)="onChangeDocument()" required minlength="1" /></td>
         <td class="amount">{{rowData.taxAmount  | currency:'EUR'}}</td>
         <td class="amount">{{rowData.totalFreeTax | currency:'EUR'}}</td>

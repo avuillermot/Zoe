@@ -1,4 +1,3 @@
-
   <div id="header">
     <div><div style="margin-top:0px" class="label">{{typeDocumentLabel}}&#160;</div><div style="margin-top:0px;padding-left:20px;" class="label">{{document.number}}</div></div>
     <div>
@@ -9,6 +8,6 @@ document.customer.number
       </div>
     </div>
     <div><div class="label">Client&#160;</div><p-autoComplete id="findCustomer" name="findCustomer" [suggestions]="customers" (completeMethod)="searchCustomer($event)" (onSelect)="onSelectCustomer()" (onClear)="onUnselectCustomer()" (onUnselect)="onUnselectCustomer()" (onKeyUp)="onKeyupCustomer()" field="fullName" [(ngModel)]="document.customer" emptyMessage="Aucun résultat" [required]="true" class="ng-invalid" placeholder="Nom du client"></p-autoComplete></div>
-    <div><div class="label">Date&#160;</div><p-calendar [(ngModel)]="document.date" dateFormat="dd/mm/yy" [required]="true" placeholder="Date"></p-calendar></div>
+    <div><div class="label">Date&#160;</div><p-calendar [(ngModel)]="document.date" dateFormat="dd/mm/yy" [required]="true" placeholder="Date" disabled="disabled"></p-calendar></div>
   </div>
 

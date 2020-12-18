@@ -9,28 +9,35 @@
 }
 
 td.order {
+  margin-left: 0px !important;
   width: 30px;
 }
 
 td.designation, td.designation input {
+  margin-left: 0px !important;
   min-width: 400px !important;
   width: 40% !important;
 }
 
 td.amount, td.amount input {
+  margin-left: 0px !important;
   width: 10% !important;
   min-width: 80px;
 }
 
-td.tax {
-  margin-left: 15px !important;
-  width: 60px !important;
+td.tax, td.tax input {
+  margin-left: 0px !important;
+  min-width: 50px !important;
+  width: 5%;
 }
 
 td.quantity input {
-  width: 40px !important;
+  margin-left: 0px !important;
+  min-width: 80px !important;
+  width: 10%;
 }
 
 td.remove-item {
+  margin-left: 0px !important;
   width: 50px;
 }

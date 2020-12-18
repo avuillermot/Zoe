@@ -27,7 +27,7 @@ export class PurchaseorderUpdateComponent implements OnInit {
 
     this.document = {
       _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, statusHistory: new Array<IStatus>(),
-      date: moment.utc().toDate(), paymentDate: moment.utc().toDate(), status: 'INIT',
+      date: moment.utc().toDate(), paymentDate: moment.utc().toDate(), status: 'INIT', html: "",
       number: "",
       customer: {
         address1: "", address2: "", address3: "", city: "", country: "", email: "",
@@ -54,35 +54,6 @@ export class PurchaseorderUpdateComponent implements OnInit {
   sendMail(): void {
 
   }
-
-  async onLock(): Promise<void> {
-
-  }
-
-  async onSave(): Promise<void> {
-    let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
-    if (elems.length == 0) {
-      let id: string | null = this.route.snapshot.paramMap.get("id");
-      if (id == null) {
-        this.blocked = true;
-        try {
-          let back: { id: string } = await this.servCalcul.create(this.document, 'purchaseorder');
-          this.router.navigate(['purchaseorder/update/' + back.id])
-        }
-        catch (ex) {
-          this.displayMessage(ex.error);
-        }
-      }
-      else await this.servCalcul.update(this.document, 'purchaseorder');
-    }
-    else this.displayMessage("Veuillez remplir les champs obligatoires.");
-  }
-
-  displayMessage(message: string): void {
-    if (message == null || message == undefined) this.popupMessage = "Une erreur est survenue"
-    else this.popupMessage = message;
-    this.popupDisplay = true;
-    this.blocked = false;
-  }
+  
 
 }
