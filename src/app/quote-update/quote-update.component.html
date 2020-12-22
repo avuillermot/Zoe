@@ -22,8 +22,9 @@
       <p-tabPanel header="Workflow" id="workflow">
         <button pButton type="button" label="Envoyer" icon="pi pi-inbox" class="p-button-secondary p-button-sm" (click)="sendMail()"></button>
         <button pButton type="button" label="Duplicata" icon="pi pi-file-pdf" class="p-button-info p-button-sm"></button>
-        <button pButton type="button" label="Accepter" icon="pi pi-money-bill" class="p-button-danger p-button-sm" (click)="accept()"></button>
-        <button pButton type="button" label="Annuler" icon="pi pi-money-bill" class="p-button-warning p-button-sm" (click)="cancel()"></button>
+        <button pButton type="button" label="Accepter" icon="pi pi-money-bill" class="p-button-danger p-button-sm" *ngIf="document.status == 'LOCK'" (click)="accept()"></button>
+        <button pButton type="button" label="Refuser" icon="pi pi-money-bill" class="p-button-danger p-button-sm" *ngIf="document.status == 'LOCK'" (click)="reject()"></button>
+        <button pButton type="button" label="Annuler" icon="pi pi-money-bill" class="p-button-warning p-button-sm" *ngIf="cancelable() == true" (click)="cancel()"></button>
       </p-tabPanel>
     </p-tabView>
   </div>

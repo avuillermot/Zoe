@@ -88,6 +88,10 @@ export class QuoteUpdateComponent implements OnInit {
     this.router.navigate([WorkflowSendMailService.navigateTo("quote", this.document._id)]);
   }
 
+  cancelable(): boolean {
+    return this.document.status == 'CREATE' || this.document.status == 'UPDATE';
+  }
+
   cancel() {
     try {
       this.servDocument.cancel(this.document._id, "quote");
@@ -105,6 +109,16 @@ export class QuoteUpdateComponent implements OnInit {
     }
     catch (ex) {
       alert("Une erreur est survenue lors de l'acceptation du devis.")
+    }
+  }
+
+  reject() {
+    try {
+      this.servDocument.reject(this.document._id, "quote");
+      this.router.navigate(['quote/reject/' + this.document._id]);
+    }
+    catch (ex) {
+      alert("Une erreur est survenue lors du rejet du devis.")
     }
   }
 }

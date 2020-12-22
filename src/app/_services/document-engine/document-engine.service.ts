@@ -17,7 +17,7 @@ export class DocumentEngineService {
   }
 
   public isLocked(status: string) {
-    return status == "LOCK" || status == "ACCEPT" || status == "CANCEL";
+    return status == "LOCK" || status == "ACCEPT" || status == "REJECT" || status == "CANCEL";
   }
 
   public async create(document: any, type: string): Promise<{ _id: string }> {
@@ -57,6 +57,14 @@ export class DocumentEngineService {
     const options = { params: params };
 
     const back: any = await this.http.put<any>(environment.services.documentEngine + type + "/accept", document, options).toPromise();
+    return back;
+  }
+
+  public async reject(id: string, type: string): Promise<any> {
+    const params = new HttpParams().set("id", id);
+    const options = { params: params };
+
+    const back: any = await this.http.put<any>(environment.services.documentEngine + type + "/reject", document, options).toPromise();
     return back;
   }
 

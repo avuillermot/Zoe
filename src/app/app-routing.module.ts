@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: "quote/update/:id", component: QuoteUpdateComponent },
   { path: "quote/lock/:id", component: QuoteUpdateComponent },
   { path: "quote/accept/:id", component: QuoteUpdateComponent },
+  { path: "quote/reject/:id", component: QuoteUpdateComponent },
   { path: "quote/cancel/:id", component: QuoteUpdateComponent },
   { path: "quote/search", component: QuoteSearchComponent },
   // parametre automatiquement le client
