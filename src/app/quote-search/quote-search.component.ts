@@ -20,7 +20,8 @@ export class QuoteSearchComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.quotes = await this.servDocument.getAll('quotes');
+    let temp:IQuote[] = await this.servDocument.getAll('quotes');
+    this.quotes = temp.sort((a, b) => (a.date < b.date) ? 1 : -1);
   }
 
   filter($event: any, field: string, pattern: string): void {
