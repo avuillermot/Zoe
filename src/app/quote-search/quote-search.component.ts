@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { IQuote } from '../_services/calcul-engine/calcul-engine.model';
-import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
+import { DocumentEngineService } from '../_services/document-engine/document-engine.service';
 
 @Component({
   selector: 'app-quote-search',
@@ -14,20 +14,28 @@ export class QuoteSearchComponent implements OnInit {
   quotes: IQuote[];
   @ViewChild('dt') table: Table;
 
-  constructor(private router: Router, private servCalculEngine: CalculEngineService) {
+  constructor(private router: Router, private servDocument: DocumentEngineService) {
     this.quotes = new Array<IQuote>();
-    this.table = ViewChild('dt');}
+    this.table = ViewChild('dt');
+  }
 
   async ngOnInit(): Promise<void> {
-    this.quotes = await this.servCalculEngine.getAll('quotes');
+    this.quotes = await this.servDocument.getAll('quotes');
   }
 
   filter($event: any, field: string, pattern: string): void {
     this.table.filter($event.target.value, field, pattern);
   }
 
-  onClick(data: string): void {
-    this.router.navigate(['quote/update/' + data]);
+  filterStatus($event: any): void {
+    let value: string = "";
+    if ($event != null && $event.target != null && $event.target.value != null) value = $event.target.value;
+    this.table.filter(value, 'status', 'equals');
+  }
+
+  onClick(data: IQuote): void {
+    if (data.status == 'LOCK' || data.status == 'ACCEPT') this.router.navigate(['quote/lock/' + data._id]);
+    else this.router.navigate(['quote/update/' + data._id]);
   }
 
 }

@@ -1,18 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { IDocument } from '../_services/calcul-engine/calcul-engine.model';
 import { environment } from '../../environments/environment';
 import { DocumentEngineService } from '../_services/document-engine/document-engine.service';
 import { UserService } from '../_services/user/user.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { IContext } from '../_services/context';
+
 
 @Component({
   selector: 'app-child-tabpanel-viewpdf',
   templateUrl: './child-tabpanel-viewpdf.component.html',
   styleUrls: ['./child-tabpanel-viewpdf.component.css']
 })
-export class ChildTabpanelViewpdfComponent {
+export class ChildTabpanelViewpdfComponent implements OnInit {
 
   @Input() typeDocument: string = "";
   @Input() document: IDocument = <IDocument>{};
@@ -27,16 +27,29 @@ export class ChildTabpanelViewpdfComponent {
   };
 
   constructor(private sanitizer: DomSanitizer, private servDocumentEngine: DocumentEngineService, private servUser: UserService) {
-    let fn: any = async() => {
-      this.htmlTemplate = await this.servDocumentEngine.getTemplateQuote();
-      this.document.html = this.htmlTemplate;
-      this.dataBinding();
-    };
-    if (this.document.html != null || this.document.html == undefined || this.document.html == "") fn();
+  }
+
+  ngOnInit(): void {
+    if (this.servDocumentEngine.isLocked(this.document.status) == false) {
+      let fn: any = async () => {
+        this.htmlTemplate = await this.servDocumentEngine.getTemplateQuote();
+        this.document.html = this.htmlTemplate;
+        this.dataBinding();
+      };
+      if (this.document.html != null || this.document.html == undefined || this.document.html == "") fn();
+    }
+    else this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl(environment.services.pdf + "pdf/quote?id=" + this.document._id);
+  }
+
+  public onRefresh(): void {
+    if (this.servDocumentEngine.isLocked(this.document.status) == false) this.dataBinding();
+    else this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl(environment.services.pdf + "pdf/quote?id=" + this.document._id);
   }
   
-  public refresh(): void {
-    this.dataBinding();
+  public refresh(current: IDocument): void {
+    if (current != null) this.document = current;
+    if (this.servDocumentEngine.isLocked(this.document.status) == false) this.dataBinding();
+    else this.urlPdf = this.sanitizer.bypassSecurityTrustResourceUrl(environment.services.pdf + "pdf/quote?id=" + this.document._id);
   }
 
   async dataBinding(): Promise<void> {
@@ -68,6 +81,10 @@ export class ChildTabpanelViewpdfComponent {
 
   openPdf(): void {
     window.open(environment.services.pdf + "pdf/quote?id=" + this.document._id);
+  }
+
+  isLocked(): boolean {
+    return this.servDocumentEngine.isLocked(this.document.status);
   }
 }
 

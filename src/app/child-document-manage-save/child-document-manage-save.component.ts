@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IDocument } from '../_services/calcul-engine/calcul-engine.model';
-import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
+import { DocumentEngineService } from '../_services/document-engine/document-engine.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ConfirmationService } from 'primeng/api';
 
@@ -18,7 +18,7 @@ export class ChildDocumentManageSaveComponent {
   popupMessage: string = "";
   popupDisplay: boolean = false;
 
-  constructor(private servCalcul: CalculEngineService, private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService) { }
+  constructor(private servDocument: DocumentEngineService, private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService) { }
 
   async onSave(): Promise<void> {
     let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
@@ -27,14 +27,14 @@ export class ChildDocumentManageSaveComponent {
       this.blocked = true;
       if (id == null) {
         try {
-          let back: { _id: string } = await this.servCalcul.create(this.document, this.typeDocument);
-          this.router.navigate([this.typeDocument+'/update/' + back._id])
+          let back: { _id: string } = await this.servDocument.create(this.document, this.typeDocument);
+          this.router.navigate([this.typeDocument + '/update/' + back._id]);
         }
         catch (ex) {
           this.displayMessage(ex.error);
         }
       }
-      else await this.servCalcul.update(this.document, this.typeDocument);
+      else await this.servDocument.update(this.document, this.typeDocument);
       this.blocked = false;
     }
     else this.displayMessage("Veuillez remplir les champs obligatoires.");
@@ -45,13 +45,12 @@ export class ChildDocumentManageSaveComponent {
     if (elems.length == 0) {
       this.blocked = true;
       try {
-        await this.servCalcul.lock(this.document, this.typeDocument);
+        await this.servDocument.lock(this.document, this.typeDocument);
+        this.router.navigate([this.typeDocument + '/lock/' + this.document._id]);
       }
       catch (ex) {
         this.displayMessage(ex.error);
       }
-      this.blocked = false;
-      this.document = await this.servCalcul.get(this.document._id, this.typeDocument);
     }
     else this.displayMessage("Veuillez remplir les champs obligatoires.");
   }
@@ -74,5 +73,9 @@ export class ChildDocumentManageSaveComponent {
     else this.popupMessage = message;
     this.popupDisplay = true;
     this.blocked = false;
+  }
+
+  isLocked(): boolean {
+    return this.servDocument.isLocked(this.document.status);
   }
 }

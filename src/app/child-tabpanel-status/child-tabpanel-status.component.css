@@ -2,3 +2,7 @@
   display: inline-block;
   min-width: 100px;
 }
+
+.label-large {
+  min-width: 250px !important;
+}

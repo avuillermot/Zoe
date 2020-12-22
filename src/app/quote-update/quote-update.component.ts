@@ -3,13 +3,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ConfirmationService } from 'primeng/api';
 import { UserService } from '../_services/user/user.service';
 import { CalculEngineService } from '../_services/calcul-engine/calcul-engine.service';
+import { DocumentEngineService } from '../_services/document-engine/document-engine.service';
 import { IQuote, IItemLine, IStatus } from '../_services/calcul-engine/calcul-engine.model';
 import { CustomerService } from '../_services/customer/customer.service';
 import { WorkflowSendMailService } from '../_services/worfklow-send-mail/workflow-send-mail.service';
 import { WorkflowHelperService } from '../_services/worfklow-helper/workflow-helper.service';
 import * as moment from 'moment';
 import { ChildTabpanelViewpdfComponent } from '../child-tabpanel-viewpdf/child-tabpanel-viewpdf.component'
-import { IEntity } from '../_services/context';
 
 @Component({
   selector: 'app-quote-update',
@@ -26,7 +26,7 @@ export class QuoteUpdateComponent implements OnInit {
   popupMessage: string = "";
   @ViewChild(ChildTabpanelViewpdfComponent) child: ChildTabpanelViewpdfComponent;
 
-  constructor(private servCustomer: CustomerService, private servCalcul: CalculEngineService,
+  constructor(private servCustomer: CustomerService, private servCalcul: CalculEngineService, private servDocument: DocumentEngineService,
     private route: ActivatedRoute, private router: Router, private cd:ChangeDetectorRef) {
 
     this.child = ViewChild('header');
@@ -46,7 +46,7 @@ export class QuoteUpdateComponent implements OnInit {
   }
 
   onVersion(args:any) {
-    this.child.refresh();
+    this.child.refresh(this.document);
   }
 
   async ngOnInit() {
@@ -57,10 +57,11 @@ export class QuoteUpdateComponent implements OnInit {
 
     let id: string | null = this.route.snapshot.paramMap.get("id");
     if (id != null) {
-      this.document = await this.servCalcul.get(id, 'quote');
+      this.document = await this.servDocument.get(id, 'quote');
       // force date to date object to be set in calendar
       this.document.date = new Date(this.document.date);
       this.document.expirationDate = new Date(this.document.expirationDate);
+      this.child.refresh(this.document);
     }
   }
 
@@ -71,7 +72,7 @@ export class QuoteUpdateComponent implements OnInit {
     let container: Element |null = document.querySelector("#main-document");
     WorkflowHelperService.manageIcons(container, this.document.status);
 
-    if (this.document.status == "LOCK") {
+    if (this.servDocument.isLocked(this.document.status)) {
       document.querySelectorAll("#main-document input")?.forEach((current:Element) => {
         current.setAttribute("disabled", "disabled");
       });
@@ -85,5 +86,25 @@ export class QuoteUpdateComponent implements OnInit {
   sendMail() {
     UserService.setReturnUrl(window.location.href);
     this.router.navigate([WorkflowSendMailService.navigateTo("quote", this.document._id)]);
+  }
+
+  cancel() {
+    try {
+      this.servDocument.cancel(this.document._id, "quote");
+      this.router.navigate(['quote/cancel/' + this.document._id]);
+    }
+    catch (ex) {
+      alert("Une erreur est survenue lors de l'annulation du devis.")
+    }
+  }
+
+  accept() {
+    try {
+      this.servDocument.accept(this.document._id, "quote");
+      this.router.navigate(['quote/accept/' + this.document._id]);
+    }
+    catch (ex) {
+      alert("Une erreur est survenue lors de l'acceptation du devis.")
+    }
   }
 }

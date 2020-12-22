@@ -28,7 +28,11 @@ export class PurchaseorderUpdateComponent implements OnInit {
     this.document = {
       _id: "", items: new Array<IItemLine>(), total: 0, totalFreeTax: 0, taxAmount: 0, statusHistory: new Array<IStatus>(),
       date: moment.utc().toDate(), paymentDate: moment.utc().toDate(), status: 'INIT', html: "",
-      number: "",
+      address1: "", address2: "", address3: "", zipCode: "", city: "", country: "", number: "",
+      seller: {
+        address1: "", address2: "", address3: "", zipCode: "", city: "", country: "", capital: 0,
+        codeAPE: "", codeTVA: "", email: "", legalType: "", name: "", phone: "", siren: "", siret: ""
+      },
       customer: {
         address1: "", address2: "", address3: "", city: "", country: "", email: "",
         entityId: "", firstName: "", lastName: "", fullName: "", number: "", phone: "", zipCode: "", _id: ""
@@ -44,7 +48,7 @@ export class PurchaseorderUpdateComponent implements OnInit {
 
     let id: string | null = this.route.snapshot.paramMap.get("id");
     if (id != null) {
-      this.document = await this.servCalcul.get(id, 'purchaseorder');
+      //this.document = await this.servCalcul.get(id, 'purchaseorder');
       // force date to date object to be set in calendar
       this.document.date = new Date(this.document.date);
       //this.document.expirationDate = new Date(this.document.expirationDate);

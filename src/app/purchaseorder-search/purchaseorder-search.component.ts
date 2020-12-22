@@ -20,7 +20,7 @@ export class PurchaseorderSearchComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.pos = await this.servCalculEngine.getAll('purchaseorders');
+    //this.pos = await this.servCalculEngine.getAll('purchaseorders');
   }
 
   filter($event: any, field: string, pattern: string): void {

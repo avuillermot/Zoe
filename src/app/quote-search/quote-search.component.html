@@ -14,34 +14,43 @@
       <td>
         <input pInputText type="text"
                (input)="filter($event, 'number', 'startsWith')"
-               placeholder="Numero commence par"
+               placeholder="Commence par"
                class="p-column-filter" />
       </td>
       <td>
         <input pInputText type="text"
                (input)="filter($event, 'customer.fullName', 'contains')"
-               placeholder="Nom contient"
+               placeholder="Contient"
                class="p-column-filter" />
       </td>
       <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td>
+        <select (change)="filterStatus($event)">
+          <option value="">(Tous)</option>
+          <option value="CREATE">Créer</option>
+          <option value="UPDATE">Mis à jour</option>
+          <option value="LOCK">Figé</option>
+          <option value="ACCEPT">Accepté</option>
+          <option value="CANCEL">Annulé</option>
+        </select>
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns">
     <tr>
-      <td (click)="onClick(rowData._id)">
+      <td (click)="onClick(rowData)">
         {{rowData.number}}
       </td>
-      <td (click)="onClick(rowData._id)">{{rowData.customer.fullName}}</td>
-      <td (click)="onClick(rowData._id)">{{rowData.date | date:'dd/MM/YYYY'}}</td>
-      <td (click)="onClick(rowData._id)">{{rowData.expirationDate | date:'dd/MM/YYYY'}}</td>
-      <td (click)="onClick(rowData._id)">{{rowData.totalFreeTax | currency:'EUR'}}</td>
-      <td (click)="onClick(rowData._id)">{{rowData.total | currency:'EUR'}}</td>
-      <td (click)="onClick(rowData._id)">{{rowData.status | documentstatus}}</td>
+      <td (click)="onClick(rowData)">{{rowData.customer.fullName}}</td>
+      <td (click)="onClick(rowData)">{{rowData.date | date:'dd/MM/YYYY'}}</td>
+      <td (click)="onClick(rowData)">{{rowData.expirationDate | date:'dd/MM/YYYY'}}</td>
+      <td (click)="onClick(rowData)">{{rowData.totalFreeTax | currency:'EUR'}}</td>
+      <td (click)="onClick(rowData)">{{rowData.total | currency:'EUR'}}</td>
+      <td (click)="onClick(rowData)">{{rowData.status | documentstatus}}</td>
     </tr>
   </ng-template>
 </p-table>
+

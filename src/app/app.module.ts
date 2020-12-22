@@ -19,6 +19,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { TabViewModule } from 'primeng/tabview';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { MenuComponent } from './menu/menu.component'
@@ -90,7 +91,8 @@ import { ChildDocumentManageSaveComponent } from './child-document-manage-save/c
     TabViewModule,
     DialogModule,
     ConfirmDialogModule,
-    AngularEditorModule
+    AngularEditorModule,
+    DropdownModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
