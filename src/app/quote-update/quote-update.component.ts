@@ -11,6 +11,7 @@ import { WorkflowHelperService } from '../_services/worfklow-helper/workflow-hel
 import * as moment from 'moment';
 import { ChildTabpanelViewpdfComponent } from '../child-tabpanel-viewpdf/child-tabpanel-viewpdf.component'
 
+
 @Component({
   selector: 'app-quote-update',
   templateUrl: './quote-update.component.html',
@@ -27,7 +28,7 @@ export class QuoteUpdateComponent implements OnInit {
   @ViewChild(ChildTabpanelViewpdfComponent) child: ChildTabpanelViewpdfComponent;
 
   constructor(private servCustomer: CustomerService, private servCalcul: CalculEngineService, private servDocument: DocumentEngineService,
-    private route: ActivatedRoute, private router: Router, private cd:ChangeDetectorRef) {
+    private route: ActivatedRoute, private router: Router, private cd: ChangeDetectorRef, private confirmationService: ConfirmationService) {
 
     this.child = ViewChild('header');
     this.document = {
@@ -83,6 +84,21 @@ export class QuoteUpdateComponent implements OnInit {
   }
 
   // WORKFLOW
+
+  async onAction(message:string, callback: any) {
+    this.confirmationService.confirm({
+      message: message,
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: async () => {
+        await callback();
+      },
+      reject: () => {
+      }
+    });
+  }
+
+
   sendMail() {
     UserService.setReturnUrl(window.location.href);
     this.router.navigate([WorkflowSendMailService.navigateTo("quote", this.document._id)]);
@@ -93,32 +109,44 @@ export class QuoteUpdateComponent implements OnInit {
   }
 
   cancel() {
-    try {
-      this.servDocument.cancel(this.document._id, "quote");
-      this.router.navigate(['quote/cancel/' + this.document._id]);
-    }
-    catch (ex) {
-      alert("Une erreur est survenue lors de l'annulation du devis.")
-    }
+    let self: any = this;
+    let fn: any = function () {
+      try {
+        self.servDocument.cancel(self.document._id, "quote");
+        self.router.navigate(['quote/cancel/' + self.document._id]);
+      }
+      catch (ex) {
+        alert("Une erreur est survenue lors de l'annulation du devis.")
+      }
+    };
+    this.onAction("Confirmer l'annulation du devis", fn);
   }
 
   accept() {
-    try {
-      this.servDocument.accept(this.document._id, "quote");
-      this.router.navigate(['quote/accept/' + this.document._id]);
-    }
-    catch (ex) {
-      alert("Une erreur est survenue lors de l'acceptation du devis.")
-    }
+    let self: any = this;
+    let fn: any = function () {
+      try {
+        self.servDocument.accept(self.document._id, "quote");
+        self.router.navigate(['quote/accept/' + self.document._id]);
+      }
+      catch (ex) {
+        alert("Une erreur est survenue lors de l'annulation du devis.")
+      }
+    };
+    this.onAction("Confirmer l'acception du devis par le client", fn);
   }
 
   reject() {
-    try {
-      this.servDocument.reject(this.document._id, "quote");
-      this.router.navigate(['quote/reject/' + this.document._id]);
-    }
-    catch (ex) {
-      alert("Une erreur est survenue lors du rejet du devis.")
-    }
+    let self: any = this;
+    let fn: any = function () {
+      try {
+        self.servDocument.reject(self.document._id, "quote");
+        self.router.navigate(['quote/reject/' + self.document._id]);
+      }
+      catch (ex) {
+        alert("Une erreur est survenue lors de l'annulation du devis.")
+      }
+    };
+    this.onAction("Confirmer le refus du devis par le client", fn);
   }
 }
