@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { DocumentEngineService } from '../_services/document-engine/document-engine.service';
 import { UserService } from '../_services/user/user.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import * as moment from "moment";
 
 
 @Component({
@@ -57,12 +58,18 @@ export class ChildTabpanelViewpdfComponent implements OnInit {
     let tempKeys: { [k: string]: any } = { };
     var elems: NodeListOf<Element> = window.document.querySelectorAll("*[data-binding]");
     elems.forEach((elem) => {
-      var key: string | null | undefined = elem?.getAttribute("data-binding");
+      let key: string | null | undefined = elem?.getAttribute("data-binding");
+      let type: string | null | undefined = elem?.getAttribute("data-type");
       
       if (key != null) {
         let res: string = key.split('.').reduce(function (o: any, k: any) {
           return o && o[k];
         }, this);
+
+
+        if (type != null && type != undefined) {
+          if (type == 'date') res = moment(res).format('DD/MM/YYYY');
+        }
 
         let key2: string = key;
         while (key2.indexOf(".") > -1) key2 = key2.replace(".", "");
@@ -74,6 +81,17 @@ export class ChildTabpanelViewpdfComponent implements OnInit {
       }
     });
     this.keys = tempKeys;
+
+    let contentItems: Element | null = window.document.querySelector(".document-body");
+    if (contentItems != null) {
+      contentItems.childNodes.forEach(current => current.remove());
+      this.document.items.forEach((current) => {
+        let div1: Element = window.document.createElement("div");
+        div1.textContent = current.name;
+        if (contentItems != null) contentItems.appendChild(div1);
+      });
+
+    }
 
     let html: string | undefined = window.document.querySelector("#document-content")?.outerHTML;
     if (html != undefined) this.document.html = html;
