@@ -108,6 +108,10 @@ export class QuoteUpdateComponent implements OnInit {
     return this.document.status == 'CREATE' || this.document.status == 'UPDATE';
   }
 
+  duplicatable(): boolean {
+    return this.document.status == 'ACCEPT';
+  }
+
   cancel() {
     let self: any = this;
     let fn: any = function () {
