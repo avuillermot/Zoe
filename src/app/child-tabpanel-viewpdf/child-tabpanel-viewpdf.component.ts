@@ -78,6 +78,7 @@ export class ChildTabpanelViewpdfComponent implements OnInit {
         else elem.textContent = elem.textContent.replace(this.keys[key2], res);
         
         tempKeys[key2] = res;
+        //if (key != null && key != undefined) JS(key) = res;
       }
     });
     this.keys = tempKeys;

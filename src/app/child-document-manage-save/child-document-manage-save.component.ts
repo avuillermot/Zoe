@@ -21,23 +21,23 @@ export class ChildDocumentManageSaveComponent {
   constructor(private servDocument: DocumentEngineService, private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService) { }
 
   async onSave(): Promise<void> {
-    let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
-    if (elems.length == 0) {
-      let id: string | null = this.route.snapshot.paramMap.get("id");
-      this.blocked = true;
-      if (id == null) {
-        try {
+    try {
+      let elems: NodeListOf<Element> = document.querySelectorAll('.ng-invalid');
+      if (elems.length == 0) {
+        let id: string | null = this.route.snapshot.paramMap.get("id");
+        this.blocked = true;
+        if (id == null) {
           let back: { _id: string } = await this.servDocument.create(this.document, this.typeDocument);
           this.router.navigate([this.typeDocument + '/update/' + back._id]);
         }
-        catch (ex) {
-          this.displayMessage(ex.error);
-        }
+        else await this.servDocument.update(this.document, this.typeDocument);
+        this.blocked = false;
       }
-      else await this.servDocument.update(this.document, this.typeDocument);
-      this.blocked = false;
+      else this.displayMessage("Veuillez remplir les champs obligatoires.");
     }
-    else this.displayMessage("Veuillez remplir les champs obligatoires.");
+    catch (ex) {
+      this.displayMessage(ex.error);
+    }
   }
 
   async runLock(): Promise<void> {
