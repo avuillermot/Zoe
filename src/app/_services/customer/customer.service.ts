@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ICustomer } from './customer.model';
-import { AuthInterceptor } from '../auth.interceptor';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,11 @@ export class CustomerService {
     const params = new HttpParams().set("startwith", startWith);
     let customers: ICustomer[] = await this.http.get<ICustomer[]>(environment.services.product + "customer/startwith", { params }).toPromise();
     return customers;
+  }
+
+  public startWith2(startWith: string): Observable<ICustomer[]> {
+    const params = new HttpParams().set("startwith", startWith);
+    return this.http.get<ICustomer[]>(environment.services.product + "customer/startwith", { params });
   }
 
   public async update(customer: ICustomer): Promise<void> {

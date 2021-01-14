@@ -20,8 +20,13 @@ export class ChildDocumentHeaderComponent {
   customers: ICustomer[] = new Array<ICustomer>();
   constructor(private servCustomer: CustomerService, private servUser: UserService) { }
 
-  async searchCustomer(event: any) {
-    this.customers = await this.servCustomer.startWith(event.query);
+  searchCustomer(event: any) {
+    //this.customers = await this.servCustomer.startWith(event.query);
+    this.servCustomer.startWith2(event.query).subscribe(
+      () => { alert('next'); },
+      () => { alert('error'); },
+      () => { alert('complete'); }
+    );
   }
 
   async onSelectCustomer(): Promise<void> {

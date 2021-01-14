@@ -21,6 +21,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -92,7 +93,8 @@ import { ChildDocumentManageSaveComponent } from './child-document-manage-save/c
     DialogModule,
     ConfirmDialogModule,
     AngularEditorModule,
-    DropdownModule
+    DropdownModule,
+    InputSwitchModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

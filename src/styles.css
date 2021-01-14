@@ -39,7 +39,7 @@
   right: 20px;
 }
 
-.ng-valid:not(form).ng-valid:not(ae-select).ng-valid:not(angular-editor) {
+.ng-valid:not(form).ng-valid:not(ae-select).ng-valid:not(angular-editor).ng-valid:not(p-inputswitch) {
   border-left: 5px solid #42A948;
 }
 

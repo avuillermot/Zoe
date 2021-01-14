@@ -39,6 +39,13 @@ export class UserService {
       });
   }
 
+  public async newPassword(email: string): Promise<void> {
+    const params = new HttpParams();
+    const options = { params: params };
+
+    return await this.http.put<void>(environment.services.user + "ask/generate/password", { email: email }, options).toPromise();
+  }
+
   public async getContext(): Promise<IContext> {
     return await this.http.get<IContext>(environment.services.context + "context").toPromise();
   }

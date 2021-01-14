@@ -4,16 +4,26 @@
 
 export const environment = {
   production: false,
+  /*services: {
+    entity: "http://localhost:8080/",
+    customer: "http://localhost:8080/",
+    product: "http://localhost:8080/",
+    calculEngine: "http://localhost:8080/",
+    documentEngine: "http://localhost:8080/",
+    user: "http://localhost:8081/",
+    context: "http://localhost:8080/",
+    pdf: "http://localhost:8080/"
+  }*/
   services: {
-    entity: "http://localhost:8000/",
-    customer: "http://localhost:8000/",
-    product: "http://localhost:8000/",
-    calculEngine: "http://localhost:8000/",
-    documentEngine: "http://localhost:8000/",
-    user: "http://localhost:8001/",
-    context: "http://localhost:8000/",
-    pdf: "http://localhost:8000/"
-  },
+    entity: "https://pc-246.home:8091/",
+    customer: "https://pc-246.home:8091/",
+    product: "https://pc-246.home:8091/",
+    calculEngine: "https://pc-246.home:8091/",
+    documentEngine: "https://pc-246.home:8091/",
+    user: "https://pc-246.home:8090/",
+    context: "https://pc-246.home:8091/",
+    pdf: "https://pc-246.home:8091/"
+  }
 };
 
 /*

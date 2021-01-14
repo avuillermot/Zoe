@@ -11,8 +11,10 @@ import { AuthInterceptor } from '../_services/auth.interceptor';
 })
 export class UserLoginComponent implements OnInit {
 
-  login: string = "confirm1@test.com";
-  password: string = "vipSOTUwEs"
+  email: string = "";
+  login: string = "";
+  password: string = "";
+  modeLostPassword: boolean = false;
 
   constructor(private route: ActivatedRoute, private router: Router, private servUser:UserService) { }
 
@@ -21,7 +23,12 @@ export class UserLoginComponent implements OnInit {
   }
 
   onLogon(logonForm: NgForm): void {
-    this.servUser.logon(this.login, this.password);
+    if (!this.modeLostPassword) this.servUser.logon(this.login, this.password);
+    else {
+      this.servUser.newPassword(this.email);
+      alert("Votre demande est en cours de traitement. Votre mot de passe vous sera envoyé dans quelques minutes.");
+      this.modeLostPassword = false;
+    }
   }
 
 }

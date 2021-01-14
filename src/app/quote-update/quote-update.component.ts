@@ -114,13 +114,14 @@ export class QuoteUpdateComponent implements OnInit {
 
   cancel() {
     let self: any = this;
-    let fn: any = function () {
+    let fn: any = async function () {
       try {
-        self.servDocument.cancel(self.document._id, "quote");
+        await self.servDocument.cancel(self.document._id, "quote");
         self.router.navigate(['quote/cancel/' + self.document._id]);
       }
       catch (ex) {
-        alert("Une erreur est survenue lors de l'annulation du devis.")
+        if (ex.error != null && ex.error != undefined) alert(ex.error);
+        else alert("Une erreur est survenue lors de l'annulation du devis.")
       }
     };
     this.onAction("Confirmer l'annulation du devis", fn);
