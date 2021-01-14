@@ -23,11 +23,12 @@ export class UserLoginComponent implements OnInit {
   }
 
   onLogon(logonForm: NgForm): void {
-    if (!this.modeLostPassword) this.servUser.logon(this.login, this.password);
-    else {
+    if (!this.modeLostPassword && this.login != "" && this.password != "") this.servUser.logon(this.login, this.password);
+    else if (this.modeLostPassword && this.email != "") {
       this.servUser.newPassword(this.email);
       alert("Votre demande est en cours de traitement. Votre mot de passe vous sera envoyé dans quelques minutes.");
       this.modeLostPassword = false;
+      this.email = "";
     }
   }
 
