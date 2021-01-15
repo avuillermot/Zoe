@@ -1,9 +1,9 @@
 <div id="div-main-entity-create">
   <div id="header-logo"></div>
-  <form id="entity-create" #loginForm="ngForm">
+  <form id="entity-create" (ngSubmit)="onCreate(createForm)" #createForm="ngForm">
     <p-panel header="Creation compte société">
       <div class="p-field p-grid form-group">
-        <div><label for="login" class="p-col-fixed">Raison Social (Nom)</label></div>
+        <div><label for="login" class="p-col-fixed">Raison Sociale (Nom)</label></div>
         <div class="p-col">
           <input id="login" name="login" class="form-control" type="text" pInputText [(ngModel)]="entity.name" required minlength="1" />
         </div>
@@ -68,20 +68,25 @@
       <div class="p-field p-grid form-group">
         <div><label for="lastName" class="p-col-fixed">Email</label></div>
         <div class="p-col">
-          <input id="lastName" name="lastName" class="form-control" type="text" pInputText [(ngModel)]="contact.lastName" required minlength="1" />
+          <input id="lastName" name="lastName" class="form-control" type="text" pInputText [(ngModel)]="contact.email" required minlength="1" />
         </div>
       </div>
       <div class="p-field p-grid form-group">
-        <div><label for="lastName" class="p-col-fixed">Mot de passe</label></div>
+        <div><label for="password" class="p-col-fixed">Mot de passe</label></div>
         <div class="p-col">
-          <input id="lastName" name="lastName" class="form-control" type="text" pInputText [(ngModel)]="contact.lastName" required minlength="1" />
+          <input id="password" name="password" class="form-control" type="text" pInputText [(ngModel)]="contact.password" required minlength="1" />
         </div>
       </div>
       <div class="p-field p-grid form-group">
-        <div><label for="lastName" class="p-col-fixed">Confirmer votre de passe</label></div>
+        <div><label for="confirm" class="p-col-fixed">Confirmer votre de passe</label></div>
         <div class="p-col">
-          <input id="lastName" name="lastName" class="form-control" type="text" pInputText [(ngModel)]="contact.lastName" required minlength="1" />
+          <input id="confirm" name="confirm" class="form-control" type="text" pInputText [(ngModel)]="contact.confirmPassword" required minlength="1" />
         </div>
+      </div>
+      <div class="p-field p-grid form-group">
+        <span class="p-buttonset">
+          <button class="p-button-sm" pButton type="submit" label="Envoyer" icon="pi pi-sign-in"></button>
+        </span>
       </div>
     </p-panel>
   </form>
