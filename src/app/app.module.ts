@@ -47,6 +47,7 @@ import { ChildDocumentHeaderComponent } from './child-document-header/child-docu
 import { PurchaseorderSearchComponent } from './purchaseorder-search/purchaseorder-search.component';
 import { ChildTabpanelStatusComponent } from './child-tabpanel-status/child-tabpanel-status.component';
 import { ChildDocumentManageSaveComponent } from './child-document-manage-save/child-document-manage-save.component';
+import { EntityCreateComponent } from './entity-create/entity-create.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { ChildDocumentManageSaveComponent } from './child-document-manage-save/c
     ChildDocumentHeaderComponent,
     PurchaseorderSearchComponent,
     ChildTabpanelStatusComponent,
-    ChildDocumentManageSaveComponent
+    ChildDocumentManageSaveComponent,
+    EntityCreateComponent
   ],
   imports: [
     BrowserModule,

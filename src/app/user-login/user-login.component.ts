@@ -23,13 +23,24 @@ export class UserLoginComponent implements OnInit {
   }
 
   onLogon(logonForm: NgForm): void {
-    if (!this.modeLostPassword && this.login != "" && this.password != "") this.servUser.logon(this.login, this.password);
-    else if (this.modeLostPassword && this.email != "") {
-      this.servUser.newPassword(this.email);
-      alert("Votre demande est en cours de traitement. Votre mot de passe vous sera envoyé dans quelques minutes.");
-      this.modeLostPassword = false;
-      this.email = "";
-    }
+    if (logonForm.form.status != "VALID") alert("Merci de sasisir votre adresse mail et mot de passe.");
+    else this.servUser.logon(this.login, this.password);
+
   }
 
+  async onRecoverPassword(pwdForm: NgForm): Promise<void> {
+    if (pwdForm.form.status != "VALID") alert("Merci de sasisir votre adresse mail.");
+    else {
+      try {
+        await this.servUser.newPassword(this.email);
+        alert("Votre demande est en cours de traitement. Votre mot de passe vous sera envoyé dans quelques minutes.");
+        this.modeLostPassword = false;
+        this.email = "";
+      }
+      catch (ex) {
+        if (ex.error == "EMAIL_NOT_FOUND") alert("Adresse mail inconnue");
+        else alert("Une erreur est survenue.")
+      }
+    }
+  }
 }

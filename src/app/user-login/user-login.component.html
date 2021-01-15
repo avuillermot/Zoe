@@ -1,8 +1,9 @@
 <div id="div-main-login">
+  <div id="header-logo"></div>
   <form id="user-login" (ngSubmit)="onLogon(loginForm)" #loginForm="ngForm">
     <p-panel header="Connexion" [hidden]="modeLostPassword">
       <div class="p-field p-grid form-group">
-        <div><label for="login" class="p-col-fixed">Identifiant</label></div>
+        <div><label for="login" class="p-col-fixed">Email</label></div>
         <div class="p-col">
           <input id="login" name="login" class="form-control" type="text" pInputText [(ngModel)]="login" required minlength="1" />
         </div>
@@ -18,8 +19,13 @@
           <button class="p-button-sm" pButton type="submit" label="Connexion" icon="pi pi-sign-in"></button>
         </span>
       </div>
+      <div style="margin-top:30px">
+        <p-inputSwitch [(ngModel)]="modeLostPassword" name="lostPassword"></p-inputSwitch>&#160;Mot de passe perdu ?
+        <div style="margin-top:10px;"><a href="entity/create">Créer un compte</a></div>
+      </div>
     </p-panel>
-
+  </form>
+  <form id="user-recover-password" (ngSubmit)="onRecoverPassword(loginRecoverPwd)" #loginRecoverPwd="ngForm">
     <p-panel header="Mot de passe perdu" [hidden]="!modeLostPassword">
       <div class="p-field p-grid form-group">
         <div><label for="email" class="p-col-fixed">Email</label></div>
@@ -32,13 +38,10 @@
           <button class="p-button-sm" pButton type="submit" label="Envoyer" icon="pi pi-sign-in"></button>
         </span>
       </div>
+      <div style="margin-top:30px">
+        <p-inputSwitch [(ngModel)]="modeLostPassword" name="lostPassword"></p-inputSwitch>&#160;Connexion
+        <div style="margin-top:10px;"><a href="entity/create">Créer un compte</a></div>
+      </div>
     </p-panel>
-
-    <div style="margin-top:10px; padding-left:5px">
-      <p-inputSwitch [(ngModel)]="modeLostPassword" name="lostPassword"></p-inputSwitch>&#160;
-      <span [hidden]="modeLostPassword">Mot de passe perdu ?</span>
-      <span [hidden]="!modeLostPassword">Connexion</span>
-    </div>
-
   </form>
 </div>

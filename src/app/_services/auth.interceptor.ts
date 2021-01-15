@@ -24,7 +24,9 @@ export class AuthInterceptor implements HttpInterceptor {
       tap(evt => { }),
       catchError(
         (err: any) => {
-          if ((<HttpErrorResponse>err).status == 401 && window.location.pathname != '/login') window.location.href = '/login';
+          if ((<HttpErrorResponse>err).status == 401
+            && window.location.pathname != '/login'
+            && window.location.pathname != '/entity/create') window.location.href = '/login';
           throw err;
         }
       )

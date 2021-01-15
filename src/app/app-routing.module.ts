@@ -11,6 +11,7 @@ import { QuoteSearchComponent } from './quote-search/quote-search.component';
 import { WorkflowSendMailComponent } from './workflow-send-mail/workflow-send-mail.component';
 import { PurchaseorderUpdateComponent } from './purchaseorder-update/purchaseorder-update.component';
 import { PurchaseorderSearchComponent } from './purchaseorder-search/purchaseorder-search.component';
+import { EntityCreateComponent } from './entity-create/entity-create.component';
 
 const routes: Routes = [
   { path: "welcome", component: WelcomeComponent },
@@ -43,7 +44,10 @@ const routes: Routes = [
   { path: "purchaseorder/create/customer/:customer", component: PurchaseorderUpdateComponent },
 
   // WORKFLOW
-  { path: "workflow/send-mail/:typedocument/:id", component: WorkflowSendMailComponent }
+  { path: "workflow/send-mail/:typedocument/:id", component: WorkflowSendMailComponent },
+
+  // ENTITY
+  { path: "entity/create", component: EntityCreateComponent }
 ];
 
 @NgModule({
