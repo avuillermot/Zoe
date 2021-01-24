@@ -1,53 +1,53 @@
 <div id="div-main-entity-create">
   <div id="header-logo"></div>
-  <form id="entity-create" (ngSubmit)="onCreate(createForm)" #createForm="ngForm">
+  <form id="entity-create" (ngSubmit)="onCreate()" [formGroup]="myFormValidator">
     <p-panel header="Creation compte société">
       <div class="p-field p-grid form-group">
         <div><label for="login" class="p-col-fixed">Raison Sociale (Nom)</label></div>
         <div class="p-col">
-          <input id="login" name="login" class="form-control" type="text" pInputText [(ngModel)]="entity.name" required minlength="1" />
+          <input id="name" name="name" formControlName="name" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="login" class="p-col-fixed">Adresse 1</label></div>
         <div class="p-col">
-          <input id="login" name="login" class="form-control" type="text" pInputText [(ngModel)]="entity.address1" required minlength="1" />
+          <input id="address1" name="address1" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="login" class="p-col-fixed">Complément adresse</label></div>
         <div class="p-col">
-          <input id="login" name="login" class="form-control" type="text" pInputText [(ngModel)]="entity.address2" required minlength="1" />
+          <input id="address2" name="address2" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="login" class="p-col-fixed">Complément adresse</label></div>
         <div class="p-col">
-          <input id="login" name="login" class="form-control" type="text" pInputText [(ngModel)]="entity.address3" required minlength="1" />
+          <input id="address3" name="address3" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="zipCode" class="p-col-fixed">Code Postal</label></div>
         <div class="p-col">
-          <input id="zipCode" name="zipCode" class="form-control" type="text" pInputText [(ngModel)]="entity.zipCode" required minlength="1" />
+          <input id="zipCode" name="zipCode" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="city" class="p-col-fixed">Ville</label></div>
         <div class="p-col">
-          <input id="city" name="city" class="form-control" type="text" pInputText [(ngModel)]="entity.city" required minlength="1" />
+          <input id="city" name="city" class="form-control" type="text" pInputText />
         </div>
       </div>
-      <div class="p-field p-grid form-group">
+      <!--<div class="p-field p-grid form-group">
         <div><label for="country" class="p-col-fixed">Pays</label></div>
         <div class="p-col">
-          <input id="country" name="country" class="form-control" type="text" pInputText [(ngModel)]="entity.country" required minlength="1" />
+          <p-dropdown placeholder="Selectionner un pays" optionLabel="name" [showClear]="true"></p-dropdown>
         </div>
-      </div>
+      </div>-->
       <div class="p-field p-grid form-group">
         <div><label for="email-entity" class="p-col-fixed">Email Société</label></div>
         <div class="p-col">
-          <input id="email-entity" name="email-entity" class="form-control" type="text" pInputText [(ngModel)]="entity.email" required minlength="1" />
+          <input id="email-entity" name="email-entity" class="form-control" type="text" pInputText />
         </div>
       </div>
     </p-panel>
@@ -56,38 +56,40 @@
       <div class="p-field p-grid form-group">
         <div><label for="firstName" class="p-col-fixed">Prénom</label></div>
         <div class="p-col">
-          <input id="firstName" name="firstName" class="form-control" type="text" pInputText [(ngModel)]="contact.firstName" required minlength="1" />
+          <input id="firstName" name="firstName" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="lastName" class="p-col-fixed">Nom</label></div>
         <div class="p-col">
-          <input id="lastName" name="lastName" class="form-control" type="text" pInputText [(ngModel)]="contact.lastName" required minlength="1" />
+          <input id="lastName" name="lastName" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="lastName" class="p-col-fixed">Email</label></div>
         <div class="p-col">
-          <input id="lastName" name="lastName" class="form-control" type="text" pInputText [(ngModel)]="contact.email" required minlength="1" />
+          <input id="email" name="email" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="password" class="p-col-fixed">Mot de passe</label></div>
         <div class="p-col">
-          <input id="password" name="password" class="form-control" type="text" pInputText [(ngModel)]="contact.password" required minlength="1" />
+          <input id="password" name="password" formControlName="password" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="confirm" class="p-col-fixed">Confirmer votre de passe</label></div>
         <div class="p-col">
-          <input id="confirm" name="confirm" class="form-control" type="text" pInputText [(ngModel)]="contact.confirmPassword" required minlength="1" />
+          <input id="confirm" name="confirm" formControlName="confirm" class="form-control" type="text" pInputText />
         </div>
       </div>
-      <div class="p-field p-grid form-group">
+      <div class="p-field p-grid form-group" style="padding-top:15px">
         <span class="p-buttonset">
           <button class="p-button-sm" pButton type="submit" label="Envoyer" icon="pi pi-sign-in"></button>
         </span>
       </div>
+      <div *ngFor="let item of Errors()">{{item.message}}</div>
     </p-panel>
   </form>
+  {{myFormValidator.status}}
 </div>

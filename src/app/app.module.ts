@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -86,6 +86,7 @@ import { EntityCreateComponent } from './entity-create/entity-create.component';
     TableModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     PanelModule,
     BlockUIModule,
     PasswordModule,
