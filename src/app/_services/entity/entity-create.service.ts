@@ -18,7 +18,7 @@ export class EntityCreateService {
     const params = new HttpParams();
     const options = { params: params };
 
-    this.http.post<void>(environment.services.entity + "entity", { entity: entity, owner: owner }, options).toPromise();
+    this.http.post<void>(environment.services.entity + "entity/uncomplete", { entity: entity, owner: owner }, options).toPromise();
   }
 
 }

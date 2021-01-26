@@ -1,17 +1,19 @@
 <div id="div-main-entity-create">
   <div id="header-logo"></div>
-  <form id="entity-create" (ngSubmit)="onCreate()" [formGroup]="myFormValidator">
-    <p-panel header="Creation compte société">
+  <form id="entity-create" [formGroup]="myFormEntity" [hidden]="!displayEntity">
+    <p-panel header="Création compte société">
       <div class="p-field p-grid form-group">
         <div><label for="login" class="p-col-fixed">Raison Sociale (Nom)</label></div>
+        <span *ngIf="myFormEntity.controls.name.errors?.required" class="mandatory-field">Champ obligatoire</span>
         <div class="p-col">
           <input id="name" name="name" formControlName="name" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="login" class="p-col-fixed">Adresse 1</label></div>
+        <span *ngIf="myFormEntity.controls.address1.errors?.required" class="mandatory-field">Champ obligatoire</span>
         <div class="p-col">
-          <input id="address1" name="address1" class="form-control" type="text" pInputText />
+          <input id="address1" name="address1" formControlName="address1" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
@@ -28,68 +30,82 @@
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="zipCode" class="p-col-fixed">Code Postal</label></div>
+        <span *ngIf="myFormEntity.controls.zipCode.errors?.required" class="mandatory-field">Champ obligatoire</span>
         <div class="p-col">
-          <input id="zipCode" name="zipCode" class="form-control" type="text" pInputText />
+          <input id="zipCode" name="zipCode" formControlName="zipCode" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="city" class="p-col-fixed">Ville</label></div>
+        <span *ngIf="myFormEntity.controls.city.errors?.required" class="mandatory-field">Champ obligatoire</span>
         <div class="p-col">
-          <input id="city" name="city" class="form-control" type="text" pInputText />
+          <input id="city" name="city" formControlName="city" class="form-control" type="text" pInputText />
         </div>
       </div>
-      <!--<div class="p-field p-grid form-group">
+      <div class="p-field p-grid form-group">
         <div><label for="country" class="p-col-fixed">Pays</label></div>
         <div class="p-col">
-          <p-dropdown placeholder="Selectionner un pays" optionLabel="name" [showClear]="true"></p-dropdown>
-        </div>
-      </div>-->
-      <div class="p-field p-grid form-group">
-        <div><label for="email-entity" class="p-col-fixed">Email Société</label></div>
-        <div class="p-col">
-          <input id="email-entity" name="email-entity" class="form-control" type="text" pInputText />
+          <p-dropdown [options]="countries" optionValue="code" optionLabel="label" formControlName="country" dataKey="FR" placeholder="Selectionner un pays"></p-dropdown>
         </div>
       </div>
+      <div class="p-field p-grid form-group">
+        <div><label for="email" class="p-col-fixed">Email Société</label></div>
+        <span *ngIf="myFormEntity.controls.email.errors?.email" class="mandatory-field">Email non valide</span>
+        <span *ngIf="myFormEntity.controls.email.errors?.required" class="mandatory-field">Champ obligatoire</span>
+        <div class="p-col">
+          <input id="email" name="email" formControlName="email" class="form-control" type="text" pInputText />
+        </div>
+      </div>
+      <div class="p-field p-grid form-group" style="padding-top:15px">
+        <span class="p-buttonset">
+          <button class="p-button-sm" pButton type="button" label="Suivant" icon="pi pi-forward" (click)="next()" [disabled]="myFormEntity.status != 'VALID'"></button>
+        </span>
+      </div>
     </p-panel>
-
+  </form>
+  <form id="contact-create" [formGroup]="myFormContact" [hidden]="!displayContact">
     <p-panel header="Contact">
       <div class="p-field p-grid form-group">
         <div><label for="firstName" class="p-col-fixed">Prénom</label></div>
+        <span *ngIf="myFormContact.controls.firstName.errors?.required" class="mandatory-field">Champ obligatoire</span>
         <div class="p-col">
-          <input id="firstName" name="firstName" class="form-control" type="text" pInputText />
+          <input id="firstName" name="firstName" formControlName="firstName" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="lastName" class="p-col-fixed">Nom</label></div>
+        <span *ngIf="myFormContact.controls.lastName.errors?.required" class="mandatory-field">Champ obligatoire</span>
         <div class="p-col">
-          <input id="lastName" name="lastName" class="form-control" type="text" pInputText />
+          <input id="lastName" name="lastName" formControlName="lastName" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
-        <div><label for="lastName" class="p-col-fixed">Email</label></div>
+        <div><label for="email" class="p-col-fixed">Email</label></div>
+        <span *ngIf="myFormContact.controls.email.errors?.required" class="mandatory-field">Champ obligatoire</span>
+        <span *ngIf="myFormContact.controls.email.errors?.email" class="mandatory-field">Email non valide</span>
         <div class="p-col">
-          <input id="email" name="email" class="form-control" type="text" pInputText />
+          <input id="email" name="email" class="form-control" formControlName="email" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="password" class="p-col-fixed">Mot de passe</label></div>
+        <span class="mandatory-field" *ngFor="let item of Errors()">{{item.message}}&#160;</span>
         <div class="p-col">
           <input id="password" name="password" formControlName="password" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
-        <div><label for="confirm" class="p-col-fixed">Confirmer votre de passe</label></div>
+        <div><label for="confirmPassword" class="p-col-fixed">Confirmer votre de passe</label></div>
         <div class="p-col">
-          <input id="confirm" name="confirm" formControlName="confirm" class="form-control" type="text" pInputText />
+          <input id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group" style="padding-top:15px">
         <span class="p-buttonset">
-          <button class="p-button-sm" pButton type="submit" label="Envoyer" icon="pi pi-sign-in"></button>
+          <button class="p-button-sm" pButton type="button" label="Précédent" icon="pi pi-backward" (click)="previous()"></button>&#160;
+          <button class="p-button-sm" pButton type="button" label="Envoyer" icon="pi pi-sign-in" (click)="onCreate()" [disabled]="myFormContact.status != 'VALID'"></button>
         </span>
       </div>
-      <div *ngFor="let item of Errors()">{{item.message}}</div>
     </p-panel>
   </form>
-  {{myFormValidator.status}}
 </div>
