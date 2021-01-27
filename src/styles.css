@@ -47,6 +47,11 @@
   border-left: 5px solid #a94442;
 }
 
+.mandatory-field {
+    color:red;
+    font-size: 10px;
+}
+
 button {
   cursor: pointer !important;
 }
@@ -76,4 +81,9 @@ p-menubar div.p-component {
   margin-right:10px;
   width: 130px !important;
   height: 50px !important;
+}
+
+/* to mask input text in p-dropdown*/
+.p-hidden-accessible {
+  display: none;
 }

@@ -1,0 +1,6 @@
+p-progressSpinner {
+  top: 10%;
+  position: absolute;
+  left: 10%;
+  z-index: 999;
+}

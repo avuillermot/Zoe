@@ -7,7 +7,7 @@
   height: 100%
 }
 
-#entity-create {
+#entity-create, #contact-create {
   top: 10%;
   position: absolute;
   width: 33%;
@@ -23,4 +23,9 @@
   background-image: url("./../../assets/logo_small.png");
   background-repeat: no-repeat;
   z-index: 0;
+}
+
+input {
+    width:80%;
+    margin-bottom: 15px;
 }
