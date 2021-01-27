@@ -22,6 +22,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { MenuComponent } from './menu/menu.component'
 import { HeaderComponent } from './header/header.component';
@@ -97,7 +98,8 @@ import { EntityCreateComponent } from './entity-create/entity-create.component';
     ConfirmDialogModule,
     AngularEditorModule,
     DropdownModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ProgressSpinnerModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

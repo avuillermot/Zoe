@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityCreateService } from '../_services/entity/entity-create.service';
-import { HttpClient } from '@angular/common/http';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, FormControl, AbstractControl } from '@angular/forms';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { environment } from "./../../environments/environment";
+import { GlobalHelper } from "./../global.helper";
 
 interface Country {
   code: string,
@@ -62,36 +63,29 @@ export class EntityCreateComponent implements OnInit {
 
   public countries: Country[];
 
-  constructor(private serv: EntityCreateService, private http: HttpClient, private fb: FormBuilder) {
+  constructor(private http: HttpClient, private fb: FormBuilder) {
     this.entity = { name: "", address1: "", address2: "", address3: "", zipCode: "", city: "", country: "", email: "" };
     this.contact = { email: "", firstName: "", lastName: "", password: "", confirmPassword: "" };
     this.countries = new Array<Country>();
-    /*this.http.get('https://localhost:8080/countries').subscribe(
-      () => { },
-      () => { },
-      () => { }
-    );*/
-    this.countries.push({ code: 'FR', label: 'France' });
-    this.countries.push({ code: 'BE', label: 'Belgique' });
 
     this.myFormEntity = this.fb.group(
       {
-        name: ['aaa', [Validators.required, Validators.minLength(1)]],
-        address1: ['bbbbb', [Validators.required, Validators.minLength(1)]],
-        zipCode: ['21160', [Validators.required, Validators.minLength(5)]],
-        city: ['Dijon', [Validators.required, Validators.minLength(1)]],
-        country: ['FRANCE', [Validators.required, Validators.minLength(1)]],
-        email: ['pp@p.com', [Validators.email, Validators.required]]
+        name: ['', [Validators.required, Validators.minLength(1)]],
+        address1: ['', [Validators.required, Validators.minLength(1)]],
+        zipCode: ['', [Validators.required, Validators.minLength(5)]],
+        city: ['', [Validators.required, Validators.minLength(1)]],
+        country: ['FR', [Validators.required, Validators.minLength(1)]],
+        email: ['', [Validators.email, Validators.required]]
       }
     );
 
     this.myFormContact = this.fb.group(
       {
-        firstName: ['aaa', [Validators.required, Validators.minLength(1)]],
-        lastName: ['bbb', [Validators.required, Validators.minLength(1)]],
-        email: ['mmmm', [Validators.email, Validators.required]],
-        password: ['111', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['111', [Validators.required, Validators.minLength(6)]]
+        firstName: ['', [Validators.required, Validators.minLength(1)]],
+        lastName: ['', [Validators.required, Validators.minLength(1)]],
+        email: ['', [Validators.email, Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
       },
       { validator: passwordValidator }
     );
@@ -99,6 +93,11 @@ export class EntityCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.http.get('https://localhost:8080/countries').subscribe(
+      (data) => { this.countries = <Country[]>data },
+      () => { },
+      () => { }
+    );
   }
 
   next(): void {
@@ -112,7 +111,22 @@ export class EntityCreateComponent implements OnInit {
   }
 
   onCreate(): void {
-    this.serv.create(this.myFormEntity.value, this.myFormContact.value);
+    const params = new HttpParams();
+    const options = { params: params };
+
+    GlobalHelper.waiting();
+    this.http.post<void>(environment.services.entity + "entity/uncomplete", { entity: this.myFormEntity.value, owner: this.myFormContact.value }, options).toPromise()
+      .then(() => {
+        GlobalHelper.stopWainting();
+        alert("Un mail vous a été envoyé pour confirmer votre adresse mail. Vous pourrez ensuite vous connecter.");
+        window.location.href = '/login';
+      })
+      .catch((ex) => {
+        GlobalHelper.stopWainting();
+        if (ex.error == undefined) alert("Une erreur inconnue est survenue.");
+        else if (ex.error == "EMAIL_ALREADY_EXIST") alert("Cette adresse mail est déjà utilisée. Vous pouvez réinitialiser votre mot de passe en d'oubli.");
+        else alert("Une erreur inconnue est survenue.");
+      });
   }
 
   Errors(): any[] {

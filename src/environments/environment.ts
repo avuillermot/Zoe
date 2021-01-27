@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const commonUrl:string = "https://pc-246.home:8091/";
+const commonUrl:string = "https://localhost:8080/";
 export const environment = {
   production: false,
   /*services: {
@@ -15,7 +15,6 @@ export const environment = {
     context: "http://localhost:8080/",
     pdf: "http://localhost:8080/"
   }*/
-  commonUrl: "https://pc-246.home:8091/",
   services: {
     entity: commonUrl,
     customer: commonUrl,

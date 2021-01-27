@@ -49,11 +49,11 @@
         </div>
       </div>
       <div class="p-field p-grid form-group">
-        <div><label for="email" class="p-col-fixed">Email Société</label></div>
+        <div><label for="email-entity" class="p-col-fixed">Email Société</label></div>
         <span *ngIf="myFormEntity.controls.email.errors?.email" class="mandatory-field">Email non valide</span>
         <span *ngIf="myFormEntity.controls.email.errors?.required" class="mandatory-field">Champ obligatoire</span>
         <div class="p-col">
-          <input id="email" name="email" formControlName="email" class="form-control" type="text" pInputText />
+          <input id="email-entity" name="email-entity" formControlName="email" class="form-control" type="text" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group" style="padding-top:15px">
@@ -91,13 +91,13 @@
         <div><label for="password" class="p-col-fixed">Mot de passe</label></div>
         <span class="mandatory-field" *ngFor="let item of Errors()">{{item.message}}&#160;</span>
         <div class="p-col">
-          <input id="password" name="password" formControlName="password" class="form-control" type="text" pInputText />
+          <input id="password" name="password" formControlName="password" class="form-control" type="password" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group">
         <div><label for="confirmPassword" class="p-col-fixed">Confirmer votre de passe</label></div>
         <div class="p-col">
-          <input id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" class="form-control" type="text" pInputText />
+          <input id="confirmPassword" name="confirmPassword" formControlName="confirmPassword" class="form-control" type="password" pInputText />
         </div>
       </div>
       <div class="p-field p-grid form-group" style="padding-top:15px">
