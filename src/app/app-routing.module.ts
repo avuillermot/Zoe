@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: "product/update/:id", component: ProductUpdateComponent },
   { path: "product/add", component: ProductUpdateComponent },
   { path: "login", component: UserLoginComponent },
+  { path: "", component: UserLoginComponent },
 
   // QUOTE
   { path: "quote/create", component: QuoteUpdateComponent },
